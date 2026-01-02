@@ -3,1565 +3,533 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QUIZ DA EBD Fiel | Lição 3: Os compromissos dos discípulos de Cristo</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Quiz Bíblico - Lição 6: A Oração</title>
     <style>
-        /* ===== VARIÁVEIS E RESET ===== */
-        :root {
-            --primary: #4361ee;
-            --primary-dark: #3a56d4;
-            --secondary: #7209b7;
-            --accent: #f72585;
-            --success: #4cc9f0;
-            --warning: #f8961e;
-            --danger: #f94144;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --text: #343a40;
-            --gray: #6c757d;
-            --shadow: 0 10px 30px rgba(0,0,0,0.1);
-            --shadow-lg: 0 15px 50px rgba(0,0,0,0.15);
-            --gradient: linear-gradient(135deg, #4361ee 0%, #7209b7 100%);
-            --gradient-light: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);
-            --instagram: #E1306C;
-        }
-
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--text);
-            min-height: 100vh;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            background-color: #f5f5f5;
+            color: #333;
             line-height: 1.6;
-        }
-
-        /* ===== CONTAINER PRINCIPAL ===== */
-        .container {
-            max-width: 100%;
-            width: 100%;
-            background: white;
-            border-radius: 20px;
-            box-shadow: var(--shadow-lg);
-            overflow: hidden;
-            margin: 10px 0;
-            position: relative;
-        }
-
-        /* ===== ANIMAÇÃO INICIAL ===== */
-        .quiz-start-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--gradient);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .quiz-start-animation.active {
-            display: flex;
-        }
-
-        .animation-icon {
-            font-size: 5rem;
-            margin-bottom: 20px;
-            animation: bounce 1s infinite, starPulse 2s infinite;
-        }
-
-        .animation-text {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            animation: slideInLeft 1s ease forwards;
-        }
-
-        .animation-subtext {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            animation: slideInRight 1s ease forwards;
-            animation-delay: 0.3s;
-        }
-
-        .countdown {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-top: 30px;
-            animation: pulse 1s infinite;
-        }
-
-        /* ===== HEADER MODERNO ===== */
-        .modern-header {
-            background: var(--gradient);
-            color: white;
-            padding: 25px 20px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.1;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHBhdGggZD0iTTIxLDMwIEMyMSwzMCA0MCwzMCA1MCw0MCBDNjAsMzAgNzksMzAgNzksMzAgQzc5LDMwIDg1LDM1IDg1LDQwIEM4NSw0NSA3OSw1MCA3OSw1MCBDNzksNTAgNjAsNTAgNTAsNjAgQzQwLDUwIDIxLDUwIDIxLDUwIEMyMSw1MCAxNSw0NSAxNSw0MCBDMTUsMzUgMjEsMzAgMjEsMzAgWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=');
-            background-size: 150px;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 2;
-            max-width: 100%;
-            margin: 0 auto;
-        }
-
-        .logo-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .logo {
-            width: 120px;
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            border-radius: 50%;
-            background: white;
-            padding: 10px;
-        }
-
-        .logo-img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 50%;
-        }
-
-        .logo-text {
-            text-align: center;
-        }
-
-        .logo-text h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
             margin: 0;
-            line-height: 1.2;
-        }
-
-        .logo-text .subtitle {
-            font-size: 1rem;
-            opacity: 0.9;
-            font-weight: 400;
-            margin-top: 5px;
-        }
-
-        .welcome-card {
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
             padding: 20px;
-            border-radius: 16px;
-            margin: 20px 0;
-            border: 1px solid rgba(255,255,255,0.2);
-            text-align: left;
         }
-
-        .welcome-card h2 {
-            font-size: 1.3rem;
+        
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
             margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
         }
-
-        .welcome-card p {
-            font-size: 1rem;
-            opacity: 0.9;
-            line-height: 1.5;
+        
+        .intro {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin-bottom: 25px;
+            font-size: 1.1em;
         }
-
-        .features {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 20px;
-            width: 100%;
-            max-width: 300px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .feature {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(255,255,255,0.1);
-            padding: 12px 15px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            backdrop-filter: blur(5px);
-            justify-content: center;
-        }
-
-        /* ===== SEÇÃO DE CONTEÚDO ===== */
-        .content-section {
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        .about-card, .details-card {
-            background: var(--light);
-            border-radius: 16px;
-            padding: 25px 20px;
-            box-shadow: var(--shadow);
-        }
-
-        .card-title {
-            font-size: 1.3rem;
-            color: var(--primary);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .card-content {
-            font-size: 0.95rem;
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        .card-content ul {
-            list-style: none;
-            margin-top: 15px;
-        }
-
-        .card-content li {
-            margin-bottom: 12px;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .card-content li i {
-            color: var(--primary);
-            margin-top: 3px;
-            flex-shrink: 0;
-        }
-
-        .highlight {
-            background: var(--gradient-light);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 600;
-        }
-
-        /* ===== BOTÃO INICIAR ===== */
-        .cta-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .start-btn {
-            padding: 16px 35px;
-            border: none;
-            border-radius: 50px;
-            background: var(--accent);
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 8px 20px rgba(248, 37, 133, 0.4);
-            width: 100%;
-            max-width: 280px;
-            justify-content: center;
-        }
-
-        .start-btn:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 12px 25px rgba(248, 37, 133, 0.5);
-            background: #ff2d95;
-        }
-
-        /* ===== SEÇÃO DO QUIZ ===== */
-        .quiz-section {
-            display: none;
-            padding: 20px 15px;
-        }
-
-        .progress-container {
-            padding: 0 15px;
+        
+        fieldset {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
             margin-bottom: 20px;
+            background-color: #fafafa;
         }
-
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
+        
+        legend {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #2c3e50;
+            padding: 0 10px;
         }
-
-        .progress-text {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--primary);
-        }
-
-        .progress-bar {
-            height: 8px;
-            background: #e9ecef;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress {
-            height: 100%;
-            background: var(--gradient);
-            border-radius: 10px;
-            transition: width 0.5s ease;
-            position: relative;
-        }
-
-        .progress::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background-image: linear-gradient(
-                -45deg,
-                rgba(255, 255, 255, 0.2) 25%,
-                transparent 25%,
-                transparent 50%,
-                rgba(255, 255, 255, 0.2) 50%,
-                rgba(255, 255, 255, 0.2) 75%,
-                transparent 75%,
-                transparent
-            );
-            background-size: 20px 20px;
-            animation: move 1s linear infinite;
-        }
-
-        @keyframes move {
-            0% { background-position: 0 0; }
-            100% { background-position: 20px 0; }
-        }
-
+        
         .question {
-            margin-bottom: 25px;
-            padding: 20px;
-            border-radius: 16px;
-            background: white;
-            box-shadow: var(--shadow);
-            border-left: 5px solid var(--primary);
-        }
-
-        .question-header {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .question-difficulty {
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            margin-bottom: 15px;
             font-weight: bold;
-            color: white;
-            align-self: flex-start;
+            color: #2c3e50;
         }
-
-        .difficulty-easy { background: var(--success); }
-        .difficulty-medium { background: var(--warning); }
-        .difficulty-hard { background: var(--danger); }
-
-        .question-text {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--primary);
-            line-height: 1.4;
-        }
-
+        
         .options {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
-
-        .option {
-            padding: 16px 15px;
-            background: var(--light);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            border: 2px solid transparent;
-            position: relative;
-        }
-
-        .option:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border-color: var(--primary);
-        }
-
-        .option.selected.correct {
-            background: var(--success);
-            color: white;
-            border-color: var(--success);
-            transform: translateY(-2px);
-        }
-
-        .option.selected.incorrect {
-            background: var(--danger);
-            color: white;
-            border-color: var(--danger);
-            transform: translateY(-2px);
-        }
-
-        .option.correct-answer {
-            background: var(--success);
-            color: white;
-            border-color: var(--success);
-            animation: pulse 0.6s ease;
-        }
-
-        .option-letter {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 50%;
-            margin-right: 12px;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        .option.selected .option-letter,
-        .option.correct-answer .option-letter {
-            background: rgba(255,255,255,0.2);
-        }
-
-        .feedback-icon {
-            margin-left: auto;
-            font-size: 1.1rem;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            flex-shrink: 0;
-        }
-
-        .option.selected.correct .feedback-icon,
-        .option.correct-answer .feedback-icon {
-            opacity: 1;
-        }
-
-        .option.selected.incorrect .feedback-icon {
-            opacity: 1;
-        }
-
-        .option.locked {
-            cursor: not-allowed;
-        }
-
-        .option.locked:hover {
-            transform: none;
-            box-shadow: none;
-            border-color: transparent;
-        }
-
-        /* ===== NAVEGAÇÃO ===== */
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 25px;
-            gap: 10px;
-            flex-direction: row-reverse;
-        }
-
-        button {
-            padding: 14px 20px;
-            border: none;
-            border-radius: 50px;
-            background: var(--primary);
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.95rem;
-            flex: 1;
-            justify-content: center;
-        }
-
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-
-        button:disabled {
-            background: #bdc3c7;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .btn-next {
-            background: var(--secondary);
-        }
-
-        /* ===== RESULTADOS ===== */
-        .results {
-            text-align: center;
-            padding: 30px 20px;
-            display: none;
-        }
-
-        .results-header {
-            margin-bottom: 25px;
-        }
-
-        .score {
-            font-size: 3.5rem;
-            font-weight: 700;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin: 15px 0;
-        }
-
-        .performance {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            gap: 15px;
-            margin: 30px 0;
+            gap: 10px;
         }
-
-        .performance-item {
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto 0;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
             text-align: center;
-            padding: 20px;
-            border-radius: 16px;
-            background: var(--light);
-            box-shadow: var(--shadow);
-        }
-
-        .performance-value {
-            font-size: 2rem;
-            font-weight: 700;
-            margin: 10px 0;
-        }
-
-        .performance-easy { color: var(--success); }
-        .performance-medium { color: var(--warning); }
-        .performance-hard { color: var(--danger); }
-
-        .message {
-            font-size: 1.1rem;
-            margin: 25px 0;
-            padding: 20px;
-            border-radius: 16px;
-            background: var(--light);
-            box-shadow: var(--shadow);
-            line-height: 1.5;
-        }
-
-        /* ===== ANIMAÇÕES FINAIS ===== */
-        .confetti-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 999;
-            overflow: hidden;
             display: none;
         }
-
-        .confetti-container.active {
-            display: block;
-        }
-
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            opacity: 0;
-            animation: confettiRain 2s ease forwards;
-        }
-
-        .trophy-animation {
-            animation: trophyGlow 2s infinite;
-        }
-
-        .star-animation {
-            animation: starPulse 1.5s infinite;
-        }
-
-        /* ===== INFORMAÇÕES DA IGREJA E INSTAGRAM ===== */
-        .church-info {
-            text-align: center;
-            padding: 20px;
-            background: var(--light);
-            border-top: 1px solid #dee2e6;
-        }
-
-        .church-name {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-
-        .church-location {
-            color: var(--text);
-            opacity: 0.8;
-            font-size: 0.95rem;
+        
+        .score {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
             margin-bottom: 15px;
         }
-
-        .instagram-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            margin-top: 10px;
+        
+        .message {
+            font-size: 1.2em;
+            margin-bottom: 20px;
         }
-
-        .instagram-text {
-            font-size: 0.9rem;
-            color: var(--text);
+        
+        .correct-answer {
+            color: #27ae60;
+            font-weight: bold;
         }
-
-        .instagram-link {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: var(--instagram);
-            color: white;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(225, 48, 108, 0.3);
+        
+        .wrong-answer {
+            color: #e74c3c;
+            font-weight: bold;
         }
-
-        .instagram-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(225, 48, 108, 0.4);
-            background: #C13584;
+        
+        .feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            font-style: italic;
         }
-
-        .instagram-icon {
-            font-size: 1.2rem;
+        
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #7f8c8d;
+            font-size: 0.9em;
         }
-
-        /* ===== ANIMAÇÕES ===== */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes confettiRain {
-            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-        }
-
-        @keyframes starPulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.2); opacity: 0.8; }
-        }
-
-        @keyframes trophyGlow {
-            0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.7)); }
-            50% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.9)); }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease forwards;
-        }
-
-        /* ===== RESPONSIVO ===== */
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-            
-            .container {
-                border-radius: 16px;
-            }
-            
-            .modern-header {
-                padding: 20px 15px;
-            }
-            
-            .logo-text h1 {
-                font-size: 1.6rem;
-            }
-            
-            .logo {
-                width: 100px;
-                height: 100px;
-            }
-            
-            .welcome-card {
+        
+        @media (max-width: 600px) {
+            .quiz-container {
                 padding: 15px;
             }
             
-            .content-section {
-                padding: 25px 15px;
-            }
-            
-            .about-card, .details-card {
-                padding: 20px 15px;
-            }
-            
-            .quiz-section {
-                padding: 15px 10px;
-            }
-            
-            .question {
+            fieldset {
                 padding: 15px;
-            }
-            
-            .question-text {
-                font-size: 1.1rem;
-            }
-            
-            .option {
-                padding: 14px 12px;
-            }
-            
-            .navigation {
-                flex-direction: column-reverse;
-            }
-            
-            button {
-                width: 100%;
-            }
-            
-            .results {
-                padding: 25px 15px;
-            }
-            
-            .score {
-                font-size: 3rem;
-            }
-            
-            .animation-text {
-                font-size: 1.5rem;
-            }
-            
-            .animation-icon {
-                font-size: 3.5rem;
-            }
-            
-            .countdown {
-                font-size: 2.5rem;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .container {
-                max-width: 700px;
-            }
-            
-            .logo-container {
-                flex-direction: row;
-                text-align: left;
-            }
-            
-            .logo-text {
-                text-align: left;
-            }
-            
-            .features {
-                flex-direction: row;
-                max-width: 100%;
-            }
-            
-            .performance {
-                flex-direction: row;
-            }
-            
-            .navigation {
-                flex-direction: row-reverse;
-            }
-            
-            .instagram-section {
-                flex-direction: row;
-                justify-content: center;
-            }
-        }
-
-        @media (min-width: 992px) {
-            .container {
-                max-width: 900px;
-            }
-            
-            .content-section {
-                grid-template-columns: 1fr 1fr;
-                display: grid;
             }
         }
     </style>
 </head>
 <body>
-    <!-- ANIMAÇÃO INICIAL -->
-    <div class="quiz-start-animation" id="quiz-start-animation">
-        <div class="animation-icon">
-            <i class="fas fa-book-bible"></i>
+    <div class="quiz-container">
+        <h1>Quiz Bíblico - Lição 6: A Oração</h1>
+        
+        <div class="intro">
+            <p>Teste seu conhecimento sobre a lição bíblica "Oração: uma disciplina indispensável aos discípulos de Cristo". Este quiz contém 10 perguntas baseadas no conteúdo da Lição 6. Tente responder todas as questões para verificar seu entendimento sobre o tema da oração.</p>
         </div>
-        <div class="animation-text">Quiz da EBD Fiel</div>
-        <div class="animation-subtext">Lição 03: Os compromissos dos discípulos de Cristo</div>
-        <div class="countdown" id="countdown">3</div>
-    </div>
-
-    <!-- CONFETES -->
-    <div class="confetti-container" id="confetti-container"></div>
-
-    <div class="container fade-in">
-        <!-- HEADER -->
-        <header class="modern-header">
-            <div class="header-bg"></div>
-            <div class="header-content">
-                <div class="logo-container">
-                    <div class="logo">
-                        <img src="https://i.ibb.co/9mLXgx7k/logo.png" alt="Logo EBD Fiel" class="logo-img" id="logo-img">
+        
+        <form id="quiz-form">
+            <!-- Pergunta 1 -->
+            <fieldset>
+                <legend>Pergunta 1 de 10</legend>
+                <div class="question">Qual é o texto áureo da Lição 6 sobre oração?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q1a" name="q1" value="a">
+                        <label for="q1a">"Orai sem cessar" (1 Tessalonicenses 5:17)</label>
                     </div>
-                    <div class="logo-text">
-                        <h1>QUIZ DA EBD Fiel</h1>
-                        <div class="subtitle">Lição 03: Os compromissos dos discípulos de Cristo</div>
+                    <div class="option">
+                        <input type="radio" id="q1b" name="q1" value="b" data-correct="true">
+                        <label for="q1b">"Cheguemos, pois, com confiança ao trono da graça, para que possamos alcançar misericórdia e achar graça, a fim de sermos ajudados em tempo oportuno" (Hebreus 4:16)</label>
                     </div>
-                </div>
-
-                <div class="welcome-card">
-                    <h2><i class="fas fa-hands"></i> Bem-vindo ao Quiz da EBD Fiel!</h2>
-                    <p>Explore os ensinamentos sobre os compromissos que os discípulos de Cristo assumem ao seguir o Mestre. Descubra como honrar seu compromisso com Cristo, seguindo pelos caminhos que Ele direcionar.</p>
-                </div>
-
-                <div class="features">
-                    <div class="feature">
-                        <i class="fas fa-star" style="color: #4cc9f0;"></i>
-                        <span>15 Perguntas</span>
+                    <div class="option">
+                        <input type="radio" id="q1c" name="q1" value="c">
+                        <label for="q1c">"Vigiai e orai, para que não entreis em tentação" (Mateus 26:41)</label>
                     </div>
-                    <div class="feature">
-                        <i class="fas fa-check-circle" style="color: #f8961e;"></i>
-                        <span>Feedback Imediato</span>
-                    </div>
-                    <div class="feature">
-                        <i class="fas fa-graduation-cap" style="color: #f94144;"></i>
-                        <span>Aprenda com a Bíblia</span>
+                    <div class="option">
+                        <input type="radio" id="q1d" name="q1" value="d">
+                        <label for="q1d">"E tudo o que pedirdes em oração, crendo, o recebereis" (Mateus 21:22)</label>
                     </div>
                 </div>
-            </div>
-        </header>
-
-        <!-- CONTEÚDO -->
-        <section class="content-section">
-            <div class="about-card">
-                <h2 class="card-title"><i class="fas fa-info-circle"></i> Sobre Esta Lição</h2>
-                <div class="card-content">
-                    <p>Esta lição nos ensina sobre os compromissos que os discípulos de Cristo assumem ao responder ao chamado do Mestre. Ao atender ao chamado do Senhor para um viver comprometido com Ele, assumimos os muitos compromissos que atestam a autenticidade dos discípulos de Jesus.</p>
-                    <p>Veremos como o compromisso com Cristo se expressa no comprometimento com a igreja local, com o contínuo cuidado pessoal e com a Palavra de Deus como regra de fé e conduta.</p>
-                    <p><span class="highlight">"Então eles, deixando logo as redes, seguiram-no" (Mateus 4:20).</span> Este é o texto áureo que norteia esta lição.</p>
-                </div>
-            </div>
-
-            <div class="details-card">
-                <h2 class="card-title"><i class="fas fa-book-open"></i> O Que Você Vai Aprender</h2>
-                <div class="card-content">
-                    <ul>
-                        <li><i class="fas fa-check"></i> O significado do chamado para o compromisso</li>
-                        <li><i class="fas fa-check"></i> Os compromissos de carregar a cruz e ser verdadeiro</li>
-                        <li><i class="fas fa-check"></i> O compromisso com a obediência a Cristo</li>
-                        <li><i class="fas fa-check"></i> O comprometimento com a Igreja e autoexame</li>
-                        <li><i class="fas fa-check"></i> A ética cristã e sua base na Palavra de Deus</li>
-                    </ul>
-                </div>
-            </div>
+            </fieldset>
             
-            <!-- BOTÃO INICIAR NO FINAL -->
-            <div class="cta-section">
-                <button class="start-btn" id="start-btn">
-                    <i class="fas fa-play"></i> Iniciar Quiz
-                </button>
-            </div>
-        </section>
-
-        <!-- QUIZ -->
-        <div class="quiz-section" id="quiz-section">
-            <div class="progress-container">
-                <div class="progress-header">
-                    <div class="progress-text" id="progress-text">Pergunta 1 de 15</div>
+            <!-- Pergunta 2 -->
+            <fieldset>
+                <legend>Pergunta 2 de 10</legend>
+                <div class="question">Segundo Jesus, como NÃO devemos orar?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q2a" name="q2" value="a">
+                        <label for="q2a">Em secreto, no nosso aposento</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q2b" name="q2" value="b">
+                        <label for="q2b">Com fé, crendo que já recebemos</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q2c" name="q2" value="c" data-correct="true">
+                        <label for="q2c">Com vãs repetições, como os gentios</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q2d" name="q2" value="d">
+                        <label for="q2d">Em todo tempo, sem cessar</label>
+                    </div>
                 </div>
-                <div class="progress-bar">
-                    <div class="progress" id="quiz-progress"></div>
+            </fieldset>
+            
+            <!-- Pergunta 3 -->
+            <fieldset>
+                <legend>Pergunta 3 de 10</legend>
+                <div class="question">Qual é a oração modelo ensinada por Jesus?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q3a" name="q3" value="a" data-correct="true">
+                        <label for="q3a">A Oração do Pai Nosso</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q3b" name="q3" value="b">
+                        <label for="q3b">A Oração do Salmo 23</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q3c" name="q3" value="c">
+                        <label for="q3c">A Oração de Jabez</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q3d" name="q3" value="d">
+                        <label for="q3d">A Oração do Credo Apostólico</label>
+                    </div>
                 </div>
-            </div>
-
-            <div class="quiz-container" id="quiz-container">
-                <!-- Perguntas serão inseridas aqui -->
-            </div>
-
-            <div class="navigation">
-                <button id="prev-btn" disabled>
-                    <i class="fas fa-arrow-left"></i> Anterior
-                </button>
-                <button id="next-btn" class="btn-next">
-                    Próxima <i class="fas fa-arrow-right"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- RESULTADOS -->
+            </fieldset>
+            
+            <!-- Pergunta 4 -->
+            <fieldset>
+                <legend>Pergunta 4 de 10</legend>
+                <div class="question">Como deve ser a oração em relação à publicidade, segundo Jesus?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q4a" name="q4" value="a">
+                        <label for="q4a">Deve ser feita em público, para edificar os outros</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q4b" name="q4" value="b">
+                        <label for="q4b">Deve ser feita em pé nas sinagogas e esquinas</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q4c" name="q4" value="c">
+                        <label for="q4c">Deve ser feita apenas nos cultos</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q4d" name="q4" value="d" data-correct="true">
+                        <label for="q4d">Deve ser feita em secreto, sem ostentação</label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Pergunta 5 -->
+            <fieldset>
+                <legend>Pergunta 5 de 10</legend>
+                <div class="question">Qual versículo orienta a "orar sem cessar"?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q5a" name="q5" value="a" data-correct="true">
+                        <label for="q5a">1 Tessalonicenses 5:17</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q5b" name="q5" value="b">
+                        <label for="q5b">Efésios 6:18</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q5c" name="q5" value="c">
+                        <label for="q5c">Mateus 6:7</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q5d" name="q5" value="d">
+                        <label for="q5d">Lucas 18:1</label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Pergunta 6 -->
+            <fieldset>
+                <legend>Pergunta 6 de 10</legend>
+                <div class="question">O que é necessário para que a oração seja eficaz, segundo a lição?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q6a" name="q6" value="a">
+                        <label for="q6a">Muitas palavras e longas orações</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q6b" name="q6" value="b" data-correct="true">
+                        <label for="q6b">Simplicidade do coração e acordo com as Escrituras</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q6c" name="q6" value="c">
+                        <label for="q6c">Vãs repetições</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q6d" name="q6" value="d">
+                        <label for="q6d">Ser feita apenas por líderes religiosos</label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Pergunta 7 -->
+            <fieldset>
+                <legend>Pergunta 7 de 10</legend>
+                <div class="question">O que Deus sabe sobre nós antes mesmo de pedirmos, conforme ensinado por Jesus?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q7a" name="q7" value="a">
+                        <label for="q7a">Deus sabe apenas o que falamos</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q7b" name="q7" value="b">
+                        <label for="q7b">Deus não sabe até que peçamos</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q7c" name="q7" value="c" data-correct="true">
+                        <label for="q7c">Deus sabe o que precisamos</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q7d" name="q7" value="d">
+                        <label for="q7d">Deus sabe apenas o que fazemos</label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Pergunta 8 -->
+            <fieldset>
+                <legend>Pergunta 8 de 10</legend>
+                <div class="question">O que Paulo diz sobre a oração e a batalha espiritual em Efésios 6:18?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q8a" name="q8" value="a">
+                        <label for="q8a">Que a oração é uma parte opcional da armadura</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q8b" name="q8" value="b">
+                        <label for="q8b">Que a oração é apenas para momentos de crise</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q8c" name="q8" value="c">
+                        <label for="q8c">Que a oração deve ser feita apenas por intercessores</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q8d" name="q8" value="d" data-correct="true">
+                        <label for="q8d">Que devemos orar em todo tempo, com toda oração e súplica no Espírito</label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Pergunta 9 -->
+            <fieldset>
+                <legend>Pergunta 9 de 10</legend>
+                <div class="question">O que a falta de oração pode causar na vida espiritual, segundo a lição?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q9a" name="q9" value="a" data-correct="true">
+                        <label for="q9a">Esfriamento espiritual</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q9b" name="q9" value="b">
+                        <label for="q9b">Avivamento espiritual</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q9c" name="q9" value="c">
+                        <label for="q9c">Mais fervor na fé</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q9d" name="q9" value="d">
+                        <label for="q9d">Independência de Deus</label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Pergunta 10 -->
+            <fieldset>
+                <legend>Pergunta 10 de 10</legend>
+                <div class="question">O que a oração promove na vida da Igreja, segundo a lição?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q10a" name="q10" value="a">
+                        <label for="q10a">Religiosidade vazia</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q10b" name="q10" value="b" data-correct="true">
+                        <label for="q10b">Avivamento</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q10c" name="q10" value="c">
+                        <label for="q10c">Controvérsias</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q10d" name="q10" value="d">
+                        <label for="q10d">Apatia</label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <button type="button" id="submit-btn">Verificar Respostas</button>
+        </form>
+        
         <div class="results" id="results">
-            <div class="results-header">
-                <h2><i class="fas fa-trophy" id="trophy-icon"></i> Resultado Final</h2>
-            </div>
-            <div class="score" id="score">0/0</div>
-
-            <div class="performance" id="performance">
-                <div class="performance-item">
-                    <div class="performance-value performance-easy" id="correct-easy">0</div>
-                    <div>Fáceis</div>
-                </div>
-                <div class="performance-item">
-                    <div class="performance-value performance-medium" id="correct-medium">0</div>
-                    <div>Médias</div>
-                </div>
-                <div class="performance-item">
-                    <div class="performance-value performance-hard" id="correct-hard">0</div>
-                    <div>Difíceis</div>
-                </div>
-            </div>
-
+            <div class="score" id="score">Sua pontuação: 0/10</div>
             <div class="message" id="message"></div>
-
-            <button id="restart-btn" style="background: var(--success);">
-                <i class="fas fa-redo"></i> Fazer Quiz Novamente
-            </button>
+            <div class="feedback" id="feedback"></div>
         </div>
-
-        <!-- INFORMAÇÕES DA IGREJA -->
-        <div class="church-info">
-            <div class="church-name">EBD FIEL</div>
-            <div class="church-location">FIEL A PALAVRA</div>
-
-            <div class="instagram-section">
-                <div class="instagram-text">Curta nossa página no Instagram:</div>
-                <a href="https://www.instagram.com/ebdfiel" target="_blank" class="instagram-link">
-                    <i class="fab fa-instagram instagram-icon"></i>
-                    @ebdfiel
-                </a>
-            </div>
+        
+        <div class="footer">
+            <p>Quiz baseado na Lição 6: "Oração: uma disciplina indispensável aos discípulos de Cristo"</p>
         </div>
     </div>
 
     <script>
-        // =============================================
-        // BANCO DE PERGUNTAS - LIÇÃO 3 (RESPOSTAS VARIADAS)
-        // =============================================
-        const allQuestions = [
-            // PERGUNTAS FÁCEIS (1-5) - Respostas corretas: A, C, B, D, A (variadas)
-            {
-                question: "Qual é o texto áureo da lição 3?",
-                options: [
-                    "Mateus 4:20 - 'Então eles, deixando logo as redes, seguiram-no'",
-                    "João 15:12 - 'O meu mandamento é este: Que vos ameis uns aos outros'", 
-                    "Lucas 9:60 - 'Jesus, porém, lhe disse: Segue-me, e deixa os mortos sepultar os seus mortos'",
-                    "1 João 2:6 - 'Aquele que diz que está nele, também deve andar como ele andou'"
-                ],
-                correct: 0, // A
-                explanation: "O texto áureo da lição 3 é Mateus 4:20, conforme indicado no início do material: 'Então eles, deixando logo as redes, seguiram-no'.",
-                difficulty: "easy"
-            },
-            {
-                question: "Segundo a Verdade Aplicada da lição, o que o discípulo deve fazer?",
-                options: [
-                    "Apenas frequentar a igreja regularmente",
-                    "Ler a Bíblia todos os dias",
-                    "Honrar seu compromisso com Cristo, seguindo pelos caminhos que Ele o direcionar",
-                    "Evangelizar todas as pessoas que encontrar"
-                ],
-                correct: 2, // C
-                explanation: "A Verdade Aplicada afirma: 'O discípulo deve honrar seu compromisso com Cristo, seguindo pelos caminhos que Ele o direcionar'.",
-                difficulty: "easy"
-            },
-            {
-                question: "Qual foi a profissão de Simão Pedro e André antes de seguir Jesus?",
-                options: [
-                    "Carpinteiros",
-                    "Pescadores",
-                    "Agricultores",
-                    "Pastores de ovelhas"
-                ],
-                correct: 1, // B
-                explanation: "Mateus 4:18 diz: 'E Jesus, andando junto ao mar da Galileia, viu a dois irmãos, Simão, chamado Pedro, e André, os quais lançavam as redes ao mar, porque eram pescadores'.",
-                difficulty: "easy"
-            },
-            {
-                question: "O que Jesus prometeu fazer com Simão e André?",
-                options: [
-                    "Fazê-los ricos e bem-sucedidos",
-                    "Dar-lhes poder sobre os demônios",
-                    "Fazê-los governadores da Galileia",
-                    "Fazê-los pescadores de homens"
-                ],
-                correct: 3, // D
-                explanation: "Mateus 4:19 registra: 'E disse-lhes: Vinde após mim, e eu vos farei pescadores de homens'.",
-                difficulty: "easy"
-            },
-            {
-                question: "Qual é um dos objetivos da lição 3?",
-                options: [
-                    "Reconhecer a relevância do chamado",
-                    "Aprender a orar mais eficazmente",
-                    "Entender os milagres de Jesus",
-                    "Memorizar versículos bíblicos"
-                ],
-                correct: 0, // A
-                explanation: "Um dos objetivos da lição é 'Reconhecer a relevância do chamado', conforme listado na seção de objetivos.",
-                difficulty: "easy"
-            },
-            
-            // PERGUNTAS MÉDIAS (6-10) - Respostas corretas: C, A, D, B, C (variadas)
-            {
-                question: "O que significa 'carregar a própria cruz', segundo a lição?",
-                options: [
-                    "Sofrer fisicamente como Jesus sofreu",
-                    "Usar um crucifixo como adorno",
-                    "Crucificar o eu, submetendo-se à disciplina do Evangelho",
-                    "Participar de procissões religiosas"
-                ],
-                correct: 2, // C
-                explanation: "Segundo o Bispo Oídes José do Carmo na lição: 'levar a cruz é crucificar o eu. Em outros texto diz: "tome cada dia a sua cruz" (Lc 9.23). Diariamente, o discípulo de Jesus renova a sua entrega incondicional a Ele.'",
-                difficulty: "medium"
-            },
-            {
-                question: "Qual destas afirmações sobre o compromisso de ser verdadeiro está correta?",
-                options: [
-                    "Jesus não é uma possível verdade, mas é a Verdade",
-                    "Às vezes é permitido mentir para evitar problemas maiores",
-                    "A verdade é relativa e depende da situação",
-                    "Só precisamos ser verdadeiros na vida pública, não na privada"
-                ],
-                correct: 0, // A
-                explanation: "A lição afirma: 'A Bíblia não diz que Jesus é uma possível verdade, mas que Ele é a Verdade (Jo 14.6). Assim, o verdadeiro discípulo de Cristo deve sempre dar testemunho da verdade, seja em sua vida pública ou privada (Jo 8.32).'",
-                difficulty: "medium"
-            },
-            {
-                question: "Como a obediência está relacionada ao amor a Deus, segundo a lição?",
-                options: [
-                    "São coisas completamente separadas",
-                    "A obediência substitui o amor quando este é difícil",
-                    "Primeiro vem a obediência, depois o amor",
-                    "A obediência está diretamente relacionada ao amor a Deus e aos Seus Mandamentos"
-                ],
-                correct: 3, // D
-                explanation: "A lição ensina: 'A obediência, portanto, é uma das virtudes da vida cristã e está diretamente relacionada ao amor a Deus e aos Seus Mandamentos (Jo 14.15).'",
-                difficulty: "medium"
-            },
-            {
-                question: "O que significa estar comprometido com a Igreja, segundo a lição?",
-                options: [
-                    "Apenas frequentar cultos aos domingos",
-                    "Participar ativamente do cuidado, cooperação e sustento da igreja local",
-                    "Doar dinheiro regularmente",
-                    "Ter cargos de liderança na igreja"
-                ],
-                correct: 1, // B
-                explanation: "A lição afirma: 'Portanto, aquele que verdadeiramente está comprometido com Cristo, expressa comprometimento com o cuidado, a participação, a cooperação e o sustento da igreja local.'",
-                difficulty: "medium"
-            },
-            {
-                question: "Por que o autoexame é importante para o discípulo?",
-                options: [
-                    "Para julgar os outros com mais precisão",
-                    "Para se sentir superior aos demais cristãos",
-                    "Para não ter o coração carregado do que desagrada ao Senhor",
-                    "Para identificar os erros dos líderes da igreja"
-                ],
-                correct: 2, // C
-                explanation: "A lição explica: 'Sabe da relevância de estar atento quanto ao seu estado espiritual para não ter o coração carregado do que desagrada ao Senhor (1Co 11.28; Lc 21.34).'",
-                difficulty: "medium"
-            },
-            
-            // PERGUNTAS DIFÍCEIS (11-15) - Respostas corretas: B, D, A, C, B (variadas)
-            {
-                question: "Segundo o Bispo Abner Ferreira na lição, qual a relação entre Bíblia e Cristo?",
-                options: [
-                    "São dois livros separados com mensagens diferentes",
-                    "São inseparáveis, sendo Cristo o personagem central de toda a Bíblia",
-                    "A Bíblia é mais importante que Cristo",
-                    "Cristo veio para substituir a Bíblia"
-                ],
-                correct: 1, // B
-                explanation: "O Bispo Abner Ferreira afirma: 'A Bíblia e Cristo são inseparáveis. Do Antigo ao Novo Testamento, Ele é o personagem central (Lc 24.44; Jo 5.39), cuja missão foi a salvação de toda a humanidade (Lc 19.10; At 4.12).'",
-                difficulty: "hard"
-            },
-            {
-                question: "Como a ética cristã se expressa no mundo, segundo a lição?",
-                options: [
-                    "Isolando-se completamente da sociedade",
-                    "Seguindo os valores predominantes da cultura",
-                    "Criando uma subcultura cristã paralela",
-                    "Sendo luz em meio às trevas, com comportamento exemplar na sociedade"
-                ],
-                correct: 3, // D
-                explanation: "A lição ensina: 'O Apóstolo Paulo, escrevendo ao cristãos de Filipos, diz que eles deveriam ter um comportamento exemplar não somente dentro da Igreja, mas também na sociedade em que viviam (Fp 2.15). Paulo compara a vida dos discípulos de Cristo com a diferença produzida pela luz num ambiente escuro.'",
-                difficulty: "hard"
-            },
-            {
-                question: "Qual é a base da ética cristã, segundo a lição?",
-                options: [
-                    "A Palavra de Deus",
-                    "As tradições da igreja",
-                    "A consciência individual",
-                    "Os valores sociais predominantes"
-                ],
-                correct: 0, // A
-                explanation: "A lição afirma claramente: 'A base da ética cristã: A Palavra de Deus. Não é possível uma ética cristã sem fundamento bíblico.'",
-                difficulty: "hard"
-            },
-            {
-                question: "Segundo o Pastor Israel Maia na lição, qual é o segredo para fazer o bem?",
-                options: [
-                    "Fazê-lo apenas quando é conveniente",
-                    "Fazê-lo em grande quantidade uma vez por ano",
-                    "A perseverança, em ser constante no fazer o bem",
-                    "Divulgar amplamente as boas ações realizadas"
-                ],
-                correct: 2, // C
-                explanation: "O Pastor Israel Maia explica: 'Ele não ensina que basta fazer o bem, mas que também se deve insistir em fazê-lo, porque o segredo está na perseverança, em ser constante no fazer o bem, porque a glória, a honra e a retidão estarão garantidas mediante a perseverança.'",
-                difficulty: "hard"
-            },
-            {
-                question: "Segundo a conclusão da lição, como é o compromisso do discípulo de Cristo?",
-                options: [
-                    "Parcial e condicional, dependendo das circunstâncias",
-                    "Uma entrega total e contínua, marcada por obediência, amor ao próximo e viver segundo os ensinamentos de Jesus",
-                    "Apenas durante os cultos e atividades da igreja",
-                    "Focado principalmente no crescimento pessoal e profissional"
-                ],
-                correct: 1, // B
-                explanation: "A conclusão da lição afirma: 'O compromisso do discípulo de Cristo é uma entrega total e contínua, marcada por: obediência à Vontade de Deus, amor ao próximo e viver segundo os ensinamentos de Jesus.'",
-                difficulty: "hard"
-            }
-        ];
-
-        // =============================================
-        // VARIÁVEIS GLOBAIS
-        // =============================================
-        let currentQuestionIndex = 0;
-        let userAnswers = [];
-        let quizStarted = false;
-
-        // =============================================
-        // INICIALIZAÇÃO
-        // =============================================
-        document.addEventListener('DOMContentLoaded', function() {
-            // Configurar eventos dos botões
-            document.getElementById('start-btn').addEventListener('click', startQuizWithAnimation);
-            document.getElementById('prev-btn').addEventListener('click', showPreviousQuestion);
-            document.getElementById('next-btn').addEventListener('click', showNextQuestion);
-            document.getElementById('restart-btn').addEventListener('click', restartQuiz);
-            
-            // Inicializar array de respostas
-            userAnswers = new Array(allQuestions.length).fill(null);
-            
-            // Configurar imagem da logo
-            const logoImg = document.getElementById('logo-img');
-            logoImg.onerror = function() {
-                logoImg.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%234361ee"/><text x="50" y="60" text-anchor="middle" fill="white" font-size="40" font-family="Arial">EBD</text></svg>';
-            };
-        });
-
-        // =============================================
-        // FUNÇÕES DO QUIZ
-        // =============================================
-        function startQuizWithAnimation() {
-            // Mostrar animação inicial
-            const startAnimation = document.getElementById('quiz-start-animation');
-            startAnimation.classList.add('active');
-            
-            // Contagem regressiva
-            let count = 3;
-            const countdownElement = document.getElementById('countdown');
-            
-            const countdownInterval = setInterval(() => {
-                countdownElement.textContent = count;
-                count--;
-                
-                if (count < 0) {
-                    clearInterval(countdownInterval);
-                    startQuiz();
-                }
-            }, 1000);
-        }
-
-        function startQuiz() {
-            // Esconder animação inicial
-            document.getElementById('quiz-start-animation').classList.remove('active');
-            
-            // Esconder elementos iniciais e mostrar quiz
-            document.querySelector('.modern-header').style.display = 'none';
-            document.querySelector('.content-section').style.display = 'none';
-            document.getElementById('quiz-section').style.display = 'block';
-            document.getElementById('results').style.display = 'none';
-            
-            // Resetar variáveis
-            quizStarted = true;
-            currentQuestionIndex = 0;
-            userAnswers = new Array(allQuestions.length).fill(null);
-            
-            // Mostrar primeira pergunta
-            showQuestion(currentQuestionIndex);
-        }
-
-        function showQuestion(index) {
-            const question = allQuestions[index];
-            const quizContainer = document.getElementById('quiz-container');
-            
-            // Atualizar barra de progresso
-            updateProgressBar();
-            
-            // Criar HTML da pergunta
-            let optionsHTML = '';
-            const letters = ['A', 'B', 'C', 'D'];
-            
-            question.options.forEach((option, i) => {
-                const isSelected = userAnswers[index] === i;
-                let optionClass = 'option';
-                
-                if (isSelected) {
-                    optionClass += ' selected';
-                    if (i === question.correct) {
-                        optionClass += ' correct';
-                    } else {
-                        optionClass += ' incorrect';
-                    }
-                }
-                
-                optionsHTML += `
-                    <div class="${optionClass}" data-index="${i}">
-                        <span class="option-letter">${letters[i]}</span>
-                        <span class="option-text">${option}</span>
-                        <span class="feedback-icon">
-                            ${isSelected ? (i === question.correct ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>') : ''}
-                        </span>
-                    </div>
-                `;
-            });
-            
-            quizContainer.innerHTML = `
-                <div class="question fade-in">
-                    <div class="question-header">
-                        <span class="question-difficulty difficulty-${question.difficulty}">
-                            ${question.difficulty === 'easy' ? 'Fácil' : question.difficulty === 'medium' ? 'Médio' : 'Difícil'}
-                        </span>
-                        <div class="question-text">${question.question}</div>
-                    </div>
-                    <div class="options">
-                        ${optionsHTML}
-                    </div>
-                </div>
-            `;
-            
-            // Adicionar eventos às opções
-            document.querySelectorAll('.option').forEach(option => {
-                option.addEventListener('click', function() {
-                    if (!quizStarted) return;
-                    
-                    const selectedIndex = parseInt(this.getAttribute('data-index'));
-                    selectOption(selectedIndex);
-                });
-            });
-            
-            // Atualizar botões de navegação
-            updateNavigationButtons();
-        }
-
-        function selectOption(optionIndex) {
-            userAnswers[currentQuestionIndex] = optionIndex;
-            const question = allQuestions[currentQuestionIndex];
-            
-            // Atualizar visual das opções
-            const options = document.querySelectorAll('.option');
-            options.forEach((option, i) => {
-                option.classList.remove('selected', 'correct', 'incorrect', 'correct-answer');
-                
-                if (i === optionIndex) {
-                    option.classList.add('selected');
-                    if (i === question.correct) {
-                        option.classList.add('correct');
-                    } else {
-                        option.classList.add('incorrect');
-                    }
-                }
-                
-                // Mostrar resposta correta se o usuário errou
-                if (i === question.correct && optionIndex !== question.correct) {
-                    option.classList.add('correct-answer');
-                }
-            });
-            
-            // Atualizar botões de navegação
-            updateNavigationButtons();
-        }
-
-        function showNextQuestion() {
-            if (currentQuestionIndex < allQuestions.length - 1) {
-                currentQuestionIndex++;
-                showQuestion(currentQuestionIndex);
-            } else {
-                showResults();
-            }
-        }
-
-        function showPreviousQuestion() {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                showQuestion(currentQuestionIndex);
-            }
-        }
-
-        function updateProgressBar() {
-            const progress = ((currentQuestionIndex + 1) / allQuestions.length) * 100;
-            document.getElementById('quiz-progress').style.width = `${progress}%`;
-            document.getElementById('progress-text').textContent = `Pergunta ${currentQuestionIndex + 1} de ${allQuestions.length}`;
-        }
-
-        function updateNavigationButtons() {
-            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
-            
-            const nextButton = document.getElementById('next-btn');
-            if (currentQuestionIndex === allQuestions.length - 1) {
-                nextButton.innerHTML = 'Ver Resultados <i class="fas fa-chart-bar"></i>';
-            } else {
-                nextButton.innerHTML = 'Próxima <i class="fas fa-arrow-right"></i>';
-            }
-            
-            // Habilitar próximo apenas se uma opção foi selecionada
-            nextButton.disabled = userAnswers[currentQuestionIndex] === null;
-        }
-
-        // =============================================
-        // ANIMAÇÕES FINAIS
-        // =============================================
-        function createConfetti(scorePercentage) {
-            const container = document.getElementById('confetti-container');
-            container.classList.add('active');
-            container.innerHTML = '';
-            
-            const colors = ['#4361ee', '#7209b7', '#f72585', '#4cc9f0', '#f8961e', '#f94144'];
-            const confettiCount = Math.min(100, Math.floor(scorePercentage * 100));
-            
-            for (let i = 0; i < confettiCount; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                
-                // Configurações aleatórias
-                const left = Math.random() * 100;
-                const size = Math.random() * 10 + 5;
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                const delay = Math.random() * 2;
-                const duration = Math.random() * 2 + 2;
-                
-                confetti.style.left = `${left}%`;
-                confetti.style.width = `${size}px`;
-                confetti.style.height = `${size}px`;
-                confetti.style.backgroundColor = color;
-                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-                confetti.style.animationDelay = `${delay}s`;
-                confetti.style.animationDuration = `${duration}s`;
-                
-                container.appendChild(confetti);
-            }
-            
-            // Remover confetes após 5 segundos
-            setTimeout(() => {
-                container.classList.remove('active');
-                container.innerHTML = '';
-            }, 5000);
-        }
-
-        function showResults() {
-            document.getElementById('quiz-section').style.display = 'none';
-            document.getElementById('results').style.display = 'block';
-            
-            // Calcular pontuação
-            let score = 0;
-            let correctEasy = 0, correctMedium = 0, correctHard = 0;
-            let totalEasy = 0, totalMedium = 0, totalHard = 0;
-            
-            allQuestions.forEach((question, index) => {
-                // Contar totais por dificuldade
-                if (question.difficulty === 'easy') totalEasy++;
-                if (question.difficulty === 'medium') totalMedium++;
-                if (question.difficulty === 'hard') totalHard++;
-                
-                // Verificar resposta correta
-                if (userAnswers[index] === question.correct) {
-                    score++;
-                    
-                    if (question.difficulty === 'easy') correctEasy++;
-                    if (question.difficulty === 'medium') correctMedium++;
-                    if (question.difficulty === 'hard') correctHard++;
-                }
-            });
-            
-            const scorePercentage = score / allQuestions.length;
-            
-            // Atualizar resultados na tela
-            document.getElementById('score').textContent = `${score}/${allQuestions.length}`;
-            document.getElementById('correct-easy').textContent = `${correctEasy}/${totalEasy}`;
-            document.getElementById('correct-medium').textContent = `${correctMedium}/${totalMedium}`;
-            document.getElementById('correct-hard').textContent = `${correctHard}/${totalHard}`;
-            
-            // Configurar mensagem e animações baseadas na pontuação
-            const trophyIcon = document.getElementById('trophy-icon');
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            const form = document.getElementById('quiz-form');
+            const results = document.getElementById('results');
+            const scoreElement = document.getElementById('score');
             const messageElement = document.getElementById('message');
+            const feedbackElement = document.getElementById('feedback');
             
-            let message = '';
-            let animationType = '';
+            let score = 0;
+            const totalQuestions = 10;
+            const answers = [];
             
-            if (score === allQuestions.length) {
-                // PERFEITO
-                message = '<i class="fas fa-crown star-animation"></i> <strong>PERFEITO!</strong> Você acertou todas as questões! Sua compreensão sobre os compromissos dos discípulos de Cristo é excepcional.';
-                trophyIcon.className = 'fas fa-crown trophy-animation';
-                createConfetti(1);
-                animationType = 'perfect';
-            } else if (scorePercentage >= 0.8) {
-                // EXCELENTE
-                message = '<i class="fas fa-star star-animation"></i> <strong>EXCELENTE!</strong> Você demonstrou um conhecimento excepcional sobre os compromissos que os discípulos de Cristo assumem ao seguir o Mestre.';
-                trophyIcon.className = 'fas fa-trophy trophy-animation';
-                createConfetti(scorePercentage);
-                animationType = 'excellent';
-            } else if (scorePercentage >= 0.6) {
-                // MUITO BOM
-                message = '<i class="fas fa-thumbs-up"></i> <strong>MUITO BOM!</strong> Você tem um bom entendimento da lição sobre os compromissos dos discípulos de Cristo. Continue estudando!';
-                trophyIcon.className = 'fas fa-award';
-                createConfetti(scorePercentage * 0.7);
-                animationType = 'good';
-            } else if (scorePercentage >= 0.5) {
-                // BOM
-                message = '<i class="fas fa-check-circle"></i> <strong>BOM TRABALHO!</strong> Você acertou a maioria das questões. Revise os pontos em que teve dificuldade.';
-                trophyIcon.className = 'fas fa-medal';
-                createConfetti(scorePercentage * 0.5);
-                animationType = 'average';
-            } else {
-                // CONTINUE ESTUDANDO
-                message = '<i class="fas fa-book"></i> <strong>CONTINUE ESTUDANDO!</strong> Os compromissos dos discípulos de Cristo são fundamentais para a caminhada cristã. Reveja a lição e tente novamente.';
-                trophyIcon.className = 'fas fa-book';
-                animationType = 'study';
+            // Verificar cada pergunta
+            for (let i = 1; i <= totalQuestions; i++) {
+                const questionName = 'q' + i;
+                const selectedOption = form.querySelector(`input[name="${questionName}"]:checked`);
+                
+                if (selectedOption) {
+                    const isCorrect = selectedOption.hasAttribute('data-correct');
+                    answers.push({
+                        question: i,
+                        selected: selectedOption.value,
+                        correct: isCorrect
+                    });
+                    
+                    if (isCorrect) {
+                        score++;
+                    }
+                } else {
+                    answers.push({
+                        question: i,
+                        selected: null,
+                        correct: false
+                    });
+                }
             }
             
-            messageElement.innerHTML = message;
+            // Mostrar resultados
+            scoreElement.textContent = `Sua pontuação: ${score}/${totalQuestions}`;
             
-            // Adicionar animação de entrada aos elementos
-            const resultElements = document.querySelectorAll('#results > *');
-            resultElements.forEach((element, index) => {
-                element.classList.add('fade-in');
-                element.style.animationDelay = `${index * 0.2}s`;
-            });
+            // Mensagem personalizada baseada na pontuação
+            if (score === totalQuestions) {
+                messageElement.textContent = "Excelente! Você dominou completamente o conteúdo da lição sobre oração!";
+                messageElement.className = "correct-answer";
+            } else if (score >= totalQuestions * 0.7) {
+                messageElement.textContent = "Muito bom! Você demonstrou um bom entendimento sobre a oração.";
+                messageElement.className = "correct-answer";
+            } else if (score >= totalQuestions * 0.5) {
+                messageElement.textContent = "Bom! Você acertou a maioria das questões, mas pode revisar alguns pontos.";
+                messageElement.className = "correct-answer";
+            } else {
+                messageElement.textContent = "Continue estudando! A oração é uma disciplina essencial para todo discípulo de Cristo.";
+                messageElement.className = "wrong-answer";
+            }
             
-            // Rolagem suave para os resultados
-            setTimeout(() => {
-                document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
-            }, 500);
-        }
-
-        function restartQuiz() {
-            // Resetar variáveis
-            currentQuestionIndex = 0;
-            userAnswers = new Array(allQuestions.length).fill(null);
-            quizStarted = false;
+            // Feedback específico
+            let feedbackText = "";
+            if (score < totalQuestions) {
+                feedbackText = "Revisite a lição para fortalecer seu conhecimento sobre: ";
+                const missedTopics = [];
+                
+                // Verificar quais questões foram erradas para dar feedback específico
+                answers.forEach(answer => {
+                    if (!answer.correct) {
+                        switch(answer.question) {
+                            case 1:
+                                missedTopics.push("o texto áureo da lição (Hebreus 4:16)");
+                                break;
+                            case 2:
+                                missedTopics.push("como não orar (sem vãs repetições)");
+                                break;
+                            case 3:
+                                missedTopics.push("a oração modelo (Pai Nosso)");
+                                break;
+                            case 4:
+                                missedTopics.push("orar em secreto, sem ostentação");
+                                break;
+                            case 5:
+                                missedTopics.push("orar sem cessar (1 Tessalonicenses 5:17)");
+                                break;
+                            case 6:
+                                missedTopics.push("a oração eficaz (simplicidade do coração)");
+                                break;
+                            case 7:
+                                missedTopics.push("Deus conhece nossas necessidades antes de pedirmos");
+                                break;
+                            case 8:
+                                missedTopics.push("oração e batalha espiritual (Efésios 6:18)");
+                                break;
+                            case 9:
+                                missedTopics.push("a falta de oração leva ao esfriamento espiritual");
+                                break;
+                            case 10:
+                                missedTopics.push("a oração promove avivamento");
+                                break;
+                        }
+                    }
+                });
+                
+                feedbackText += missedTopics.slice(0, 3).join(", ");
+                if (missedTopics.length > 3) {
+                    feedbackText += " e outros tópicos";
+                }
+                feedbackText += ".";
+            } else {
+                feedbackText = "Parabéns! Você demonstrou um excelente entendimento sobre a importância da oração na vida do discípulo de Cristo. Continue cultivando uma vida de oração!";
+            }
             
-            // Esconder resultados e confetes
-            document.getElementById('results').style.display = 'none';
-            document.getElementById('confetti-container').classList.remove('active');
-            document.getElementById('confetti-container').innerHTML = '';
+            feedbackElement.textContent = feedbackText;
+            results.style.display = 'block';
             
-            // Mostrar página inicial
-            document.querySelector('.modern-header').style.display = 'block';
-            document.querySelector('.content-section').style.display = 'flex';
-            
-            // Rolagem para o topo
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+            // Rolar para os resultados
+            results.scrollIntoView({ behavior: 'smooth' });
+        });
     </script>
 </body>
 </html>
