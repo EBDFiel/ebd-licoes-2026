@@ -3,62 +3,327 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EBD Fiel - Lições 2026</title>
+    <title>EBD 2026 - Quizzes das Lições</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             padding: 20px;
-            background: #f5f5f5;
+            color: #333;
         }
+        
         .container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 1000px;
+            margin: 0 auto;
         }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
         h1 {
             color: #2c3e50;
-            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
         }
-        .lição-card {
-            background: #f8f9fa;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border-left: 4px solid #3498db;
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
         }
-        .btn {
-            display: inline-block;
-            background: #2ecc71;
+        
+        .trimestre {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .trimestre h2 {
+            color: #2c3e50;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #3498db;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .trimestre h2 .badge {
+            background: #3498db;
             color: white;
-            padding: 10px 20px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .licoes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .licao-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .licao-card:hover {
+            transform: translateY(-5px);
+            border-color: #3498db;
+            box-shadow: 0 15px 30px rgba(52, 152, 219, 0.2);
+        }
+        
+        .licao-card .numero {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #f1f8ff;
+            color: #3498db;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .licao-card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+            padding-right: 50px;
+        }
+        
+        .licao-card .data {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-quiz {
+            display: inline-block;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
             text-decoration: none;
-            border-radius: 5px;
-            margin: 5px;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+        }
+        
+        .btn-quiz:hover {
+            background: linear-gradient(135deg, #27ae60, #219653);
+            transform: translateY(-2px);
+            box-shadow: 0 7px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .btn-quiz.disabled {
+            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        .btn-quiz.disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .em-breve {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+        
+        .em-breve:hover {
+            background: linear-gradient(135deg, #c0392b, #a93226);
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .status.ativa {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status.breve {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: white;
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .licoes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📚 Escola Bíblica Dominical - 2026</h1>
-        <p>Quizzes interativos para estudo das lições da EBD</p>
+        <header>
+            <div class="logo">📚</div>
+            <h1>Escola Bíblica Dominical</h1>
+            <p class="subtitle">Quizzes Interativos - Ano 2026</p>
+            <p style="color: #666; margin-top: 20px;">
+                Teste seu conhecimento com os quizzes das lições da EBD
+            </p>
+        </header>
         
-        <h2>1º Trimestre: Os Discípulos de Jesus Cristo</h2>
+        <main>
+            <div class="trimestre">
+                <h2>
+                    <span>1º Trimestre 2026</span>
+                    <span class="badge">Jan-Mar</span>
+                </h2>
+                <p style="margin-bottom: 25px; color: #555; font-size: 1.1rem;">
+                    <strong>Tema:</strong> Fundamentos da Fé Cristã
+                </p>
+                
+                <div class="licoes-grid">
+                    <!-- Lição 01 -->
+                    <div class="licao-card">
+                        <div class="numero">01</div>
+                        <h3>A Importância do Estudo Bíblico</h3>
+                        <div class="data">
+                            <span>📅</span> 05/01/2026
+                            <span class="status ativa">Disponível</span>
+                        </div>
+                        <a href="trimestre-01/licao-01/" class="btn-quiz">
+                            ▶️ Iniciar Quiz
+                        </a>
+                    </div>
+                    
+                    <!-- Lição 02 -->
+                    <div class="licao-card">
+                        <div class="numero">02</div>
+                        <h3>A Inspiração das Escrituras</h3>
+                        <div class="data">
+                            <span>📅</span> 12/01/2026
+                            <span class="status breve">Em breve</span>
+                        </div>
+                        <button class="btn-quiz disabled" disabled>
+                            ⏳ Em preparação
+                        </button>
+                    </div>
+                    
+                    <!-- Lição 03 -->
+                    <div class="licao-card">
+                        <div class="numero">03</div>
+                        <h3>A Autoridade da Bíblia</h3>
+                        <div class="data">
+                            <span>📅</span> 19/01/2026
+                            <span class="status breve">Em breve</span>
+                        </div>
+                        <button class="btn-quiz disabled" disabled>
+                            ⏳ Em preparação
+                        </button>
+                    </div>
+                    
+                    <!-- Lição 04 -->
+                    <div class="licao-card">
+                        <div class="numero">04</div>
+                        <h3>A Trindade</h3>
+                        <div class="data">
+                            <span>📅</span> 26/01/2026
+                            <span class="status breve">Em breve</span>
+                        </div>
+                        <button class="btn-quiz disabled" disabled>
+                            ⏳ Em preparação
+                        </button>
+                    </div>
+                    
+                    <!-- Lição 05 -->
+                    <div class="licao-card">
+                        <div class="numero">05</div>
+                        <h3>A Pessoa de Cristo</h3>
+                        <div class="data">
+                            <span>📅</span> 02/02/2026
+                            <span class="status breve">Em breve</span>
+                        </div>
+                        <button class="btn-quiz disabled" disabled>
+                            ⏳ Em preparação
+                        </button>
+                    </div>
+                    
+                    <!-- Lição 06 -->
+                    <div class="licao-card">
+                        <div class="numero">06</div>
+                        <h3>A Obra do Espírito Santo</h3>
+                        <div class="data">
+                            <span>📅</span> 09/02/2026
+                            <span class="status breve">Em breve</span>
+                        </div>
+                        <button class="btn-quiz disabled" disabled>
+                            ⏳ Em preparação
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px; color: #666;">
+                    <p>Total de 13 lições - Lições 07 a 13 em preparação...</p>
+                </div>
+            </div>
+        </main>
         
-        <div class="lição-card">
-            <h3>Licação 01: Os discípulos de Cristo são novas criaturas</h3>
-            <p><strong>Data:</strong> 05/01/2026</p>
-            <a href="trimestre-01/licao-01/" class="btn">▶️ Acessar Quiz</a>
-            <a href="https://github.com/EBDFiel/ebd-licoes-2026/tree/main/trimestre-01/licao-01" class="btn" style="background: #3498db;">📁 Ver Código</a>
-        </div>
-        
-        <p><em>Próximas lições em preparação...</em></p>
-        
-        <div style="margin-top: 30px; text-align: center;">
-            <a href="https://github.com/EBDFiel/ebd-licoes-2026" class="btn" style="background: #333;">💾 Repositório no GitHub</a>
-        </div>
+        <footer>
+            <p>© 2026 - Escola Bíblica Dominical</p>
+            <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">
+                Para estudo e edificação
+            </p>
+        </footer>
     </div>
 </body>
 </html>
