@@ -34,12 +34,14 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
         
+        /* LOGO SEM MOLDA - CANTO RETO E SEM SOMBRA */
         .logo-img {
-    max-width: 150px;
-    height: auto;
-    display: block;
-    margin: 0 auto 20px auto;
-    /* Sem border-radius, sem box-shadow */
+            max-width: 150px;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px auto;
+            border-radius: 0;
+            box-shadow: none;
         }
         
         h1 {
@@ -69,7 +71,8 @@
             border-bottom: 3px solid #3498db;
             display: flex;
             align-items: center;
-            gap: 15px;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
         
         .trimestre h2 .badge {
@@ -95,6 +98,9 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         
         .licao-card:hover {
@@ -124,6 +130,7 @@
             margin-bottom: 10px;
             font-size: 1.1rem;
             padding-right: 50px;
+            flex-grow: 1;
         }
         
         .licao-card .data {
@@ -149,6 +156,7 @@
             cursor: pointer;
             width: 100%;
             font-size: 1rem;
+            margin-top: auto;
         }
         
         .btn-quiz:hover {
@@ -166,14 +174,6 @@
         .btn-quiz.disabled:hover {
             transform: none;
             box-shadow: none;
-        }
-        
-        .em-breve {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-        }
-        
-        .em-breve:hover {
-            background: linear-gradient(135deg, #c0392b, #a93226);
         }
         
         .status {
@@ -214,14 +214,43 @@
             .logo-img {
                 max-width: 120px;
             }
+            
+            .trimestre h2 {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .licao-card h3 {
+                padding-right: 0;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            header {
+                padding: 20px 15px;
+            }
+            
+            .trimestre {
+                padding: 20px 15px;
+            }
+            
+            .licao-card {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <!-- LOGO DA EBD - TROQUE O NOME DO ARQUIVO SE NECESSÁRIO -->
-            <img src="imagens/logo-ebd.png" alt="Logo EBD" class="logo-img">
+            <!-- LOGO DA EBD - SEM MOLDA -->
+            <img src="imagens/logo-ebd.jpg" alt="Logo EBD" class="logo-img">
             
             <h1>Escola Bíblica Dominical</h1>
             <p class="subtitle">Quizzes Interativos - Ano 2026</p>
@@ -254,18 +283,18 @@
                         </a>
                     </div>
                     
-                   <!-- Lição 02 -->
-<div class="licao-card">
-    <div class="numero">02</div>
-    <h3>Princípios bíblicos para a vida dos discípulos de Cristo</h3>
-    <div class="data">
-        <span>📅</span> 11/01/2026
-        <span class="status ativa">Disponível</span>
-    </div>
-    <a href="trimestre-01/licao-02/" class="btn-quiz">
-        ▶️ Iniciar Quiz
-    </a>
-</div>
+                    <!-- Lição 02 -->
+                    <div class="licao-card">
+                        <div class="numero">02</div>
+                        <h3>Princípios bíblicos para a vida dos discípulos de Cristo</h3>
+                        <div class="data">
+                            <span>📅</span> 11/01/2026
+                            <span class="status ativa">Disponível</span>
+                        </div>
+                        <a href="trimestre-01/licao-02/" class="btn-quiz">
+                            ▶️ Iniciar Quiz
+                        </a>
+                    </div>
                     
                     <!-- Lição 03 -->
                     <div class="licao-card">
@@ -276,8 +305,8 @@
                             <span class="status ativa">Disponível</span>
                         </div>
                         <a href="trimestre-01/licao-03/" class="btn-quiz">
-    ▶️ Iniciar Quiz
-</a>
+                            ▶️ Iniciar Quiz
+                        </a>
                     </div>
                     
                     <!-- Lição 04 -->
@@ -289,8 +318,8 @@
                             <span class="status ativa">Disponível</span>
                         </div>
                         <a href="trimestre-01/licao-04/" class="btn-quiz">
-    ▶️ Iniciar Quiz
-</a>
+                            ▶️ Iniciar Quiz
+                        </a>
                     </div>
                     
                     <!-- Lição 05 -->
@@ -299,11 +328,11 @@
                         <h3>A importância do jejum na vida dos discípulos de Cristo</h3>
                         <div class="data">
                             <span>📅</span> 01/02/2026
-                            <span class="status ativa">Disponível</span>
+                            <span class="status breve">Em breve</span>
                         </div>
-                        <a href="trimestre-01/licao-05/" class="btn-quiz">
-    ▶️ Iniciar Quiz
-</a>                    
+                        <button class="btn-quiz disabled" disabled>
+                            ⏳ Em preparação
+                        </button>
                     </div>
                     
                     <!-- Lição 06 -->
@@ -312,10 +341,11 @@
                         <h3>Oração: uma disciplina indispensável aos discípulos de Cristo</h3>
                         <div class="data">
                             <span>📅</span> 08/02/2026
-                             <span class="status ativa">Disponível</span>
+                            <span class="status breve">Em breve</span>
                         </div>
-                        <a href="trimestre-01/licao-06/" class="btn-quiz">
-    ▶️ Iniciar Quiz
+                        <button class="btn-quiz disabled" disabled>
+                            ⏳ Em preparação
+                        </button>
                     </div>
                     
                     <!-- Lição 07 -->
