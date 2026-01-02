@@ -34,10 +34,13 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
         
-        .logo {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #2c3e50;
+        .logo-img {
+            max-width: 150px; /* AJUSTE CONFORME NECESSÁRIO */
+            height: auto;
+            display: block;
+            margin: 0 auto 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
         h1 {
@@ -208,13 +211,19 @@
             h1 {
                 font-size: 2rem;
             }
+            
+            .logo-img {
+                max-width: 120px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="logo">📚</div>
+            <!-- LOGO DA EBD - TROQUE O NOME DO ARQUIVO SE NECESSÁRIO -->
+            <img src="imagens/logo-ebd.png" alt="Logo EBD" class="logo-img">
+            
             <h1>Escola Bíblica Dominical</h1>
             <p class="subtitle">Quizzes Interativos - Ano 2026</p>
             <p style="color: #666; margin-top: 20px;">
