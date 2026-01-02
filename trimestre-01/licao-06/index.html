@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Bíblico - Lição 6: A Oração</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .intro {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+        
+        fieldset {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #fafafa;
+        }
+        
+        legend {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #2c3e50;
+            padding: 0 10px;
+        }
+        
+        .question {
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto 0;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            text-align: center;
+            display: none;
+        }
+        
+        .score {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .message {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        
+        .correct-answer {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .wrong-answer {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            font-style: italic;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px;
+            }
+            
+            fieldset {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Quiz Bíblico - Lição 6: A Oração</h1>
+        
+        <div class="intro">
+            <p>Teste seu conhecimento sobre a lição bíblica "Oração: uma disciplina indispensável aos discípulos de Cristo". Este quiz contém 10 perguntas baseadas no conteúdo da Lição 6. Tente responder todas as questões para verificar seu entendimento sobre o tema da oração.</p>
+        </div>
+        
+        <form id="quiz-form">
+            <!-- Pergunta 1 -->
+            <fieldset>
+                <legend>Pergunta 1 de 10</legend>
+                <div class="question">Qual é o texto áureo da Lição 6 sobre oração?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q1a" name="q1" value="a">
+                        <label for="q1a">"Orai sem cessar" (1 Tessalonicenses 5:17)</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q1b" name="q1" value="b" data-correct="true">
+                        <label for="q1b">"Cheguemos, pois, com confiança ao trono da graça, para que possamos alcançar misericórdia e achar graça, a fim de sermos ajudados em tempo oportuno" (Hebreus 4:16)</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q1c" name="q1" value="c">
+                        <label for="q1c">"Vigiai e orai, para que não entreis em tentação" (Mateus 26:41)</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q1d" name="q1" value="d">
+                        <label for="q1d">"E tudo o que pedirdes em oração, crendo, o recebereis" (Mateus 21:22)</label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Pergunta 2 -->
+            <fieldset>
+                <legend>Pergunta 2 de 10</legend>
+                <div class="question">Segundo Jesus, como NÃO devemos orar?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q2a" name="q2" value="a">
+                        <label for="q2a">Em secreto, no nosso aposento</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q2b" name="q2" value="b">
+                        <label for="q2b">Com fé, crendo que já recebemos</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q2c" name="q2" value="c" data-correct="true">
+                        <label for="q2c">Com vãs repetições, como os gentios</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q2d" name="q2" value="d">
+                        <label for="q2d">Em todo tempo, sem cessar</label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Pergunta 3 -->
+            <fieldset>
+                <legend>Pergunta 3 de 10</legend>
+                <div class="question">Qual é a oração modelo ensinada por Jesus?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q3a" name="q3" value="a" data-correct="true">
+                        <label for="q3a">A Oração do Pai Nosso</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q3b" name="q3" value="b">
+                        <label for="q3b">A Oração do Salmo 23</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q3c" name="q3" value="c">
+                        <label for="q3c">A Oração de Jabez</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q3d" name="q3" value="d">
+                        <label for="q3d">A Oração do Credo Apostólico</label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Pergunta 4 -->
+            <fieldset>
+                <legend>Pergunta 4 de 10</legend>
+                <div class="question">Como deve ser a oração em relação à publicidade, segundo Jesus?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q4a" name="q4" value="a">
+                        <label for="q4a">Deve ser feita em público, para edificar os outros</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q4b" name="q4" value="b">
+                        <label for="q4b">Deve ser feita em pé nas sinagogas e esquinas</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q4c" name="q4" value="c">
+                        <label for="q4c">Deve ser feita apenas nos cultos</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q4d" name="q4" value="d" data-correct="true">
+                        <label for="q4d">Deve ser feita em secreto, sem ostentação</label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Pergunta 5 -->
+            <fieldset>
+                <legend>Pergunta 5 de 10</legend>
+                <div class="question">Qual versículo orienta a "orar sem cessar"?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q5a" name="q5" value="a" data-correct="true">
+                        <label for="q5a">1 Tessalonicenses 5:17</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q5b" name="q5" value="b">
+                        <label for="q5b">Efésios 6:18</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q5c" name="q5" value="c">
+                        <label for="q5c">Mateus 6:7</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q5d" name="q5" value="d">
+                        <label for="q5d">Lucas 18:1</label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Pergunta 6 -->
+            <fieldset>
+                <legend>Pergunta 6 de 10</legend>
+                <div class="question">O que é necessário para que a oração seja eficaz, segundo a lição?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q6a" name="q6" value="a">
+                        <label for="q6a">Muitas palavras e longas orações</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q6b" name="q6" value="b" data-correct="true">
+                        <label for="q6b">Simplicidade do coração e acordo com as Escrituras</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q6c" name="q6" value="c">
+                        <label for="q6c">Vãs repetições</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q6d" name="q6" value="d">
+                        <label for="q6d">Ser feita apenas por líderes religiosos</label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Pergunta 7 -->
+            <fieldset>
+                <legend>Pergunta 7 de 10</legend>
+                <div class="question">O que Deus sabe sobre nós antes mesmo de pedirmos, conforme ensinado por Jesus?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q7a" name="q7" value="a">
+                        <label for="q7a">Deus sabe apenas o que falamos</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q7b" name="q7" value="b">
+                        <label for="q7b">Deus não sabe até que peçamos</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q7c" name="q7" value="c" data-correct="true">
+                        <label for="q7c">Deus sabe o que precisamos</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q7d" name="q7" value="d">
+                        <label for="q7d">Deus sabe apenas o que fazemos</label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Pergunta 8 -->
+            <fieldset>
+                <legend>Pergunta 8 de 10</legend>
+                <div class="question">O que Paulo diz sobre a oração e a batalha espiritual em Efésios 6:18?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q8a" name="q8" value="a">
+                        <label for="q8a">Que a oração é uma parte opcional da armadura</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q8b" name="q8" value="b">
+                        <label for="q8b">Que a oração é apenas para momentos de crise</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q8c" name="q8" value="c">
+                        <label for="q8c">Que a oração deve ser feita apenas por intercessores</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q8d" name="q8" value="d" data-correct="true">
+                        <label for="q8d">Que devemos orar em todo tempo, com toda oração e súplica no Espírito</label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Pergunta 9 -->
+            <fieldset>
+                <legend>Pergunta 9 de 10</legend>
+                <div class="question">O que a falta de oração pode causar na vida espiritual, segundo a lição?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q9a" name="q9" value="a" data-correct="true">
+                        <label for="q9a">Esfriamento espiritual</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q9b" name="q9" value="b">
+                        <label for="q9b">Avivamento espiritual</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q9c" name="q9" value="c">
+                        <label for="q9c">Mais fervor na fé</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q9d" name="q9" value="d">
+                        <label for="q9d">Independência de Deus</label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Pergunta 10 -->
+            <fieldset>
+                <legend>Pergunta 10 de 10</legend>
+                <div class="question">O que a oração promove na vida da Igreja, segundo a lição?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q10a" name="q10" value="a">
+                        <label for="q10a">Religiosidade vazia</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q10b" name="q10" value="b" data-correct="true">
+                        <label for="q10b">Avivamento</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q10c" name="q10" value="c">
+                        <label for="q10c">Controvérsias</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q10d" name="q10" value="d">
+                        <label for="q10d">Apatia</label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <button type="button" id="submit-btn">Verificar Respostas</button>
+        </form>
+        
+        <div class="results" id="results">
+            <div class="score" id="score">Sua pontuação: 0/10</div>
+            <div class="message" id="message"></div>
+            <div class="feedback" id="feedback"></div>
+        </div>
+        
+        <div class="footer">
+            <p>Quiz baseado na Lição 6: "Oração: uma disciplina indispensável aos discípulos de Cristo"</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            const form = document.getElementById('quiz-form');
+            const results = document.getElementById('results');
+            const scoreElement = document.getElementById('score');
+            const messageElement = document.getElementById('message');
+            const feedbackElement = document.getElementById('feedback');
+            
+            let score = 0;
+            const totalQuestions = 10;
+            const answers = [];
+            
+            // Verificar cada pergunta
+            for (let i = 1; i <= totalQuestions; i++) {
+                const questionName = 'q' + i;
+                const selectedOption = form.querySelector(`input[name="${questionName}"]:checked`);
+                
+                if (selectedOption) {
+                    const isCorrect = selectedOption.hasAttribute('data-correct');
+                    answers.push({
+                        question: i,
+                        selected: selectedOption.value,
+                        correct: isCorrect
+                    });
+                    
+                    if (isCorrect) {
+                        score++;
+                    }
+                } else {
+                    answers.push({
+                        question: i,
+                        selected: null,
+                        correct: false
+                    });
+                }
+            }
+            
+            // Mostrar resultados
+            scoreElement.textContent = `Sua pontuação: ${score}/${totalQuestions}`;
+            
+            // Mensagem personalizada baseada na pontuação
+            if (score === totalQuestions) {
+                messageElement.textContent = "Excelente! Você dominou completamente o conteúdo da lição sobre oração!";
+                messageElement.className = "correct-answer";
+            } else if (score >= totalQuestions * 0.7) {
+                messageElement.textContent = "Muito bom! Você demonstrou um bom entendimento sobre a oração.";
+                messageElement.className = "correct-answer";
+            } else if (score >= totalQuestions * 0.5) {
+                messageElement.textContent = "Bom! Você acertou a maioria das questões, mas pode revisar alguns pontos.";
+                messageElement.className = "correct-answer";
+            } else {
+                messageElement.textContent = "Continue estudando! A oração é uma disciplina essencial para todo discípulo de Cristo.";
+                messageElement.className = "wrong-answer";
+            }
+            
+            // Feedback específico
+            let feedbackText = "";
+            if (score < totalQuestions) {
+                feedbackText = "Revisite a lição para fortalecer seu conhecimento sobre: ";
+                const missedTopics = [];
+                
+                // Verificar quais questões foram erradas para dar feedback específico
+                answers.forEach(answer => {
+                    if (!answer.correct) {
+                        switch(answer.question) {
+                            case 1:
+                                missedTopics.push("o texto áureo da lição (Hebreus 4:16)");
+                                break;
+                            case 2:
+                                missedTopics.push("como não orar (sem vãs repetições)");
+                                break;
+                            case 3:
+                                missedTopics.push("a oração modelo (Pai Nosso)");
+                                break;
+                            case 4:
+                                missedTopics.push("orar em secreto, sem ostentação");
+                                break;
+                            case 5:
+                                missedTopics.push("orar sem cessar (1 Tessalonicenses 5:17)");
+                                break;
+                            case 6:
+                                missedTopics.push("a oração eficaz (simplicidade do coração)");
+                                break;
+                            case 7:
+                                missedTopics.push("Deus conhece nossas necessidades antes de pedirmos");
+                                break;
+                            case 8:
+                                missedTopics.push("oração e batalha espiritual (Efésios 6:18)");
+                                break;
+                            case 9:
+                                missedTopics.push("a falta de oração leva ao esfriamento espiritual");
+                                break;
+                            case 10:
+                                missedTopics.push("a oração promove avivamento");
+                                break;
+                        }
+                    }
+                });
+                
+                feedbackText += missedTopics.slice(0, 3).join(", ");
+                if (missedTopics.length > 3) {
+                    feedbackText += " e outros tópicos";
+                }
+                feedbackText += ".";
+            } else {
+                feedbackText = "Parabéns! Você demonstrou um excelente entendimento sobre a importância da oração na vida do discípulo de Cristo. Continue cultivando uma vida de oração!";
+            }
+            
+            feedbackElement.textContent = feedbackText;
+            results.style.display = 'block';
+            
+            // Rolar para os resultados
+            results.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
