@@ -1,29 +1,24 @@
-# 📚 Lições da EBD - 2026
+# 1º Trimestre 2026 - Os Discípulos de Jesus Cristo
 
-**Site oficial:** [https://ebdfiel.github.io/ebd-licoes-2026/](https://ebdfiel.github.io/ebd-licoes-2026/)
+**Período:** Janeiro a Março de 2026  
+**Site:** [https://ebdfiel.github.io/ebd-licoes-2026/trimestre-01/](https://ebdfiel.github.io/ebd-licoes-2026/trimestre-01/)
 
-Repositório para organização das lições da Escola Bíblica Dominical com quizzes interativos.
+## 📋 Links Diretos para os Quizzes
 
-## 🗂️ Trimestres
-- [1º Trimestre 2026](trimestre-01/README.md) - Os discípulos de Cristo são novas criaturas
-  - [Lição 01: Quiz Online](https://ebdfiel.github.io/ebd-licoes-2026/trimestre-01/licao-01/)
-  - [Lição 02: Em breve](#)
-  - [Lição 03: Em breve](#)
-- 2º Trimestre 2026 - Em breve
-- 3º Trimestre 2026 - Em breve
-- 4º Trimestre 2026 - Em breve
+| Lição | Data | Tema | Quiz Online |
+|-------|------|------|-------------|
+| 01 | 04/01/2026 | Os discípulos de Cristo são novas criaturas | [▶️ Acessar Quiz](https://ebdfiel.github.io/ebd-licoes-2026/trimestre-01/licao-01/) |
+| 02 | 11/01/2026 | Princípios bíblicos para a vida dos discípulos de Cristo | [⚡ Em breve](#) |
+| 03 | 18/01/2026 | Os compromissos dos discípulos de Cristo | [⚡ Em breve](#) |
+| 04 | 25/01/2026 | Os discípulos de Cristo e a tentação | [⚡ Em breve](#) |
+| 05 | 01/02/2026 | A importância do jejum na vida dos discípulos de Cristo | [⚡ Em breve](#) |
+| 06 | 08/02/2026 | Oração: uma disciplina indispensável aos discípulos de Cristo | [⚡ Em breve](#) |
+| 07 | 15/02/2026 | Vencendo as estratégias e propostas do inimigo | [⚡ Em breve](#) |
+| 08 | 22/02/2026 | Os discípulos de Cristo e o bom ânimo | [⚡ Em breve](#) |
+| 09 | 01/03/2026 | Os discípulos de Cristo e o processo da santificação | [⚡ Em breve](#) |
+| 10 | 08/03/2026 | A missão dos discípulos de Cristo | [⚡ Em breve](#) |
+| 11 | 15/03/2026 | O caráter dos discípulos de Cristo | [⚡ Em breve](#) |
+| 12 | 22/03/2026 | Os discípulos de Cristo e o Espírito Santo | [⚡ Em breve](#) |
+| 13 | 29/03/2026 | Os discípulos de Cristo e a bem-aventurada esperança | [⚡ Em breve](#) |
 
-## 🚀 Como Acessar os Quizzes
-1. Através do site: [https://ebdfiel.github.io/ebd-licoes-2026/](https://ebdfiel.github.io/ebd-licoes-2026/)
-2. Direto pela URL: `https://ebdfiel.github.io/ebd-licoes-2026/trimestre-01/licao-01/`
-3. No GitHub: Navegue até `trimestre-01/licao-01/index.html` e clique em "View raw"
-
-## 🔧 Estrutura
-Cada lição contém apenas um arquivo `index.html` com:
-- Quiz interativo
-- Perguntas de múltipla escolha
-- Correção automática
-- Navegação entre lições
-
----
-*Última atualização: Janeiro 2026*
+## 📁 Estrutura Local
