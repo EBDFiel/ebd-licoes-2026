@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUIZ DA EBD Fiel | Lição 7: Vencendo as estratégias e propostas do inimigo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== VARIÁVEIS E RESET ===== */
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --accent: #f72585;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --danger: #f94144;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --text: #343a40;
+            --gray: #6c757d;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --shadow-lg: 0 15px 50px rgba(0,0,0,0.15);
+            --gradient: linear-gradient(135deg, #4361ee 0%, #7209b7 100%);
+            --gradient-light: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);
+            --instagram: #E1306C;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.6;
+        }
+
+        /* ===== CONTAINER PRINCIPAL ===== */
+        .container {
+            max-width: 100%;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            margin: 10px 0;
+            position: relative;
+        }
+
+        /* ===== ANIMAÇÃO INICIAL ===== */
+        .quiz-start-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .quiz-start-animation.active {
+            display: flex;
+        }
+
+        .animation-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: bounce 1s infinite, starPulse 2s infinite;
+        }
+
+        .animation-text {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            animation: slideInLeft 1s ease forwards;
+        }
+
+        .animation-subtext {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: slideInRight 1s ease forwards;
+            animation-delay: 0.3s;
+        }
+
+        .countdown {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-top: 30px;
+            animation: pulse 1s infinite;
+        }
+
+        /* ===== HEADER MODERNO ===== */
+        .modern-header {
+            background: var(--gradient);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHBhdGggZD0iTTIxLDMwIENyMSwzMCA0MCwzMCA1MCw0MCBDNjAsMzAgNzksMzAgNzksMzAgQzc5LDMwIDg1LDM1IDg1LDQwIEM4NSw0NSA3OSw1MCA3OSw1MCBDNzksNTAgNjAsNTAgNTAsNjAgQzQwLDUwIDIxLDUwIDIxLDUwIEMyMSw1MCAxNSw0NSAxNSw0MCBDMTUsMzUgMjEsMzAgMjEsMzAgWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=');
+            background-size: 150px;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 50%;
+            background: white;
+            padding: 10px;
+        }
+
+        .logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .logo-text {
+            text-align: center;
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .logo-text .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 400;
+            margin-top: 5px;
+        }
+
+        .welcome-card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 16px;
+            margin: 20px 0;
+            border: 1px solid rgba(255,255,255,0.2);
+            text-align: left;
+        }
+
+        .welcome-card h2 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .welcome-card p {
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .features {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.1);
+            padding: 12px 15px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+            justify-content: center;
+        }
+
+        /* ===== SEÇÃO DE CONTEÚDO ===== */
+        .content-section {
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .about-card, .details-card {
+            background: var(--light);
+            border-radius: 16px;
+            padding: 25px 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-content {
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .card-content ul {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .card-content li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .card-content li i {
+            color: var(--primary);
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        .highlight {
+            background: var(--gradient-light);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 600;
+        }
+
+        /* ===== BOTÃO INICIAR ===== */
+        .cta-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .start-btn {
+            padding: 16px 35px;
+            border: none;
+            border-radius: 50px;
+            background: var(--accent);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 20px rgba(248, 37, 133, 0.4);
+            width: 100%;
+            max-width: 280px;
+            justify-content: center;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 25px rgba(248, 37, 133, 0.5);
+            background: #ff2d95;
+        }
+
+        /* ===== SEÇÃO DO QUIZ ===== */
+        .quiz-section {
+            display: none;
+            padding: 20px 15px;
+        }
+
+        .progress-container {
+            padding: 0 15px;
+            margin-bottom: 20px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .progress-text {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+
+        .progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-image: linear-gradient(
+                -45deg,
+                rgba(255, 255, 255, 0.2) 25%,
+                transparent 25%,
+                transparent 50%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0.2) 75%,
+                transparent 75%,
+                transparent
+            );
+            background-size: 20px 20px;
+            animation: move 1s linear infinite;
+        }
+
+        @keyframes move {
+            0% { background-position: 0 0; }
+            100% { background-position: 20px 0; }
+        }
+
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 16px;
+            background: white;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary);
+        }
+
+        .question-header {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .question-difficulty {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: white;
+            align-self: flex-start;
+        }
+
+        .difficulty-easy { background: var(--success); }
+        .difficulty-medium { background: var(--warning); }
+        .difficulty-hard { background: var(--danger); }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            line-height: 1.4;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 16px 15px;
+            background: var(--light);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .option.selected.correct {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+            transform: translateY(-2px);
+        }
+
+        .option.selected.incorrect {
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
+            transform: translateY(-2px);
+        }
+
+        .option.correct-answer {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+            animation: pulse 0.6s ease;
+        }
+
+        .option-letter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            margin-right: 12px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option.selected .option-letter,
+        .option.correct-answer .option-letter {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .feedback-icon {
+            margin-left: auto;
+            font-size: 1.1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .option.selected.correct .feedback-icon,
+        .option.correct-answer .feedback-icon {
+            opacity: 1;
+        }
+
+        .option.selected.incorrect .feedback-icon {
+            opacity: 1;
+        }
+
+        .option.locked {
+            cursor: not-allowed;
+        }
+
+        .option.locked:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: transparent;
+        }
+
+        /* ===== NAVEGAÇÃO ===== */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            gap: 10px;
+            flex-direction: row-reverse;
+        }
+
+        button {
+            padding: 14px 20px;
+            border: none;
+            border-radius: 50px;
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            flex: 1;
+            justify-content: center;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        button:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-next {
+            background: var(--secondary);
+        }
+
+        /* ===== RESULTADOS ===== */
+        .results {
+            text-align: center;
+            padding: 30px 20px;
+            display: none;
+        }
+
+        .results-header {
+            margin-bottom: 25px;
+        }
+
+        .score {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 15px 0;
+        }
+
+        .performance {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .performance-item {
+            text-align: center;
+            padding: 20px;
+            border-radius: 16px;
+            background: var(--light);
+            box-shadow: var(--shadow);
+        }
+
+        .performance-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .performance-easy { color: var(--success); }
+        .performance-medium { color: var(--warning); }
+        .performance-hard { color: var(--danger); }
+
+        .message {
+            font-size: 1.1rem;
+            margin: 25px 0;
+            padding: 20px;
+            border-radius: 16px;
+            background: var(--light);
+            box-shadow: var(--shadow);
+            line-height: 1.5;
+        }
+
+        /* ===== ANIMAÇÕES FINAIS ===== */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            overflow: hidden;
+            display: none;
+        }
+
+        .confetti-container.active {
+            display: block;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+            animation: confettiRain 2s ease forwards;
+        }
+
+        .trophy-animation {
+            animation: trophyGlow 2s infinite;
+        }
+
+        .star-animation {
+            animation: starPulse 1.5s infinite;
+        }
+
+        /* ===== INFORMAÇÕES DA IGREJA E INSTAGRAM ===== */
+        .church-info {
+            text-align: center;
+            padding: 20px;
+            background: var(--light);
+            border-top: 1px solid #dee2e6;
+        }
+
+        .church-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .church-location {
+            color: var(--text);
+            opacity: 0.8;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .instagram-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .instagram-text {
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .instagram-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--instagram);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(225, 48, 108, 0.3);
+        }
+
+        .instagram-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(225, 48, 108, 0.4);
+            background: #C13584;
+        }
+
+        .instagram-icon {
+            font-size: 1.2rem;
+        }
+
+        /* ===== ANIMAÇÕES ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes confettiRain {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes starPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        @keyframes trophyGlow {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.7)); }
+            50% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.9)); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                border-radius: 16px;
+            }
+            
+            .modern-header {
+                padding: 20px 15px;
+            }
+            
+            .logo-text h1 {
+                font-size: 1.6rem;
+            }
+            
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .welcome-card {
+                padding: 15px;
+            }
+            
+            .content-section {
+                padding: 25px 15px;
+            }
+            
+            .about-card, .details-card {
+                padding: 20px 15px;
+            }
+            
+            .quiz-section {
+                padding: 15px 10px;
+            }
+            
+            .question {
+                padding: 15px;
+            }
+            
+            .question-text {
+                font-size: 1.1rem;
+            }
+            
+            .option {
+                padding: 14px 12px;
+            }
+            
+            .navigation {
+                flex-direction: column-reverse;
+            }
+            
+            button {
+                width: 100%;
+            }
+            
+            .results {
+                padding: 25px 15px;
+            }
+            
+            .score {
+                font-size: 3rem;
+            }
+            
+            .animation-text {
+                font-size: 1.5rem;
+            }
+            
+            .animation-icon {
+                font-size: 3.5rem;
+            }
+            
+            .countdown {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 700px;
+            }
+            
+            .logo-container {
+                flex-direction: row;
+                text-align: left;
+            }
+            
+            .logo-text {
+                text-align: left;
+            }
+            
+            .features {
+                flex-direction: row;
+                max-width: 100%;
+            }
+            
+            .performance {
+                flex-direction: row;
+            }
+            
+            .navigation {
+                flex-direction: row-reverse;
+            }
+            
+            .instagram-section {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .container {
+                max-width: 900px;
+            }
+            
+            .content-section {
+                grid-template-columns: 1fr 1fr;
+                display: grid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ANIMAÇÃO INICIAL -->
+    <div class="quiz-start-animation" id="quiz-start-animation">
+        <div class="animation-icon">
+            <i class="fas fa-shield-alt"></i>
+        </div>
+        <div class="animation-text">Quiz da EBD Fiel</div>
+        <div class="animation-subtext">Lição 7: Vencendo as estratégias e propostas do inimigo</div>
+        <div class="countdown" id="countdown">3</div>
+    </div>
+
+    <!-- CONFETES -->
+    <div class="confetti-container" id="confetti-container"></div>
+
+    <div class="container fade-in">
+        <!-- HEADER -->
+        <header class="modern-header">
+            <div class="header-bg"></div>
+            <div class="header-content">
+                <div class="logo-container">
+                    <div class="logo">
+                        <img src="https://i.ibb.co/9mLXgx7k/logo.png" alt="Logo EBD Fiel" class="logo-img" id="logo-img">
+                    </div>
+                    <div class="logo-text">
+                        <h1>QUIZ DA EBD Fiel</h1>
+                        <div class="subtitle">Lição 7: Vencendo as estratégias e propostas do inimigo</div>
+                    </div>
+                </div>
+
+                <div class="welcome-card">
+                    <h2><i class="fas fa-hands"></i> Bem-vindo ao Quiz da EBD Fiel!</h2>
+                    <p>Explore o ensino bíblico sobre como vencer as estratégias do inimigo através da armadura de Deus. Aprenda a reconhecer e resistir às astutas ciladas do diabo.</p>
+                </div>
+
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-star" style="color: #4cc9f0;"></i>
+                        <span>15 Perguntas</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle" style="color: #f8961e;"></i>
+                        <span>Feedback Imediato</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-graduation-cap" style="color: #f94144;"></i>
+                        <span>Aprenda com a Bíblia</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="content-section">
+            <div class="about-card">
+                <h2 class="card-title"><i class="fas fa-info-circle"></i> Sobre Esta Lição</h2>
+                <div class="card-content">
+                    <p>Nesta lição, estudaremos como vencer as estratégias e propostas do inimigo através da armadura de Deus. Aprendemos que Satanás age com astúcia, mas podemos resistir firmes através do poder de Cristo.</p>
+                    <p>A lição aborda três aspectos fundamentais: as propostas ardilosas de Satanás, suas estratégias sutis e suas táticas contra a Igreja. O foco está em como permanecer firmes através dos recursos espirituais que Deus nos forneceu.</p>
+                    <p><span class="highlight">"Revesti-vos de toda a armadura de Deus"</span> - este é o mandamento de Efésios 6:11 para enfrentarmos e vencermos as ciladas do diabo.</p>
+                </div>
+            </div>
+
+            <div class="details-card">
+                <h2 class="card-title"><i class="fas fa-book-open"></i> O Que Você Vai Aprender</h2>
+                <div class="card-content">
+                    <ul>
+                        <li><i class="fas fa-check"></i> Como identificar as propostas ardilosas de Satanás</li>
+                        <li><i class="fas fa-check"></i> As estratégias sutis que o inimigo usa para nos afastar de Cristo</li>
+                        <li><i class="fas fa-check"></i> As táticas de Satanás contra a Igreja e missionários</li>
+                        <li><i class="fas fa-check"></i> Como enfraquecer a fé através da Palavra roubada</li>
+                        <li><i class="fas fa-check"></i> A importância da armadura de Deus para resistir firmes</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- BOTÃO INICIAR NO FINAL -->
+            <div class="cta-section">
+                <button class="start-btn" id="start-btn">
+                    <i class="fas fa-play"></i> Iniciar Quiz
+                </button>
+            </div>
+        </section>
+
+        <!-- QUIZ -->
+        <div class="quiz-section" id="quiz-section">
+            <div class="progress-container">
+                <div class="progress-header">
+                    <div class="progress-text" id="progress-text">Pergunta 1 de 15</div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" id="quiz-progress"></div>
+                </div>
+            </div>
+
+            <div class="quiz-container" id="quiz-container">
+                <!-- Perguntas serão inseridas aqui -->
+            </div>
+
+            <div class="navigation">
+                <button id="prev-btn" disabled>
+                    <i class="fas fa-arrow-left"></i> Anterior
+                </button>
+                <button id="next-btn" class="btn-next">
+                    Próxima <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- RESULTADOS -->
+        <div class="results" id="results">
+            <div class="results-header">
+                <h2><i class="fas fa-trophy" id="trophy-icon"></i> Resultado Final</h2>
+            </div>
+            <div class="score" id="score">0/0</div>
+
+            <div class="performance" id="performance">
+                <div class="performance-item">
+                    <div class="performance-value performance-easy" id="correct-easy">0</div>
+                    <div>Fáceis</div>
+                </div>
+                <div class="performance-item">
+                    <div class="performance-value performance-medium" id="correct-medium">0</div>
+                    <div>Médias</div>
+                </div>
+                <div class="performance-item">
+                    <div class="performance-value performance-hard" id="correct-hard">0</div>
+                    <div>Difíceis</div>
+                </div>
+            </div>
+
+            <div class="message" id="message"></div>
+
+            <button id="restart-btn" style="background: var(--success);">
+                <i class="fas fa-redo"></i> Fazer Quiz Novamente
+            </button>
+        </div>
+
+        <!-- INFORMAÇÕES DA IGREJA -->
+        <div class="church-info">
+            <div class="church-name">EBD FIEL</div>
+            <div class="church-location">FIEL A PALAVRA</div>
+
+            <div class="instagram-section">
+                <div class="instagram-text">Curta nossa página no Instagram:</div>
+                <a href="https://www.instagram.com/ebdfiel" target="_blank" class="instagram-link">
+                    <i class="fab fa-instagram instagram-icon"></i>
+                    @ebdfiel
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =============================================
+        // BANCO DE PERGUNTAS - LIÇÃO 7
+        // =============================================
+        const allQuestions = [
+            // PERGUNTAS FÁCEIS (1-5)
+            {
+                question: "Qual é o texto áureo da Lição 7 sobre vencer as estratégias do inimigo?",
+                options: [
+                    "'Revesti-vos de toda a armadura de Deus, para que possais estar firmes contra as astutas ciladas do diabo' – Efésios 6.11", 
+                    "'Sujeitai-vos, pois, a Deus; resisti ao diabo, e ele fugirá de vós' – Tiago 4.7",
+                    "'Sede sóbrios, vigiai, porque o diabo, vosso adversário, anda em derredor' – 1 Pedro 5.8",
+                    "'Não deis lugar ao diabo' – Efésios 4.27"
+                ],
+                correct: 0,
+                explanation: "O texto áureo é Efésios 6.11: 'Revesti-vos de toda a armadura de Deus, para que possais estar firmes contra as astutas ciladas do diabo'.",
+                difficulty: "easy"
+            },
+            {
+                question: "Qual é a verdade aplicada da lição sobre vencer as estratégias do inimigo?",
+                options: [
+                    "Devemos ignorar o diabo e ele fugirá de nós",
+                    "É preciso vigilância e estar revestidos de toda a Armadura de Deus para resistir e permanecer firmes contra as investidas do maligno", 
+                    "Basta ter fé que o diabo não nos tocará",
+                    "O diabo já foi vencido, então não precisamos nos preocupar"
+                ],
+                correct: 1,
+                explanation: "A verdade aplicada é: 'É preciso vigilância e estar revestidos de toda a Armadura de Deus para resistir e permanecer firmes contra as investidas do maligno'.",
+                difficulty: "easy"
+            },
+            {
+                question: "Qual é um dos objetivos da lição sobre vencer as estratégias do inimigo?",
+                options: [
+                    "Aprender a exorcizar demônios",
+                    "Identificar as artimanhas do inimigo contra o povo de Deus", 
+                    "Descobrir o nome pessoal de Satanás",
+                    "Saber quando o diabo foi criado"
+                ],
+                correct: 1,
+                explanation: "Um dos objetivos da lição é: 'Identificar as artimanhas do inimigo contra o povo de Deus'.",
+                difficulty: "easy"
+            },
+            {
+                question: "Como a Bíblia descreve Satanás em 1 Pedro 5:8?",
+                options: [
+                    "Como um anjo de luz",
+                    "Como um adversário que anda em derredor, rugindo como leão, buscando a quem possa tragar", 
+                    "Como um ser impotente e derrotado",
+                    "Como um mero símbolo do mal"
+                ],
+                correct: 1,
+                explanation: "1 Pedro 5:8 diz: 'Sede sóbrios, vigiai, porque o diabo, vosso adversário, anda em derredor, rugindo como leão, buscando a quem possa tragar'.",
+                difficulty: "easy"
+            },
+            {
+                question: "O que Paulo chama de 'o bom combate' em 1 Timóteo 1:18?",
+                options: [
+                    "A guerra contra outras religiões",
+                    "A guerra contra o inferno que faz parte da jornada do discípulo de Cristo", 
+                    "A luta por justiça social",
+                    "O combate contra governos opressores"
+                ],
+                correct: 1,
+                explanation: "Paulo se refere à guerra contra o inferno como 'o bom combate' que faz parte da jornada do discípulo de Cristo nesta terra.",
+                difficulty: "easy"
+            },
+            
+            // PERGUNTAS MÉDIAS (6-10)
+            {
+                question: "O que o inimigo tenta fazer com a nossa fé, segundo a lição?",
+                options: [
+                    "Fortalecê-la para nosso bem",
+                    "Enfraquecê-la", 
+                    "Transformá-la em conhecimento intelectual",
+                    "Usá-la para seus próprios propósitos"
+                ],
+                correct: 1,
+                explanation: "A lição ensina que 'o inimigo de nossas almas faz de tudo para enfraquecer a nossa fé' (Lucas 22:32).",
+                difficulty: "medium"
+            },
+            {
+                question: "Na Parábola do Semeador (Marcos 4), o que o inimigo faz com a Palavra de Deus?",
+                options: [
+                    "A rega para que cresça",
+                    "A arranca do coração das pessoas", 
+                    "A distorce para confundir",
+                    "A esconde para que ninguém encontre"
+                ],
+                correct: 1,
+                explanation: "Jesus explica que 'assim que ouvem a Palavra, o inimigo arranca o que foi plantado neles' (Marcos 4:15).",
+                difficulty: "medium"
+            },
+            {
+                question: "Como o inimigo age com suas propostas, segundo Hebreus 12:2?",
+                options: [
+                    "De forma óbvia e fácil de identificar",
+                    "Sagazmente, com propostas que parecem legítimas, mas seu intuito é tirar o foco dos cristãos de Cristo", 
+                    "Abertamente, desafiando os cristãos",
+                    "Passivamente, esperando que o cristão peque sozinho"
+                ],
+                correct: 1,
+                explanation: "O inimigo 'age sagazmente com propostas que parecem legítimas, mas seu intuito é tirar o foco dos cristãos, que é Jesus Cristo' (Hebreus 12:2).",
+                difficulty: "medium"
+            },
+            {
+                question: "O que o inimigo tenta fazer com os missionários, segundo a lição?",
+                options: [
+                    "Ajudá-los em seu trabalho",
+                    "Frustrar seus planos", 
+                    "Convertê-los ao seu lado",
+                    "Ignorá-los completamente"
+                ],
+                correct: 1,
+                explanation: "A lição ensina que 'o inimigo detesta os missionários, por isso se empenha para colocar empecilhos no caminho deles', tentando frustrar seus planos.",
+                difficulty: "medium"
+            },
+            {
+                question: "O que o inimigo incita nos cristãos, segundo Gálatas 5:16?",
+                options: [
+                    "A viver pelo Espírito",
+                    "A ceder aos desejos da carne", 
+                    "A buscar a santificação",
+                    "A orar sem cessar"
+                ],
+                correct: 1,
+                explanation: "A lição alerta que 'o inimigo nos incita a ceder aos desejos da carne', mas quem vive pelo Espírito não satisfaz esses desejos (Gálatas 5:16).",
+                difficulty: "medium"
+            },
+            
+            // PERGUNTAS DIFÍCEIS (11-15)
+            {
+                question: "O que a queda de Adão acarretou para a humanidade, segundo Romanos 5:12?",
+                options: [
+                    "Somente vergonha",
+                    "Doença, dor e morte", 
+                    "Apenas separação espiritual de Deus",
+                    "Exclusivamente conhecimento do bem e do mal"
+                ],
+                correct: 1,
+                explanation: "Quando o inimigo induziu Adão e Eva ao pecado, isso trouxe 'doença, dor e morte ao ser humano' (Romanos 5:12).",
+                difficulty: "hard"
+            },
+            {
+                question: "Além de enfermidades, o que o inimigo tenta usar para nos parar, segundo a lição?",
+                options: [
+                    "A solidão completa",
+                    "Atrativos mundanos", 
+                    "A pobreza extrema",
+                    "A perseguição violenta"
+                ],
+                correct: 1,
+                explanation: "A lição ensina que 'o inimigo tenta nos parar com atrativos' mundanos que nos afastam de Deus.",
+                difficulty: "hard"
+            },
+            {
+                question: "A que o inimigo se opõe, segundo o tópico 3.3 da lição?",
+                options: [
+                    "Ao jejum e oração",
+                    "Ao perdão", 
+                    "À leitura da Bíblia",
+                    "À comunhão entre irmãos"
+                ],
+                correct: 1,
+                explanation: "A lição ensina que 'o inimigo se opõe ao perdão' e tenta aproveitar-se da falta de reconciliação para enfraquecer a Igreja.",
+                difficulty: "hard"
+            },
+            {
+                question: "O que John Stott comenta sobre Efésios 6:10-12?",
+                options: [
+                    "Que a batalha espiritual é apenas simbólica",
+                    "Que subestimar o inimigo leva à derrota, pois não veremos necessidade da armadura de Deus", 
+                    "Que o inimigo já está completamente amarrado",
+                    "Que apenas os pastores precisam se preocupar com a batalha espiritual"
+                ],
+                correct: 1,
+                explanation: "John Stott comenta que 'se subestimarmos nosso inimigo espiritual, não veremos necessidade para a armadura de Deus, sairemos despreparados para a batalha e seremos rapidamente derrotados'.",
+                difficulty: "hard"
+            },
+            {
+                question: "O que o bispo Abner Ferreira diz sobre as estratégias do inimigo em Efésios 6:12?",
+                options: [
+                    "São óbvias e fáceis de identificar",
+                    "São verdadeiras estratégias de guerra não convencionais, astutas ciladas que geralmente passam despercebidas", 
+                    "São apenas simbólicas e não representam perigo real",
+                    "São direcionadas apenas aos líderes da igreja"
+                ],
+                correct: 1,
+                explanation: "O bispo Abner Ferreira diz que as estratégias do inimigo são 'verdadeiras estratégias de guerra não convencionais (Paulo as chama de astutas ciladas), que geralmente passam despercebidas'.",
+                difficulty: "hard"
+            }
+        ];
+
+        // =============================================
+        // VARIÁVEIS GLOBAIS
+        // =============================================
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let quizStarted = false;
+
+        // =============================================
+        // INICIALIZAÇÃO
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurar eventos dos botões
+            document.getElementById('start-btn').addEventListener('click', startQuizWithAnimation);
+            document.getElementById('prev-btn').addEventListener('click', showPreviousQuestion);
+            document.getElementById('next-btn').addEventListener('click', showNextQuestion);
+            document.getElementById('restart-btn').addEventListener('click', restartQuiz);
+            
+            // Inicializar array de respostas
+            userAnswers = new Array(allQuestions.length).fill(null);
+            
+            // Configurar imagem da logo
+            const logoImg = document.getElementById('logo-img');
+            logoImg.onerror = function() {
+                logoImg.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%234361ee"/><text x="50" y="60" text-anchor="middle" fill="white" font-size="40" font-family="Arial">EBD</text></svg>';
+            };
+        });
+
+        // =============================================
+        // FUNÇÕES DO QUIZ
+        // =============================================
+        function startQuizWithAnimation() {
+            // Mostrar animação inicial
+            const startAnimation = document.getElementById('quiz-start-animation');
+            startAnimation.classList.add('active');
+            
+            // Contagem regressiva
+            let count = 3;
+            const countdownElement = document.getElementById('countdown');
+            
+            const countdownInterval = setInterval(() => {
+                countdownElement.textContent = count;
+                count--;
+                
+                if (count < 0) {
+                    clearInterval(countdownInterval);
+                    startQuiz();
+                }
+            }, 1000);
+        }
+
+        function startQuiz() {
+            // Esconder animação inicial
+            document.getElementById('quiz-start-animation').classList.remove('active');
+            
+            // Esconder elementos iniciais e mostrar quiz
+            document.querySelector('.modern-header').style.display = 'none';
+            document.querySelector('.content-section').style.display = 'none';
+            document.getElementById('quiz-section').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+            
+            // Resetar variáveis
+            quizStarted = true;
+            currentQuestionIndex = 0;
+            userAnswers = new Array(allQuestions.length).fill(null);
+            
+            // Mostrar primeira pergunta
+            showQuestion(currentQuestionIndex);
+        }
+
+        function showQuestion(index) {
+            const question = allQuestions[index];
+            const quizContainer = document.getElementById('quiz-container');
+            
+            // Atualizar barra de progresso
+            updateProgressBar();
+            
+            // Criar HTML da pergunta
+            let optionsHTML = '';
+            const letters = ['A', 'B', 'C', 'D'];
+            
+            question.options.forEach((option, i) => {
+                const isSelected = userAnswers[index] === i;
+                let optionClass = 'option';
+                
+                if (isSelected) {
+                    optionClass += ' selected';
+                    if (i === question.correct) {
+                        optionClass += ' correct';
+                    } else {
+                        optionClass += ' incorrect';
+                    }
+                }
+                
+                optionsHTML += `
+                    <div class="${optionClass}" data-index="${i}">
+                        <span class="option-letter">${letters[i]}</span>
+                        <span class="option-text">${option}</span>
+                        <span class="feedback-icon">
+                            ${isSelected ? (i === question.correct ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>') : ''}
+                        </span>
+                    </div>
+                `;
+            });
+            
+            quizContainer.innerHTML = `
+                <div class="question fade-in">
+                    <div class="question-header">
+                        <span class="question-difficulty difficulty-${question.difficulty}">
+                            ${question.difficulty === 'easy' ? 'Fácil' : question.difficulty === 'medium' ? 'Médio' : 'Difícil'}
+                        </span>
+                        <div class="question-text">${question.question}</div>
+                    </div>
+                    <div class="options">
+                        ${optionsHTML}
+                    </div>
+                </div>
+            `;
+            
+            // Adicionar eventos às opções
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    if (!quizStarted) return;
+                    
+                    const selectedIndex = parseInt(this.getAttribute('data-index'));
+                    selectOption(selectedIndex);
+                });
+            });
+            
+            // Atualizar botões de navegação
+            updateNavigationButtons();
+        }
+
+        function selectOption(optionIndex) {
+            userAnswers[currentQuestionIndex] = optionIndex;
+            const question = allQuestions[currentQuestionIndex];
+            
+            // Atualizar visual das opções
+            const options = document.querySelectorAll('.option');
+            options.forEach((option, i) => {
+                option.classList.remove('selected', 'correct', 'incorrect', 'correct-answer');
+                
+                if (i === optionIndex) {
+                    option.classList.add('selected');
+                    if (i === question.correct) {
+                        option.classList.add('correct');
+                    } else {
+                        option.classList.add('incorrect');
+                    }
+                }
+                
+                // Mostrar resposta correta se o usuário errou
+                if (i === question.correct && optionIndex !== question.correct) {
+                    option.classList.add('correct-answer');
+                }
+            });
+            
+            // Atualizar botões de navegação
+            updateNavigationButtons();
+        }
+
+        function showNextQuestion() {
+            if (currentQuestionIndex < allQuestions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion(currentQuestionIndex);
+            } else {
+                showResults();
+            }
+        }
+
+        function showPreviousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion(currentQuestionIndex);
+            }
+        }
+
+        function updateProgressBar() {
+            const progress = ((currentQuestionIndex + 1) / allQuestions.length) * 100;
+            document.getElementById('quiz-progress').style.width = `${progress}%`;
+            document.getElementById('progress-text').textContent = `Pergunta ${currentQuestionIndex + 1} de ${allQuestions.length}`;
+        }
+
+        function updateNavigationButtons() {
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            
+            const nextButton = document.getElementById('next-btn');
+            if (currentQuestionIndex === allQuestions.length - 1) {
+                nextButton.innerHTML = 'Ver Resultados <i class="fas fa-chart-bar"></i>';
+            } else {
+                nextButton.innerHTML = 'Próxima <i class="fas fa-arrow-right"></i>';
+            }
+            
+            // Habilitar próximo apenas se uma opção foi selecionada
+            nextButton.disabled = userAnswers[currentQuestionIndex] === null;
+        }
+
+        // =============================================
+        // ANIMAÇÕES FINAIS
+        // =============================================
+        function createConfetti(scorePercentage) {
+            const container = document.getElementById('confetti-container');
+            container.classList.add('active');
+            container.innerHTML = '';
+            
+            const colors = ['#4361ee', '#7209b7', '#f72585', '#4cc9f0', '#f8961e', '#f94144'];
+            const confettiCount = Math.min(100, Math.floor(scorePercentage * 100));
+            
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                
+                // Configurações aleatórias
+                const left = Math.random() * 100;
+                const size = Math.random() * 10 + 5;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const delay = Math.random() * 2;
+                const duration = Math.random() * 2 + 2;
+                
+                confetti.style.left = `${left}%`;
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                confetti.style.backgroundColor = color;
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.animationDelay = `${delay}s`;
+                confetti.style.animationDuration = `${duration}s`;
+                
+                container.appendChild(confetti);
+            }
+            
+            // Remover confetes após 5 segundos
+            setTimeout(() => {
+                container.classList.remove('active');
+                container.innerHTML = '';
+            }, 5000);
+        }
+
+        function showResults() {
+            document.getElementById('quiz-section').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            
+            // Calcular pontuação
+            let score = 0;
+            let correctEasy = 0, correctMedium = 0, correctHard = 0;
+            let totalEasy = 0, totalMedium = 0, totalHard = 0;
+            
+            allQuestions.forEach((question, index) => {
+                // Contar totais por dificuldade
+                if (question.difficulty === 'easy') totalEasy++;
+                if (question.difficulty === 'medium') totalMedium++;
+                if (question.difficulty === 'hard') totalHard++;
+                
+                // Verificar resposta correta
+                if (userAnswers[index] === question.correct) {
+                    score++;
+                    
+                    if (question.difficulty === 'easy') correctEasy++;
+                    if (question.difficulty === 'medium') correctMedium++;
+                    if (question.difficulty === 'hard') correctHard++;
+                }
+            });
+            
+            const scorePercentage = score / allQuestions.length;
+            
+            // Atualizar resultados na tela
+            document.getElementById('score').textContent = `${score}/${allQuestions.length}`;
+            document.getElementById('correct-easy').textContent = `${correctEasy}/${totalEasy}`;
+            document.getElementById('correct-medium').textContent = `${correctMedium}/${totalMedium}`;
+            document.getElementById('correct-hard').textContent = `${correctHard}/${totalHard}`;
+            
+            // Configurar mensagem e animações baseadas na pontuação
+            const trophyIcon = document.getElementById('trophy-icon');
+            const messageElement = document.getElementById('message');
+            
+            let message = '';
+            let animationType = '';
+            
+            if (score === allQuestions.length) {
+                // PERFEITO
+                message = '<i class="fas fa-crown star-animation"></i> <strong>PERFEITO!</strong> Você acertou todas as questões! Sua compreensão sobre vencer as estratégias do inimigo é excepcional.';
+                trophyIcon.className = 'fas fa-crown trophy-animation';
+                createConfetti(1);
+                animationType = 'perfect';
+            } else if (scorePercentage >= 0.8) {
+                // EXCELENTE
+                message = '<i class="fas fa-star star-animation"></i> <strong>EXCELENTE!</strong> Você demonstrou um conhecimento excepcional sobre como vencer as estratégias do inimigo.';
+                trophyIcon.className = 'fas fa-trophy trophy-animation';
+                createConfetti(scorePercentage);
+                animationType = 'excellent';
+            } else if (scorePercentage >= 0.6) {
+                // MUITO BOM
+                message = '<i class="fas fa-thumbs-up"></i> <strong>MUITO BOM!</strong> Você tem um bom entendimento da lição sobre vencer as estratégias do inimigo. Continue estudando!';
+                trophyIcon.className = 'fas fa-award';
+                createConfetti(scorePercentage * 0.7);
+                animationType = 'good';
+            } else if (scorePercentage >= 0.5) {
+                // BOM
+                message = '<i class="fas fa-check-circle"></i> <strong>BOM TRABALHO!</strong> Você acertou a maioria das questões. Revise os pontos em que teve dificuldade sobre as estratégias do inimigo.';
+                trophyIcon.className = 'fas fa-medal';
+                createConfetti(scorePercentage * 0.5);
+                animationType = 'average';
+            } else {
+                // CONTINUE ESTUDANDO
+                message = '<i class="fas fa-book"></i> <strong>CONTINUE ESTUDANDO!</strong> Vencer as estratégias do inimigo é fundamental na vida cristã. Reveja a lição e tente novamente.';
+                trophyIcon.className = 'fas fa-book';
+                animationType = 'study';
+            }
+            
+            messageElement.innerHTML = message;
+            
+            // Adicionar animação de entrada aos elementos
+            const resultElements = document.querySelectorAll('#results > *');
+            resultElements.forEach((element, index) => {
+                element.classList.add('fade-in');
+                element.style.animationDelay = `${index * 0.2}s`;
+            });
+            
+            // Rolagem suave para os resultados
+            setTimeout(() => {
+                document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+            }, 500);
+        }
+
+        function restartQuiz() {
+            // Resetar variáveis
+            currentQuestionIndex = 0;
+            userAnswers = new Array(allQuestions.length).fill(null);
+            quizStarted = false;
+            
+            // Esconder resultados e confetes
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('confetti-container').classList.remove('active');
+            document.getElementById('confetti-container').innerHTML = '';
+            
+            // Mostrar página inicial
+            document.querySelector('.modern-header').style.display = 'block';
+            document.querySelector('.content-section').style.display = 'flex';
+            
+            // Rolagem para o topo
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
