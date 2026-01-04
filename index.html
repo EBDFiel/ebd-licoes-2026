@@ -56,6 +56,70 @@
             margin-bottom: 20px;
         }
         
+        /* SEÇÃO DE VÍDEO */
+        .video-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .video-section h2 {
+            color: #3498db;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 315px;
+            margin: 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 177.78%; /* Proporção 16:9 para vídeo */
+            height: 0;
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+        }
+        
+        .video-description {
+            margin-top: 20px;
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.5;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .video-instructions {
+            margin-top: 15px;
+            background: rgba(52, 152, 219, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            font-size: 0.95rem;
+            color: #2c3e50;
+        }
+        
         /* REDES SOCIAIS */
         .redes-sociais {
             margin-top: 25px;
@@ -331,6 +395,10 @@
                 padding: 20px;
             }
             
+            .video-section {
+                padding: 20px;
+            }
+            
             .social-icons {
                 gap: 15px;
             }
@@ -359,7 +427,7 @@
                 padding: 20px;
             }
             
-            .saudacao {
+            .saudacao, .video-section {
                 padding: 15px;
             }
             
@@ -371,6 +439,10 @@
                 width: 35px;
                 height: 35px;
                 font-size: 1.1rem;
+            }
+            
+            .video-container {
+                max-width: 280px;
             }
         }
     </style>
@@ -435,6 +507,31 @@
             <p>Os quizzes serão disponibilizados semanalmente, seguindo o calendário das lições. As lições futuras serão marcadas como "Em preparação" até estarem prontas para uso.</p>
             
             <p>Que Deus abençoe seu estudo da Palavra e que estes recursos contribuam para seu crescimento espiritual!</p>
+        </div>
+        
+        <!-- SEÇÃO DO VÍDEO DO YOUTUBE SHORTS -->
+        <div class="video-section">
+            <h2><i class="fab fa-youtube"></i> Vídeo da Semana</h2>
+            <p class="video-description">
+                Assista a este conteúdo especial que complementa os estudos da EBD. 
+                Um breve vídeo para reflexão e aprendizado.
+            </p>
+            
+            <div class="video-container">
+                <div class="video-wrapper">
+                    <iframe 
+                        src="https://www.youtube.com/embed/te9eFEEVqKQ" 
+                        title="Vídeo da EBD Fiel" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+            
+            <div class="video-instructions">
+                <p><strong>Dica:</strong> Este vídeo pode ser útil para compreender melhor os conceitos das lições atuais.</p>
+            </div>
         </div>
         
         <main>
@@ -637,6 +734,14 @@
                 logo.onerror = function() {
                     this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%233498db"/><text x="50" y="60" font-family="Arial" font-size="24" fill="white" text-anchor="middle">EBD</text><text x="50" y="80" font-family="Arial" font-size="12" fill="white" text-anchor="middle">2026</text></svg>';
                 };
+            }
+            
+            // Adiciona redirecionamento para o YouTube quando o vídeo for clicado (opcional)
+            const videoIframe = document.querySelector('.video-wrapper iframe');
+            if (videoIframe) {
+                videoIframe.addEventListener('click', function() {
+                    window.open('https://youtube.com/shorts/te9eFEEVqKQ', '_blank');
+                });
             }
         });
     </script>
