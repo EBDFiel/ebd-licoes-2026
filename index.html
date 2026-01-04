@@ -56,70 +56,6 @@
             margin-bottom: 20px;
         }
         
-        /* SEÇÃO DE VÍDEO */
-        .video-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        
-        .video-section h2 {
-            color: #3498db;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .video-container {
-            position: relative;
-            width: 100%;
-            max-width: 315px;
-            margin: 0 auto;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-        
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 177.78%; /* Proporção 16:9 para vídeo */
-            height: 0;
-        }
-        
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 8px;
-        }
-        
-        .video-description {
-            margin-top: 20px;
-            color: #555;
-            font-size: 1rem;
-            line-height: 1.5;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .video-instructions {
-            margin-top: 15px;
-            background: rgba(52, 152, 219, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 4px solid #3498db;
-            font-size: 0.95rem;
-            color: #2c3e50;
-        }
-        
         /* REDES SOCIAIS */
         .redes-sociais {
             margin-top: 25px;
@@ -246,6 +182,63 @@
             padding: 5px 15px;
             border-radius: 20px;
             font-size: 0.9rem;
+        }
+        
+        /* SEÇÃO DO VÍDEO DO TRIMESTRE */
+        .video-trimestre {
+            background: rgba(52, 152, 219, 0.08);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #3498db;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .video-trimestre h3 {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .video-container {
+            width: 100%;
+            max-width: 560px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* Proporção 16:9 */
+            height: 0;
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
+        }
+        
+        .video-info {
+            text-align: center;
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.5;
+            max-width: 800px;
+        }
+        
+        .video-info p {
+            margin-bottom: 10px;
         }
         
         .licoes-grid {
@@ -395,7 +388,7 @@
                 padding: 20px;
             }
             
-            .video-section {
+            .video-trimestre {
                 padding: 20px;
             }
             
@@ -427,7 +420,7 @@
                 padding: 20px;
             }
             
-            .saudacao, .video-section {
+            .saudacao, .video-trimestre {
                 padding: 15px;
             }
             
@@ -442,7 +435,11 @@
             }
             
             .video-container {
-                max-width: 280px;
+                max-width: 100%;
+            }
+            
+            .video-trimestre h3 {
+                font-size: 1.1rem;
             }
         }
     </style>
@@ -509,31 +506,6 @@
             <p>Que Deus abençoe seu estudo da Palavra e que estes recursos contribuam para seu crescimento espiritual!</p>
         </div>
         
-        <!-- SEÇÃO DO VÍDEO DO YOUTUBE SHORTS -->
-        <div class="video-section">
-            <h2><i class="fab fa-youtube"></i> Vídeo da Semana</h2>
-            <p class="video-description">
-                Assista a este conteúdo especial que complementa os estudos da EBD. 
-                Um breve vídeo para reflexão e aprendizado.
-            </p>
-            
-            <div class="video-container">
-                <div class="video-wrapper">
-                    <iframe 
-                        src="https://www.youtube.com/embed/te9eFEEVqKQ" 
-                        title="Vídeo da EBD Fiel" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                    </iframe>
-                </div>
-            </div>
-            
-            <div class="video-instructions">
-                <p><strong>Dica:</strong> Este vídeo pode ser útil para compreender melhor os conceitos das lições atuais.</p>
-            </div>
-        </div>
-        
         <main>
             <div class="trimestre">
                 <h2>
@@ -543,6 +515,33 @@
                 <p style="margin-bottom: 25px; color: #555; font-size: 1.1rem;">
                     <strong>Tema:</strong> Os Discípulos de Jesus Cristo
                 </p>
+                
+                <!-- SEÇÃO DO VÍDEO SOBRE O TRIMESTRE -->
+                <div class="video-trimestre">
+                    <h3><i class="fas fa-video"></i> Vídeo sobre o Tema do Trimestre</h3>
+                    
+                    <div class="video-container">
+                        <div class="video-wrapper">
+                            <!-- VÍDEO DO YOUTUBE SHORTS - FORMATAÇÃO CORRETA -->
+                            <iframe 
+                                src="https://www.youtube.com/embed/te9eFEEVqKQ?rel=0&modestbranding=1" 
+                                title="Vídeo sobre o Tema: Os Discípulos de Jesus Cristo" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen
+                                loading="lazy">
+                            </iframe>
+                        </div>
+                    </div>
+                    
+                    <div class="video-info">
+                        <p><strong>Assista a este vídeo especial que introduz o tema do trimestre:</strong> "Os Discípulos de Jesus Cristo".</p>
+                        <p>Este conteúdo ajudará você a compreender melhor o contexto e os principais conceitos que serão abordados nas 13 lições deste trimestre.</p>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
+                            <i class="fas fa-lightbulb"></i> Dica: Assista o vídeo antes de começar os quizzes para ter uma visão geral do tema.
+                        </p>
+                    </div>
+                </div>
                 
                 <div class="licoes-grid">
                     <!-- Lição 01 -->
@@ -736,11 +735,28 @@
                 };
             }
             
-            // Adiciona redirecionamento para o YouTube quando o vídeo for clicado (opcional)
+            // Verificação do vídeo do YouTube
+            console.log('Vídeo do YouTube Shorts incluído: te9eFEEVqKQ');
+            console.log('URL de embed: https://www.youtube.com/embed/te9eFEEVqKQ');
+            
+            // Adiciona mensagem de debug se o iframe não carregar
             const videoIframe = document.querySelector('.video-wrapper iframe');
             if (videoIframe) {
-                videoIframe.addEventListener('click', function() {
-                    window.open('https://youtube.com/shorts/te9eFEEVqKQ', '_blank');
+                videoIframe.addEventListener('error', function() {
+                    console.error('Erro ao carregar o vídeo do YouTube');
+                    this.parentElement.innerHTML = `
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
+                            <p style="color: #666; margin-bottom: 10px;">Vídeo não disponível no momento.</p>
+                            <a href="https://youtube.com/shorts/te9eFEEVqKQ" target="_blank" style="color: #3498db; text-decoration: none;">
+                                <i class="fab fa-youtube"></i> Assista no YouTube
+                            </a>
+                        </div>
+                    `;
+                });
+                
+                // Adiciona listener para quando o vídeo carregar com sucesso
+                videoIframe.addEventListener('load', function() {
+                    console.log('Vídeo do YouTube carregado com sucesso!');
                 });
             }
         });
