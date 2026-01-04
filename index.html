@@ -56,6 +56,66 @@
             margin-bottom: 20px;
         }
         
+        /* REDES SOCIAIS */
+        .redes-sociais {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .redes-sociais h3 {
+            color: #3498db;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #f8f9fa;
+            color: #333;
+            font-size: 1.4rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .social-icon.instagram {
+            background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+            color: white;
+        }
+        
+        .social-icon.facebook {
+            background: #1877F2;
+            color: white;
+        }
+        
+        .social-icon.youtube {
+            background: #FF0000;
+            color: white;
+        }
+        
+        .social-icon.tiktok {
+            background: #000000;
+            color: white;
+        }
+        
         /* MENSAGEM DE SAUDAÇÃO */
         .saudacao {
             background: rgba(255, 255, 255, 0.95);
@@ -270,6 +330,16 @@
             .saudacao {
                 padding: 20px;
             }
+            
+            .social-icons {
+                gap: 15px;
+            }
+            
+            .social-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
         }
         
         @media (max-width: 480px) {
@@ -292,8 +362,20 @@
             .saudacao {
                 padding: 15px;
             }
+            
+            .social-icons {
+                gap: 10px;
+            }
+            
+            .social-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 1.1rem;
+            }
         }
     </style>
+    <!-- Adicionando Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
@@ -306,6 +388,25 @@
             <p style="color: #666; margin-top: 20px;">
                 Teste seu conhecimento com os quizzes das lições da EBD
             </p>
+            
+            <!-- REDES SOCIAIS -->
+            <div class="redes-sociais">
+                <h3>Siga a EBD Fiel nas redes sociais:</h3>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/ebdfiel/" class="social-icon instagram" target="_blank" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.facebook.com/EBDFiel/" class="social-icon facebook" target="_blank" title="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@EBDFiel" class="social-icon youtube" target="_blank" title="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@ebdfiel" class="social-icon tiktok" target="_blank" title="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
         </header>
         
         <!-- MENSAGEM DE SAUDAÇÃO E EXPLICAÇÃO -->
