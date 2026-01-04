@@ -30,7 +30,7 @@
             padding: 40px 20px;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
         
@@ -54,6 +54,47 @@
             color: #7f8c8d;
             font-size: 1.2rem;
             margin-bottom: 20px;
+        }
+        
+        /* MENSAGEM DE SAUDAÇÃO */
+        .saudacao {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .saudacao h2 {
+            color: #3498db;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .saudacao p {
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+            color: #444;
+        }
+        
+        .saudacao ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .saudacao li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .saudacao .destaque {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            margin-top: 15px;
         }
         
         .trimestre {
@@ -225,6 +266,10 @@
                 padding-right: 0;
                 font-size: 1rem;
             }
+            
+            .saudacao {
+                padding: 20px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -243,6 +288,10 @@
             .licao-card {
                 padding: 20px;
             }
+            
+            .saudacao {
+                padding: 15px;
+            }
         }
     </style>
 </head>
@@ -250,7 +299,7 @@
     <div class="container">
         <header>
             <!-- LOGO DA EBD - SEM MOLDA -->
-            <img src="imagens/logo-ebd.png" alt="Logo EBD" class="logo-img">
+            <img src="https://i.imgur.com/vsNu5IC.png" alt="Logo EBD" class="logo-img">
             
             <h1>Escola Bíblica Dominical</h1>
             <p class="subtitle">Quizzes Interativos - Ano 2026</p>
@@ -258,6 +307,34 @@
                 Teste seu conhecimento com os quizzes das lições da EBD
             </p>
         </header>
+        
+        <!-- MENSAGEM DE SAUDAÇÃO E EXPLICAÇÃO -->
+        <div class="saudacao">
+            <h2>📚 Bem-vindo à Escola Bíblica Dominical 2026!</h2>
+            
+            <p>Esta página foi criada para ajudar no estudo e fixação das lições da EBD no ano de 2026, com foco especial na classe de Jovens e Adultos.</p>
+            
+            <p><strong>Objetivo dos Quizzes:</strong></p>
+            <ul>
+                <li><strong>Reforçar o aprendizado:</strong> Testar o conhecimento adquirido em cada lição</li>
+                <li><strong>Preparar para as aulas:</strong> Revisar os principais conceitos antes da aula dominical</li>
+                <li><strong>Avaliar o entendimento:</strong> Identificar pontos que precisam de mais atenção</li>
+                <li><strong>Tornar o estudo interativo:</strong> Transformar o estudo bíblico em uma experiência dinâmica</li>
+                <li><strong>Facilitar o ensino:</strong> Professores podem usar os quizzes para preparar suas aulas</li>
+            </ul>
+            
+            <div class="destaque">
+                <p><strong>📝 Como usar esta plataforma:</strong></p>
+                <p>1. Encontre a lição da semana correspondente abaixo</p>
+                <p>2. Clique em "Iniciar Quiz" para testar seu conhecimento</p>
+                <p>3. Responda as questões com atenção</p>
+                <p>4. Revise as respostas e estude os pontos que você errou</p>
+            </div>
+            
+            <p>Os quizzes serão disponibilizados semanalmente, seguindo o calendário das lições. As lições futuras serão marcadas como "Em preparação" até estarem prontas para uso.</p>
+            
+            <p>Que Deus abençoe seu estudo da Palavra e que estes recursos contribuam para seu crescimento espiritual!</p>
+        </div>
         
         <main>
             <div class="trimestre">
@@ -349,31 +426,30 @@
                     </div>
                     
                     <!-- Lição 07 -->
-<div class="licao-card">
-    <div class="numero">07</div>
-    <h3>Vencendo as estratégias e propostas do inimigo</h3>
-    <div class="data">
-        <span>📅</span> 15/02/2026
-        <span class="status ativa">Disponível</span>
-    </div>
-    <a href="trimestre-01/licao-07/" class="btn-quiz">
-        ▶️ Iniciar Quiz
-    </a>
-</div>
-
+                    <div class="licao-card">
+                        <div class="numero">07</div>
+                        <h3>Vencendo as estratégias e propostas do inimigo</h3>
+                        <div class="data">
+                            <span>📅</span> 15/02/2026
+                            <span class="status ativa">Disponível</span>
+                        </div>
+                        <a href="trimestre-01/licao-07/" class="btn-quiz">
+                            ▶️ Iniciar Quiz
+                        </a>
+                    </div>
                     
                     <!-- Lição 08 -->
-<div class="licao-card">
-    <div class="numero">08</div>
-    <h3>Os discípulos de Cristo e o bom ânimo</h3>
-    <div class="data">
-        <span>📅</span> 22/02/2026
-        <span class="status ativa">Disponível</span>
-    </div>
-    <a href="trimestre-01/licao-08/" class="btn-quiz">
-        ▶️ Iniciar Quiz
-    </a>
-</div>
+                    <div class="licao-card">
+                        <div class="numero">08</div>
+                        <h3>Os discípulos de Cristo e o bom ânimo</h3>
+                        <div class="data">
+                            <span>📅</span> 22/02/2026
+                            <span class="status ativa">Disponível</span>
+                        </div>
+                        <a href="trimestre-01/licao-08/" class="btn-quiz">
+                            ▶️ Iniciar Quiz
+                        </a>
+                    </div>
                     
                     <!-- Lição 09 -->
                     <div class="licao-card">
@@ -444,11 +520,24 @@
         </main>
         
         <footer>
-            <p>© 2026 - Escola Bíblica Dominical</p>
+            <p>© 2026 - EBD Fiel</p>
             <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">
-                Para estudo e edificação
+                Fiel à Palavra
             </p>
         </footer>
     </div>
+    
+    <script>
+        // Adiciona fallback para a logo caso não carregue
+        document.addEventListener('DOMContentLoaded', function() {
+            const logo = document.querySelector('.logo-img');
+            
+            if (logo) {
+                logo.onerror = function() {
+                    this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%233498db"/><text x="50" y="60" font-family="Arial" font-size="24" fill="white" text-anchor="middle">EBD</text><text x="50" y="80" font-family="Arial" font-size="12" fill="white" text-anchor="middle">2026</text></svg>';
+                };
+            }
+        });
+    </script>
 </body>
 </html>
