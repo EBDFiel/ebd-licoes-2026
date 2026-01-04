@@ -184,49 +184,109 @@
             font-size: 0.9rem;
         }
         
-        /* SEÇÃO DO VÍDEO DO TRIMESTRE */
+        /* SEÇÃO DO VÍDEO DO TRIMESTRE - CORRIGIDA PARA MOBILE */
         .video-trimestre {
             background: rgba(52, 152, 219, 0.08);
             border-radius: 12px;
             padding: 25px;
             margin-bottom: 30px;
             border-left: 5px solid #3498db;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
+            text-align: center;
         }
         
         .video-trimestre h3 {
             color: #2c3e50;
             font-size: 1.3rem;
-            text-align: center;
-            width: 100%;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
-        .video-container {
+        /* SOLUÇÃO UNIVERSAL PARA O VÍDEO */
+        .video-universal-container {
             width: 100%;
-            max-width: 560px;
-            position: relative;
-            overflow: hidden;
+            max-width: 315px;
+            margin: 0 auto;
             border-radius: 10px;
+            overflow: hidden;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            background: #000;
         }
         
-        .video-wrapper {
+        /* Container responsivo para vídeo */
+        .video-responsive-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* Proporção 16:9 */
+            padding-bottom: 177.78%; /* Proporção 9:16 para Shorts vertical */
             height: 0;
+            overflow: hidden;
         }
         
-        .video-wrapper iframe {
+        .video-responsive-wrapper iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             border: none;
+        }
+        
+        /* Thumbnail com link para mobile */
+        .video-mobile-fallback {
+            display: none;
+            width: 100%;
+            max-width: 315px;
+            margin: 0 auto;
             border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .video-mobile-fallback img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .video-mobile-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .play-icon-large {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 0, 0, 0.9);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .mobile-video-text {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .mobile-video-subtext {
+            font-size: 0.9rem;
+            opacity: 0.9;
         }
         
         .video-info {
@@ -235,10 +295,28 @@
             font-size: 1rem;
             line-height: 1.5;
             max-width: 800px;
+            margin: 20px auto 0;
         }
         
         .video-info p {
             margin-bottom: 10px;
+        }
+        
+        .video-direct-link {
+            display: inline-block;
+            background: #FF0000;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .video-direct-link:hover {
+            background: #cc0000;
+            transform: translateY(-2px);
         }
         
         .licoes-grid {
@@ -392,6 +470,10 @@
                 padding: 20px;
             }
             
+            .video-universal-container, .video-mobile-fallback {
+                max-width: 280px;
+            }
+            
             .social-icons {
                 gap: 15px;
             }
@@ -424,6 +506,10 @@
                 padding: 15px;
             }
             
+            .video-universal-container, .video-mobile-fallback {
+                max-width: 250px;
+            }
+            
             .social-icons {
                 gap: 10px;
             }
@@ -434,12 +520,15 @@
                 font-size: 1.1rem;
             }
             
-            .video-container {
-                max-width: 100%;
-            }
-            
             .video-trimestre h3 {
                 font-size: 1.1rem;
+            }
+        }
+        
+        /* Estilos específicos para mobile */
+        @media (max-width: 768px) and (orientation: portrait) {
+            .video-responsive-wrapper {
+                padding-bottom: 177.78%; /* Mantém proporção vertical */
             }
         }
     </style>
@@ -516,27 +605,45 @@
                     <strong>Tema:</strong> Os Discípulos de Jesus Cristo
                 </p>
                 
-                <!-- SEÇÃO DO VÍDEO SOBRE O TRIMESTRE -->
+                <!-- SEÇÃO DO VÍDEO SOBRE O TRIMESTRE - VERSÃO CORRIGIDA PARA MOBILE -->
                 <div class="video-trimestre">
                     <h3><i class="fas fa-video"></i> Vídeo sobre o Tema do Trimestre</h3>
                     
-                    <div class="video-container">
-                        <div class="video-wrapper">
-                            <!-- VÍDEO DO YOUTUBE SHORTS - FORMATAÇÃO CORRETA -->
+                    <!-- SOLUÇÃO PARA PC - IFRAME -->
+                    <div class="video-universal-container" id="pcVideoContainer">
+                        <div class="video-responsive-wrapper">
                             <iframe 
-                                src="https://www.youtube.com/embed/te9eFEEVqKQ?rel=0&modestbranding=1" 
+                                id="youtubeIframe"
+                                src="https://www.youtube.com/embed/te9eFEEVqKQ?rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=https://yourdomain.com" 
                                 title="Vídeo sobre o Tema: Os Discípulos de Jesus Cristo" 
                                 frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                                 allowfullscreen
-                                loading="lazy">
+                                referrerpolicy="strict-origin-when-cross-origin">
                             </iframe>
                         </div>
                     </div>
                     
+                    <!-- SOLUÇÃO PARA MOBILE - THUMBNAIL COM LINK -->
+                    <div class="video-mobile-fallback" id="mobileVideoFallback">
+                        <div class="video-mobile-overlay">
+                            <div class="play-icon-large">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="mobile-video-text">Clique para assistir no YouTube</div>
+                            <div class="mobile-video-subtext">Vídeo sobre o tema do trimestre</div>
+                        </div>
+                    </div>
+                    
+                    <!-- LINK DIRETO COMO FALLBACK -->
                     <div class="video-info">
                         <p><strong>Assista a este vídeo especial que introduz o tema do trimestre:</strong> "Os Discípulos de Jesus Cristo".</p>
                         <p>Este conteúdo ajudará você a compreender melhor o contexto e os principais conceitos que serão abordados nas 13 lições deste trimestre.</p>
+                        
+                        <a href="https://youtube.com/shorts/te9eFEEVqKQ" target="_blank" rel="noopener" class="video-direct-link" id="directVideoLink">
+                            <i class="fab fa-youtube"></i> Assistir Vídeo no YouTube
+                        </a>
+                        
                         <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
                             <i class="fas fa-lightbulb"></i> Dica: Assista o vídeo antes de começar os quizzes para ter uma visão geral do tema.
                         </p>
@@ -735,30 +842,171 @@
                 };
             }
             
-            // Verificação do vídeo do YouTube
-            console.log('Vídeo do YouTube Shorts incluído: te9eFEEVqKQ');
-            console.log('URL de embed: https://www.youtube.com/embed/te9eFEEVqKQ');
+            // SOLUÇÃO PARA O VÍDEO DO YOUTUBE SHORTS
+            const videoId = 'te9eFEEVqKQ';
+            const youtubeShortsUrl = `https://youtube.com/shorts/${videoId}`;
+            const youtubeEmbedUrl = `https://www.youtube.com/embed/${videoId}`;
             
-            // Adiciona mensagem de debug se o iframe não carregar
-            const videoIframe = document.querySelector('.video-wrapper iframe');
-            if (videoIframe) {
-                videoIframe.addEventListener('error', function() {
-                    console.error('Erro ao carregar o vídeo do YouTube');
-                    this.parentElement.innerHTML = `
-                        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
-                            <p style="color: #666; margin-bottom: 10px;">Vídeo não disponível no momento.</p>
-                            <a href="https://youtube.com/shorts/te9eFEEVqKQ" target="_blank" style="color: #3498db; text-decoration: none;">
-                                <i class="fab fa-youtube"></i> Assista no YouTube
-                            </a>
-                        </div>
-                    `;
+            // Elementos do DOM
+            const pcVideoContainer = document.getElementById('pcVideoContainer');
+            const mobileVideoFallback = document.getElementById('mobileVideoFallback');
+            const youtubeIframe = document.getElementById('youtubeIframe');
+            const directVideoLink = document.getElementById('directVideoLink');
+            
+            // Detectar se é dispositivo móvel
+            function isMobileDevice() {
+                return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            }
+            
+            // Detectar se é iOS
+            function isIOS() {
+                return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            }
+            
+            // Detectar se é um navegador específico
+            function isInAppBrowser() {
+                const userAgent = navigator.userAgent.toLowerCase();
+                return userAgent.includes('fbios') || 
+                       userAgent.includes('fban') || 
+                       userAgent.includes('fbbv') ||
+                       userAgent.includes('twitter') ||
+                       userAgent.includes('instagram') ||
+                       userAgent.includes('line') ||
+                       userAgent.includes('whatsapp');
+            }
+            
+            // Estratégia inteligente para carregar o vídeo
+            function initVideoPlayer() {
+                const isMobile = isMobileDevice();
+                const isIOSDevice = isIOS();
+                const isInApp = isInAppBrowser();
+                
+                console.log('Dispositivo móvel:', isMobile);
+                console.log('iOS:', isIOSDevice);
+                console.log('Navegador in-app:', isInApp);
+                
+                // URL do vídeo para diferentes cenários
+                let finalVideoUrl = youtubeEmbedUrl;
+                
+                // Adicionar parâmetros específicos para iOS
+                if (isIOSDevice) {
+                    finalVideoUrl += '?playsinline=1&rel=0&modestbranding=1&autoplay=0';
+                } else {
+                    finalVideoUrl += '?rel=0&modestbranding=1&playsinline=1&enablejsapi=1';
+                }
+                
+                // Atualizar o iframe com a URL correta
+                youtubeIframe.src = finalVideoUrl;
+                
+                // Estratégia para dispositivos móveis
+                if (isMobile) {
+                    console.log('Dispositivo móvel detectado - usando estratégia especial');
+                    
+                    // Para navegadores in-app (Facebook, Instagram, etc.), usar thumbnail
+                    if (isInApp) {
+                        console.log('Navegador in-app detectado - usando thumbnail com link');
+                        pcVideoContainer.style.display = 'none';
+                        mobileVideoFallback.style.display = 'block';
+                    }
+                    // Para iOS, tentar iframe com parâmetros especiais
+                    else if (isIOSDevice) {
+                        console.log('iOS detectado - tentando iframe otimizado');
+                        // Manter iframe visível
+                        pcVideoContainer.style.display = 'block';
+                        mobileVideoFallback.style.display = 'none';
+                    }
+                    // Para outros dispositivos móveis
+                    else {
+                        console.log('Outro dispositivo móvel - tentando iframe normal');
+                        // Manter iframe visível
+                        pcVideoContainer.style.display = 'block';
+                        mobileVideoFallback.style.display = 'none';
+                    }
+                } else {
+                    console.log('Dispositivo desktop - usando iframe normal');
+                    pcVideoContainer.style.display = 'block';
+                    mobileVideoFallback.style.display = 'none';
+                }
+                
+                // Configurar o link direto
+                directVideoLink.href = youtubeShortsUrl;
+                
+                // Configurar clique na thumbnail (para fallback mobile)
+                mobileVideoFallback.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openYouTubeVideo();
                 });
                 
-                // Adiciona listener para quando o vídeo carregar com sucesso
-                videoIframe.addEventListener('load', function() {
-                    console.log('Vídeo do YouTube carregado com sucesso!');
+                // Adicionar botão de fallback no iframe se ocorrer erro
+                youtubeIframe.addEventListener('error', function() {
+                    console.error('Erro ao carregar iframe do YouTube');
+                    showFallbackOption();
                 });
+                
+                // Verificar após alguns segundos se o iframe carregou
+                setTimeout(function() {
+                    // Se o iframe ainda não carregou conteúdo, oferecer fallback
+                    try {
+                        // Tentativa de verificar se o iframe carregou
+                        if (youtubeIframe.contentWindow && youtubeIframe.contentWindow.document) {
+                            console.log('Iframe do YouTube carregado com sucesso');
+                        }
+                    } catch (e) {
+                        console.log('Não foi possível verificar o iframe, oferecendo fallback');
+                        showFallbackOption();
+                    }
+                }, 3000);
             }
+            
+            // Função para abrir o vídeo no YouTube
+            function openYouTubeVideo() {
+                // Tentar abrir no aplicativo do YouTube se estiver disponível
+                const youtubeAppUrl = `vnd.youtube://shorts/${videoId}`;
+                const youtubeWebUrl = youtubeShortsUrl;
+                
+                // Primeiro tenta abrir no app, depois no navegador
+                window.location.href = youtubeAppUrl;
+                
+                // Fallback após um tempo se o app não abrir
+                setTimeout(function() {
+                    if (document.hasFocus()) {
+                        // O app não abriu, então abrir no navegador
+                        window.open(youtubeWebUrl, '_blank', 'noopener,noreferrer');
+                    }
+                }, 500);
+            }
+            
+            // Função para mostrar opção de fallback
+            function showFallbackOption() {
+                // Adicionar mensagem de fallback
+                const fallbackMessage = document.createElement('div');
+                fallbackMessage.style.cssText = `
+                    background: #fff3cd;
+                    border: 1px solid #ffeaa7;
+                    color: #856404;
+                    padding: 10px;
+                    border-radius: 5px;
+                    margin-top: 10px;
+                    text-align: center;
+                `;
+                fallbackMessage.innerHTML = `
+                    <p style="margin: 0 0 5px 0;">O vídeo pode não estar disponível para incorporação.</p>
+                    <a href="${youtubeShortsUrl}" target="_blank" style="color: #d63031; font-weight: bold;">
+                        Clique aqui para assistir no YouTube
+                    </a>
+                `;
+                
+                // Inserir após o container do vídeo
+                pcVideoContainer.parentNode.insertBefore(fallbackMessage, pcVideoContainer.nextSibling);
+            }
+            
+            // Inicializar o player de vídeo
+            initVideoPlayer();
+            
+            // Log para debug
+            console.log('YouTube Video ID:', videoId);
+            console.log('YouTube Shorts URL:', youtubeShortsUrl);
+            console.log('YouTube Embed URL:', youtubeEmbedUrl);
         });
     </script>
 </body>
