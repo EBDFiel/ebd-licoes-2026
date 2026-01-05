@@ -605,9 +605,9 @@
                     <strong>Tema:</strong> Os Discípulos de Jesus Cristo
                 </p>
                 
-                <!-- SEÇÃO DO VÍDEO SOBRE O TRIMESTRE - VERSÃO CORRIGIDA PARA MOBILE -->
+                <!-- SEÇÃO DO VÍDEO DA LIÇÃO 2 -->
                 <div class="video-trimestre">
-                    <h3><i class="fas fa-video"></i> Vídeo sobre o Tema do Trimestre</h3>
+                    <h3><i class="fas fa-video"></i> Vídeo da Lição 2 - Princípios bíblicos para a vida dos discípulos de Cristo</h3>
                     
                     <!-- SOLUÇÃO PARA PC - IFRAME -->
                     <div class="video-universal-container" id="pcVideoContainer">
@@ -615,7 +615,7 @@
                             <iframe 
                                 id="youtubeIframe"
                                 src="https://www.youtube.com/embed/j6NSJQ42ch8?rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=https://yourdomain.com" 
-                                title="Vídeo sobre o Tema: Os Discípulos de Jesus Cristo" 
+                                title="Vídeo da Lição 2: Princípios bíblicos para a vida dos discípulos de Cristo" 
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                                 allowfullscreen
@@ -631,21 +631,21 @@
                                 <i class="fas fa-play"></i>
                             </div>
                             <div class="mobile-video-text">Clique para assistir no YouTube</div>
-                            <div class="mobile-video-subtext">Vídeo sobre o tema do trimestre</div>
+                            <div class="mobile-video-subtext">Vídeo da Lição 2</div>
                         </div>
                     </div>
                     
                     <!-- LINK DIRETO COMO FALLBACK -->
                     <div class="video-info">
-                        <p><strong>Assista a este vídeo especial que introduz o tema do trimestre:</strong> "Os Discípulos de Jesus Cristo".</p>
-                        <p>Este conteúdo ajudará você a compreender melhor o contexto e os principais conceitos que serão abordados nas 13 lições deste trimestre.</p>
+                        <p><strong>Assista a este vídeo complementar da Lição 2:</strong> "Princípios bíblicos para a vida dos discípulos de Cristo".</p>
+                        <p>Este conteúdo ajudará você a compreender melhor os conceitos abordados na segunda lição deste trimestre e a se preparar para o quiz.</p>
                         
-                        <a href="https://youtube.com/shorts/j6NSJQ42ch8" target="_blank" rel="noopener" class="video-direct-link" id="directVideoLink">
+                        <a href="https://www.youtube.com/watch?v=j6NSJQ42ch8" target="_blank" rel="noopener" class="video-direct-link" id="directVideoLink">
                             <i class="fab fa-youtube"></i> Assistir Vídeo no YouTube
                         </a>
                         
                         <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
-                            <i class="fas fa-lightbulb"></i> Dica: Assista o vídeo antes de começar os quizzes para ter uma visão geral do tema.
+                            <i class="fas fa-lightbulb"></i> Dica: Assista o vídeo antes de fazer o quiz da Lição 2 para reforçar seu aprendizado.
                         </p>
                     </div>
                 </div>
@@ -844,7 +844,7 @@
             
             // SOLUÇÃO PARA O VÍDEO DO YOUTUBE SHORTS
             const videoId = 'j6NSJQ42ch8';
-            const youtubeShortsUrl = `https://youtube.com/shorts/${videoId}`;
+            const youtubeWatchUrl = `https://www.youtube.com/watch?v=${videoId}`;
             const youtubeEmbedUrl = `https://www.youtube.com/embed/${videoId}`;
             
             // Elementos do DOM
@@ -878,8 +878,8 @@
             // Função para abrir o vídeo no YouTube
             function openYouTubeVideo() {
                 // Tentar abrir no aplicativo do YouTube se estiver disponível
-                const youtubeAppUrl = `vnd.youtube://shorts/${videoId}`;
-                const youtubeWebUrl = youtubeShortsUrl;
+                const youtubeAppUrl = `vnd.youtube://watch?v=${videoId}`;
+                const youtubeWebUrl = youtubeWatchUrl;
                 
                 // Primeiro tenta abrir no app, depois no navegador
                 window.location.href = youtubeAppUrl;
@@ -947,7 +947,7 @@
                 }
                 
                 // Configurar o link direto
-                directVideoLink.href = youtubeShortsUrl;
+                directVideoLink.href = youtubeWatchUrl;
                 
                 // Configurar clique na thumbnail (para fallback mobile)
                 mobileVideoFallback.addEventListener('click', function(e) {
@@ -961,7 +961,7 @@
             
             // Log para debug
             console.log('YouTube Video ID:', videoId);
-            console.log('YouTube Shorts URL:', youtubeShortsUrl);
+            console.log('YouTube Watch URL:', youtubeWatchUrl);
             console.log('YouTube Embed URL:', youtubeEmbedUrl);
         });
     </script>
