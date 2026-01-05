@@ -875,6 +875,24 @@
                        userAgent.includes('whatsapp');
             }
             
+            // Função para abrir o vídeo no YouTube
+            function openYouTubeVideo() {
+                // Tentar abrir no aplicativo do YouTube se estiver disponível
+                const youtubeAppUrl = `vnd.youtube://shorts/${videoId}`;
+                const youtubeWebUrl = youtubeShortsUrl;
+                
+                // Primeiro tenta abrir no app, depois no navegador
+                window.location.href = youtubeAppUrl;
+                
+                // Fallback após um tempo se o app não abrir
+                setTimeout(function() {
+                    if (document.hasFocus()) {
+                        // O app não abriu, então abrir no navegador
+                        window.open(youtubeWebUrl, '_blank', 'noopener,noreferrer');
+                    }
+                }, 500);
+            }
+            
             // Estratégia inteligente para carregar o vídeo
             function initVideoPlayer() {
                 const isMobile = isMobileDevice();
@@ -936,68 +954,6 @@
                     e.preventDefault();
                     openYouTubeVideo();
                 });
-                
-                // Adicionar botão de fallback no iframe se ocorrer erro
-                youtubeIframe.addEventListener('error', function() {
-                    console.error('Erro ao carregar iframe do YouTube');
-                    showFallbackOption();
-                });
-                
-                // Verificar após alguns segundos se o iframe carregou
-                setTimeout(function() {
-                    // Se o iframe ainda não carregou conteúdo, oferecer fallback
-                    try {
-                        // Tentativa de verificar se o iframe carregou
-                        if (youtubeIframe.contentWindow && youtubeIframe.contentWindow.document) {
-                            console.log('Iframe do YouTube carregado com sucesso');
-                        }
-                    } catch (e) {
-                        console.log('Não foi possível verificar o iframe, oferecendo fallback');
-                        showFallbackOption();
-                    }
-                }, 3000);
-            }
-            
-            // Função para abrir o vídeo no YouTube
-            function openYouTubeVideo() {
-                // Tentar abrir no aplicativo do YouTube se estiver disponível
-                const youtubeAppUrl = `vnd.youtube://shorts/${videoId}`;
-                const youtubeWebUrl = youtubeShortsUrl;
-                
-                // Primeiro tenta abrir no app, depois no navegador
-                window.location.href = youtubeAppUrl;
-                
-                // Fallback após um tempo se o app não abrir
-                setTimeout(function() {
-                    if (document.hasFocus()) {
-                        // O app não abriu, então abrir no navegador
-                        window.open(youtubeWebUrl, '_blank', 'noopener,noreferrer');
-                    }
-                }, 500);
-            }
-            
-            // Função para mostrar opção de fallback
-            function showFallbackOption() {
-                // Adicionar mensagem de fallback
-                const fallbackMessage = document.createElement('div');
-                fallbackMessage.style.cssText = `
-                    background: #fff3cd;
-                    border: 1px solid #ffeaa7;
-                    color: #856404;
-                    padding: 10px;
-                    border-radius: 5px;
-                    margin-top: 10px;
-                    text-align: center;
-                `;
-                fallbackMessage.innerHTML = `
-                    <p style="margin: 0 0 5px 0;">O vídeo pode não estar disponível para incorporação.</p>
-                    <a href="${youtubeShortsUrl}" target="_blank" style="color: #d63031; font-weight: bold;">
-                        Clique aqui para assistir no YouTube
-                    </a>
-                `;
-                
-                // Inserir após o container do vídeo
-                pcVideoContainer.parentNode.insertBefore(fallbackMessage, pcVideoContainer.nextSibling);
             }
             
             // Inicializar o player de vídeo
