@@ -1226,10 +1226,11 @@
         // VARIÁVEIS GLOBAIS
         // =============================================
         let currentQuestionIndex = 0;
-        let userAnswers = [];               // Armazena o índice original da opção selecionada
+        let userAnswers = [];               // Armazena o índice original da opção selecionada (relativo à pergunta original)
         let quizStarted = false;
-        // Estado para manter as opções embaralhadas por pergunta durante a sessão
-        let shuffledQuestionsState = [];     // Cada posição: array de objetos { text, originalIndex } já embaralhado
+        let shuffledQuestions = [];           // Array com as perguntas em ordem aleatória para a sessão atual
+        // Estado para manter as opções embaralhadas por pergunta (indexado pela posição no array shuffledQuestions)
+        let shuffledOptionsState = [];
 
         // =============================================
         // FUNÇÕES AUXILIARES
@@ -1244,14 +1245,14 @@
 
         // Prepara as opções embaralhadas para uma pergunta, se ainda não existir
         function getShuffledOptionsForQuestion(questionIndex) {
-            if (!shuffledQuestionsState[questionIndex]) {
-                const question = allQuestions[questionIndex];
+            if (!shuffledOptionsState[questionIndex]) {
+                const question = shuffledQuestions[questionIndex];
                 // Cria array de objetos com texto e índice original
                 const optionsWithIndex = question.options.map((text, idx) => ({ text, originalIndex: idx }));
                 // Embaralha
-                shuffledQuestionsState[questionIndex] = shuffleArray([...optionsWithIndex]);
+                shuffledOptionsState[questionIndex] = shuffleArray([...optionsWithIndex]);
             }
-            return shuffledQuestionsState[questionIndex];
+            return shuffledOptionsState[questionIndex];
         }
 
         // =============================================
@@ -1264,10 +1265,8 @@
             document.getElementById('next-btn').addEventListener('click', showNextQuestion);
             document.getElementById('restart-btn').addEventListener('click', restartQuiz);
             
-            // Inicializar array de respostas
-            userAnswers = new Array(allQuestions.length).fill(null);
-            
-            // Configurar imagem da logo
+            // Inicializar array de respostas (será preenchido no startQuiz)
+            // A imagem da logo será tratada no carregamento
             const logoImg = document.getElementById('logo-img');
             logoImg.onerror = function() {
                 logoImg.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%234361ee"/><text x="50" y="60" text-anchor="middle" fill="white" font-size="40" font-family="Arial">EBD</text></svg>';
@@ -1298,8 +1297,14 @@
         }
 
         function startQuiz() {
-            // Resetar o estado de embaralhamento para uma nova sessão
-            shuffledQuestionsState = [];
+            // Embaralhar a ordem das perguntas
+            shuffledQuestions = shuffleArray([...allQuestions]);
+            
+            // Resetar estado de opções embaralhadas
+            shuffledOptionsState = [];
+            
+            // Resetar respostas
+            userAnswers = new Array(shuffledQuestions.length).fill(null);
             
             // Esconder animação inicial
             document.getElementById('quiz-start-animation').classList.remove('active');
@@ -1310,17 +1315,16 @@
             document.getElementById('quiz-section').style.display = 'block';
             document.getElementById('results').style.display = 'none';
             
-            // Resetar variáveis
-            quizStarted = true;
+            // Resetar índice
             currentQuestionIndex = 0;
-            userAnswers = new Array(allQuestions.length).fill(null);
+            quizStarted = true;
             
             // Mostrar primeira pergunta
             showQuestion(currentQuestionIndex);
         }
 
         function showQuestion(index) {
-            const question = allQuestions[index];
+            const question = shuffledQuestions[index];
             const quizContainer = document.getElementById('quiz-container');
             
             // Atualizar barra de progresso
@@ -1393,7 +1397,7 @@
 
         function selectOption(originalIndex) {
             userAnswers[currentQuestionIndex] = originalIndex;
-            const question = allQuestions[currentQuestionIndex];
+            const question = shuffledQuestions[currentQuestionIndex];
             
             // Atualizar visual das opções
             const options = document.querySelectorAll('.option');
@@ -1421,7 +1425,7 @@
         }
 
         function showNextQuestion() {
-            if (currentQuestionIndex < allQuestions.length - 1) {
+            if (currentQuestionIndex < shuffledQuestions.length - 1) {
                 currentQuestionIndex++;
                 showQuestion(currentQuestionIndex);
             } else {
@@ -1437,16 +1441,16 @@
         }
 
         function updateProgressBar() {
-            const progress = ((currentQuestionIndex + 1) / allQuestions.length) * 100;
+            const progress = ((currentQuestionIndex + 1) / shuffledQuestions.length) * 100;
             document.getElementById('quiz-progress').style.width = `${progress}%`;
-            document.getElementById('progress-text').textContent = `Pergunta ${currentQuestionIndex + 1} de ${allQuestions.length}`;
+            document.getElementById('progress-text').textContent = `Pergunta ${currentQuestionIndex + 1} de ${shuffledQuestions.length}`;
         }
 
         function updateNavigationButtons() {
             document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
             
             const nextButton = document.getElementById('next-btn');
-            if (currentQuestionIndex === allQuestions.length - 1) {
+            if (currentQuestionIndex === shuffledQuestions.length - 1) {
                 nextButton.innerHTML = 'Ver Resultados <i class="fas fa-chart-bar"></i>';
             } else {
                 nextButton.innerHTML = 'Próxima <i class="fas fa-arrow-right"></i>';
@@ -1505,7 +1509,7 @@
             let correctEasy = 0, correctMedium = 0, correctHard = 0;
             let totalEasy = 0, totalMedium = 0, totalHard = 0;
             
-            allQuestions.forEach((question, index) => {
+            shuffledQuestions.forEach((question, index) => {
                 // Contar totais por dificuldade
                 if (question.difficulty === 'easy') totalEasy++;
                 if (question.difficulty === 'medium') totalMedium++;
@@ -1521,10 +1525,10 @@
                 }
             });
             
-            const scorePercentage = score / allQuestions.length;
+            const scorePercentage = score / shuffledQuestions.length;
             
             // Atualizar resultados na tela
-            document.getElementById('score').textContent = `${score}/${allQuestions.length}`;
+            document.getElementById('score').textContent = `${score}/${shuffledQuestions.length}`;
             document.getElementById('correct-easy').textContent = `${correctEasy}/${totalEasy}`;
             document.getElementById('correct-medium').textContent = `${correctMedium}/${totalMedium}`;
             document.getElementById('correct-hard').textContent = `${correctHard}/${totalHard}`;
@@ -1534,37 +1538,31 @@
             const messageElement = document.getElementById('message');
             
             let message = '';
-            let animationType = '';
             
-            if (score === allQuestions.length) {
+            if (score === shuffledQuestions.length) {
                 // PERFEITO
                 message = '<i class="fas fa-crown star-animation"></i> <strong>PERFEITO!</strong> Você acertou todas as questões! Sua compreensão sobre vencer as estratégias do inimigo é excepcional.';
                 trophyIcon.className = 'fas fa-crown trophy-animation';
                 createConfetti(1);
-                animationType = 'perfect';
             } else if (scorePercentage >= 0.8) {
                 // EXCELENTE
                 message = '<i class="fas fa-star star-animation"></i> <strong>EXCELENTE!</strong> Você demonstrou um conhecimento excepcional sobre como vencer as estratégias do inimigo.';
                 trophyIcon.className = 'fas fa-trophy trophy-animation';
                 createConfetti(scorePercentage);
-                animationType = 'excellent';
             } else if (scorePercentage >= 0.6) {
                 // MUITO BOM
                 message = '<i class="fas fa-thumbs-up"></i> <strong>MUITO BOM!</strong> Você tem um bom entendimento da lição sobre vencer as estratégias do inimigo. Continue estudando!';
                 trophyIcon.className = 'fas fa-award';
                 createConfetti(scorePercentage * 0.7);
-                animationType = 'good';
             } else if (scorePercentage >= 0.5) {
                 // BOM
                 message = '<i class="fas fa-check-circle"></i> <strong>BOM TRABALHO!</strong> Você acertou a maioria das questões. Revise os pontos em que teve dificuldade sobre as estratégias do inimigo.';
                 trophyIcon.className = 'fas fa-medal';
                 createConfetti(scorePercentage * 0.5);
-                animationType = 'average';
             } else {
                 // CONTINUE ESTUDANDO
                 message = '<i class="fas fa-book"></i> <strong>CONTINUE ESTUDANDO!</strong> Vencer as estratégias do inimigo é fundamental na vida cristã. Reveja a lição e tente novamente.';
                 trophyIcon.className = 'fas fa-book';
-                animationType = 'study';
             }
             
             messageElement.innerHTML = message;
@@ -1585,11 +1583,13 @@
         function restartQuiz() {
             // Resetar variáveis
             currentQuestionIndex = 0;
-            userAnswers = new Array(allQuestions.length).fill(null);
+            userAnswers = [];
             quizStarted = false;
             
-            // Resetar estado de embaralhamento para uma nova ordem na próxima tentativa
-            shuffledQuestionsState = [];
+            // Resetar estado de opções embaralhadas e perguntas
+            shuffledOptionsState = [];
+            shuffledQuestions = shuffleArray([...allQuestions]);
+            userAnswers = new Array(shuffledQuestions.length).fill(null);
             
             // Esconder resultados e confetes
             document.getElementById('results').style.display = 'none';
