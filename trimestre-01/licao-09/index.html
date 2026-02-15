@@ -1226,8 +1226,34 @@
         // VARIÁVEIS GLOBAIS
         // =============================================
         let currentQuestionIndex = 0;
-        let userAnswers = [];
+        let userAnswers = [];               // Armazena o índice original da opção selecionada (relativo à pergunta original)
         let quizStarted = false;
+        let shuffledQuestions = [];           // Array com as perguntas em ordem aleatória para a sessão atual
+        // Estado para manter as opções embaralhadas por pergunta (indexado pela posição no array shuffledQuestions)
+        let shuffledOptionsState = [];
+
+        // =============================================
+        // FUNÇÕES AUXILIARES
+        // =============================================
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Prepara as opções embaralhadas para uma pergunta, se ainda não existir
+        function getShuffledOptionsForQuestion(questionIndex) {
+            if (!shuffledOptionsState[questionIndex]) {
+                const question = shuffledQuestions[questionIndex];
+                // Cria array de objetos com texto e índice original
+                const optionsWithIndex = question.options.map((text, idx) => ({ text, originalIndex: idx }));
+                // Embaralha
+                shuffledOptionsState[questionIndex] = shuffleArray([...optionsWithIndex]);
+            }
+            return shuffledOptionsState[questionIndex];
+        }
 
         // =============================================
         // INICIALIZAÇÃO
@@ -1238,9 +1264,6 @@
             document.getElementById('prev-btn').addEventListener('click', showPreviousQuestion);
             document.getElementById('next-btn').addEventListener('click', showNextQuestion);
             document.getElementById('restart-btn').addEventListener('click', restartQuiz);
-            
-            // Inicializar array de respostas
-            userAnswers = new Array(allQuestions.length).fill(null);
             
             // Configurar imagem da logo
             const logoImg = document.getElementById('logo-img');
@@ -1273,6 +1296,15 @@
         }
 
         function startQuiz() {
+            // Embaralhar a ordem das perguntas
+            shuffledQuestions = shuffleArray([...allQuestions]);
+            
+            // Resetar estado de opções embaralhadas
+            shuffledOptionsState = [];
+            
+            // Resetar respostas
+            userAnswers = new Array(shuffledQuestions.length).fill(null);
+            
             // Esconder animação inicial
             document.getElementById('quiz-start-animation').classList.remove('active');
             
@@ -1282,45 +1314,53 @@
             document.getElementById('quiz-section').style.display = 'block';
             document.getElementById('results').style.display = 'none';
             
-            // Resetar variáveis
-            quizStarted = true;
+            // Resetar índice
             currentQuestionIndex = 0;
-            userAnswers = new Array(allQuestions.length).fill(null);
+            quizStarted = true;
             
             // Mostrar primeira pergunta
             showQuestion(currentQuestionIndex);
         }
 
         function showQuestion(index) {
-            const question = allQuestions[index];
+            const question = shuffledQuestions[index];
             const quizContainer = document.getElementById('quiz-container');
             
             // Atualizar barra de progresso
             updateProgressBar();
             
-            // Criar HTML da pergunta
+            // Obter opções embaralhadas para esta pergunta
+            const shuffledOptions = getShuffledOptionsForQuestion(index);
+            
+            // Criar HTML da pergunta usando as opções embaralhadas
             let optionsHTML = '';
             const letters = ['A', 'B', 'C', 'D'];
             
-            question.options.forEach((option, i) => {
-                const isSelected = userAnswers[index] === i;
+            shuffledOptions.forEach((opt, i) => {
+                const originalIdx = opt.originalIndex;
+                const isSelected = userAnswers[index] === originalIdx;
                 let optionClass = 'option';
                 
                 if (isSelected) {
                     optionClass += ' selected';
-                    if (i === question.correct) {
+                    if (originalIdx === question.correct) {
                         optionClass += ' correct';
                     } else {
                         optionClass += ' incorrect';
                     }
                 }
                 
+                // Se o usuário já respondeu e esta é a opção correta (e ele errou), destacar como correta
+                if (userAnswers[index] !== null && originalIdx === question.correct && userAnswers[index] !== question.correct) {
+                    optionClass += ' correct-answer';
+                }
+                
                 optionsHTML += `
-                    <div class="${optionClass}" data-index="${i}">
+                    <div class="${optionClass}" data-original-index="${originalIdx}">
                         <span class="option-letter">${letters[i]}</span>
-                        <span class="option-text">${option}</span>
+                        <span class="option-text">${opt.text}</span>
                         <span class="feedback-icon">
-                            ${isSelected ? (i === question.correct ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>') : ''}
+                            ${isSelected ? (originalIdx === question.correct ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>') : ''}
                         </span>
                     </div>
                 `;
@@ -1345,8 +1385,8 @@
                 option.addEventListener('click', function() {
                     if (!quizStarted) return;
                     
-                    const selectedIndex = parseInt(this.getAttribute('data-index'));
-                    selectOption(selectedIndex);
+                    const originalIndex = parseInt(this.getAttribute('data-original-index'));
+                    selectOption(originalIndex);
                 });
             });
             
@@ -1354,18 +1394,19 @@
             updateNavigationButtons();
         }
 
-        function selectOption(optionIndex) {
-            userAnswers[currentQuestionIndex] = optionIndex;
-            const question = allQuestions[currentQuestionIndex];
+        function selectOption(originalIndex) {
+            userAnswers[currentQuestionIndex] = originalIndex;
+            const question = shuffledQuestions[currentQuestionIndex];
             
             // Atualizar visual das opções
             const options = document.querySelectorAll('.option');
-            options.forEach((option, i) => {
+            options.forEach(option => {
+                const optOriginalIndex = parseInt(option.getAttribute('data-original-index'));
                 option.classList.remove('selected', 'correct', 'incorrect', 'correct-answer');
                 
-                if (i === optionIndex) {
+                if (optOriginalIndex === originalIndex) {
                     option.classList.add('selected');
-                    if (i === question.correct) {
+                    if (optOriginalIndex === question.correct) {
                         option.classList.add('correct');
                     } else {
                         option.classList.add('incorrect');
@@ -1373,7 +1414,7 @@
                 }
                 
                 // Mostrar resposta correta se o usuário errou
-                if (i === question.correct && optionIndex !== question.correct) {
+                if (optOriginalIndex === question.correct && originalIndex !== question.correct) {
                     option.classList.add('correct-answer');
                 }
             });
@@ -1383,7 +1424,7 @@
         }
 
         function showNextQuestion() {
-            if (currentQuestionIndex < allQuestions.length - 1) {
+            if (currentQuestionIndex < shuffledQuestions.length - 1) {
                 currentQuestionIndex++;
                 showQuestion(currentQuestionIndex);
             } else {
@@ -1399,16 +1440,16 @@
         }
 
         function updateProgressBar() {
-            const progress = ((currentQuestionIndex + 1) / allQuestions.length) * 100;
+            const progress = ((currentQuestionIndex + 1) / shuffledQuestions.length) * 100;
             document.getElementById('quiz-progress').style.width = `${progress}%`;
-            document.getElementById('progress-text').textContent = `Pergunta ${currentQuestionIndex + 1} de ${allQuestions.length}`;
+            document.getElementById('progress-text').textContent = `Pergunta ${currentQuestionIndex + 1} de ${shuffledQuestions.length}`;
         }
 
         function updateNavigationButtons() {
             document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
             
             const nextButton = document.getElementById('next-btn');
-            if (currentQuestionIndex === allQuestions.length - 1) {
+            if (currentQuestionIndex === shuffledQuestions.length - 1) {
                 nextButton.innerHTML = 'Ver Resultados <i class="fas fa-chart-bar"></i>';
             } else {
                 nextButton.innerHTML = 'Próxima <i class="fas fa-arrow-right"></i>';
@@ -1467,7 +1508,7 @@
             let correctEasy = 0, correctMedium = 0, correctHard = 0;
             let totalEasy = 0, totalMedium = 0, totalHard = 0;
             
-            allQuestions.forEach((question, index) => {
+            shuffledQuestions.forEach((question, index) => {
                 // Contar totais por dificuldade
                 if (question.difficulty === 'easy') totalEasy++;
                 if (question.difficulty === 'medium') totalMedium++;
@@ -1483,10 +1524,10 @@
                 }
             });
             
-            const scorePercentage = score / allQuestions.length;
+            const scorePercentage = score / shuffledQuestions.length;
             
             // Atualizar resultados na tela
-            document.getElementById('score').textContent = `${score}/${allQuestions.length}`;
+            document.getElementById('score').textContent = `${score}/${shuffledQuestions.length}`;
             document.getElementById('correct-easy').textContent = `${correctEasy}/${totalEasy}`;
             document.getElementById('correct-medium').textContent = `${correctMedium}/${totalMedium}`;
             document.getElementById('correct-hard').textContent = `${correctHard}/${totalHard}`;
@@ -1496,37 +1537,31 @@
             const messageElement = document.getElementById('message');
             
             let message = '';
-            let animationType = '';
             
-            if (score === allQuestions.length) {
+            if (score === shuffledQuestions.length) {
                 // PERFEITO
                 message = '<i class="fas fa-crown star-animation"></i> <strong>PERFEITO!</strong> Você acertou todas as questões! Sua compreensão sobre a santificação é excepcional. Continue crescendo na graça e no conhecimento!';
                 trophyIcon.className = 'fas fa-crown trophy-animation';
                 createConfetti(1);
-                animationType = 'perfect';
             } else if (scorePercentage >= 0.8) {
                 // EXCELENTE
                 message = '<i class="fas fa-star star-animation"></i> <strong>EXCELENTE!</strong> Você demonstrou um conhecimento profundo sobre a santificação. Continue buscando viver santo em todas as áreas da vida!';
                 trophyIcon.className = 'fas fa-trophy trophy-animation';
                 createConfetti(scorePercentage);
-                animationType = 'excellent';
             } else if (scorePercentage >= 0.6) {
                 // MUITO BOM
                 message = '<i class="fas fa-thumbs-up"></i> <strong>MUITO BOM!</strong> Você tem um bom entendimento da santificação. Continue se dedicando ao estudo da Palavra e à vida de santidade!';
                 trophyIcon.className = 'fas fa-award';
                 createConfetti(scorePercentage * 0.7);
-                animationType = 'good';
             } else if (scorePercentage >= 0.5) {
                 // BOM
                 message = '<i class="fas fa-check-circle"></i> <strong>BOM TRABALHO!</strong> Você acertou a maioria das questões. Reveja os pontos em que teve dificuldade sobre a santificação.';
                 trophyIcon.className = 'fas fa-medal';
                 createConfetti(scorePercentage * 0.5);
-                animationType = 'average';
             } else {
                 // CONTINUE ESTUDANDO
                 message = '<i class="fas fa-book"></i> <strong>CONTINUE ESTUDANDO!</strong> A santificação é essencial para ver a Deus. Reveja a lição e busque viver separado para o Senhor.';
                 trophyIcon.className = 'fas fa-book';
-                animationType = 'study';
             }
             
             messageElement.innerHTML = message;
@@ -1547,8 +1582,13 @@
         function restartQuiz() {
             // Resetar variáveis
             currentQuestionIndex = 0;
-            userAnswers = new Array(allQuestions.length).fill(null);
+            userAnswers = [];
             quizStarted = false;
+            
+            // Resetar estado de opções embaralhadas e perguntas
+            shuffledOptionsState = [];
+            shuffledQuestions = shuffleArray([...allQuestions]);
+            userAnswers = new Array(shuffledQuestions.length).fill(null);
             
             // Esconder resultados e confetes
             document.getElementById('results').style.display = 'none';
