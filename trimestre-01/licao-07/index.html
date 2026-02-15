@@ -1226,8 +1226,33 @@
         // VARIÁVEIS GLOBAIS
         // =============================================
         let currentQuestionIndex = 0;
-        let userAnswers = [];
+        let userAnswers = [];               // Armazena o índice original da opção selecionada
         let quizStarted = false;
+        // Estado para manter as opções embaralhadas por pergunta durante a sessão
+        let shuffledQuestionsState = [];     // Cada posição: array de objetos { text, originalIndex } já embaralhado
+
+        // =============================================
+        // FUNÇÕES AUXILIARES
+        // =============================================
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Prepara as opções embaralhadas para uma pergunta, se ainda não existir
+        function getShuffledOptionsForQuestion(questionIndex) {
+            if (!shuffledQuestionsState[questionIndex]) {
+                const question = allQuestions[questionIndex];
+                // Cria array de objetos com texto e índice original
+                const optionsWithIndex = question.options.map((text, idx) => ({ text, originalIndex: idx }));
+                // Embaralha
+                shuffledQuestionsState[questionIndex] = shuffleArray([...optionsWithIndex]);
+            }
+            return shuffledQuestionsState[questionIndex];
+        }
 
         // =============================================
         // INICIALIZAÇÃO
@@ -1273,6 +1298,9 @@
         }
 
         function startQuiz() {
+            // Resetar o estado de embaralhamento para uma nova sessão
+            shuffledQuestionsState = [];
+            
             // Esconder animação inicial
             document.getElementById('quiz-start-animation').classList.remove('active');
             
@@ -1298,29 +1326,38 @@
             // Atualizar barra de progresso
             updateProgressBar();
             
-            // Criar HTML da pergunta
+            // Obter opções embaralhadas para esta pergunta
+            const shuffledOptions = getShuffledOptionsForQuestion(index);
+            
+            // Criar HTML da pergunta usando as opções embaralhadas
             let optionsHTML = '';
             const letters = ['A', 'B', 'C', 'D'];
             
-            question.options.forEach((option, i) => {
-                const isSelected = userAnswers[index] === i;
+            shuffledOptions.forEach((opt, i) => {
+                const originalIdx = opt.originalIndex;
+                const isSelected = userAnswers[index] === originalIdx;
                 let optionClass = 'option';
                 
                 if (isSelected) {
                     optionClass += ' selected';
-                    if (i === question.correct) {
+                    if (originalIdx === question.correct) {
                         optionClass += ' correct';
                     } else {
                         optionClass += ' incorrect';
                     }
                 }
                 
+                // Se o usuário já respondeu e esta é a opção correta (e ele errou), destacar como correta
+                if (userAnswers[index] !== null && originalIdx === question.correct && userAnswers[index] !== question.correct) {
+                    optionClass += ' correct-answer';
+                }
+                
                 optionsHTML += `
-                    <div class="${optionClass}" data-index="${i}">
+                    <div class="${optionClass}" data-original-index="${originalIdx}">
                         <span class="option-letter">${letters[i]}</span>
-                        <span class="option-text">${option}</span>
+                        <span class="option-text">${opt.text}</span>
                         <span class="feedback-icon">
-                            ${isSelected ? (i === question.correct ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>') : ''}
+                            ${isSelected ? (originalIdx === question.correct ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>') : ''}
                         </span>
                     </div>
                 `;
@@ -1345,8 +1382,8 @@
                 option.addEventListener('click', function() {
                     if (!quizStarted) return;
                     
-                    const selectedIndex = parseInt(this.getAttribute('data-index'));
-                    selectOption(selectedIndex);
+                    const originalIndex = parseInt(this.getAttribute('data-original-index'));
+                    selectOption(originalIndex);
                 });
             });
             
@@ -1354,18 +1391,19 @@
             updateNavigationButtons();
         }
 
-        function selectOption(optionIndex) {
-            userAnswers[currentQuestionIndex] = optionIndex;
+        function selectOption(originalIndex) {
+            userAnswers[currentQuestionIndex] = originalIndex;
             const question = allQuestions[currentQuestionIndex];
             
             // Atualizar visual das opções
             const options = document.querySelectorAll('.option');
-            options.forEach((option, i) => {
+            options.forEach(option => {
+                const optOriginalIndex = parseInt(option.getAttribute('data-original-index'));
                 option.classList.remove('selected', 'correct', 'incorrect', 'correct-answer');
                 
-                if (i === optionIndex) {
+                if (optOriginalIndex === originalIndex) {
                     option.classList.add('selected');
-                    if (i === question.correct) {
+                    if (optOriginalIndex === question.correct) {
                         option.classList.add('correct');
                     } else {
                         option.classList.add('incorrect');
@@ -1373,7 +1411,7 @@
                 }
                 
                 // Mostrar resposta correta se o usuário errou
-                if (i === question.correct && optionIndex !== question.correct) {
+                if (optOriginalIndex === question.correct && originalIndex !== question.correct) {
                     option.classList.add('correct-answer');
                 }
             });
@@ -1549,6 +1587,9 @@
             currentQuestionIndex = 0;
             userAnswers = new Array(allQuestions.length).fill(null);
             quizStarted = false;
+            
+            // Resetar estado de embaralhamento para uma nova ordem na próxima tentativa
+            shuffledQuestionsState = [];
             
             // Esconder resultados e confetes
             document.getElementById('results').style.display = 'none';
