@@ -6,6 +6,8 @@
     <title>QUIZ DA EBD Fiel - Classe Adultos 👨‍👩 | Lição 9: Os discípulos de Cristo e o processo da santificação</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         /* ===== VARIÁVEIS E RESET ===== */
         :root {
@@ -25,6 +27,28 @@
             --gradient: linear-gradient(135deg, #4361ee 0%, #7209b7 100%);
             --gradient-light: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);
             --instagram: #E1306C;
+            --bg-body: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --bg-container: white;
+            --text-color: #343a40;
+            --card-bg: #f8f9fa;
+        }
+
+        body.dark-mode {
+            --primary: #bb86fc;
+            --primary-dark: #9b67f0;
+            --secondary: #03dac6;
+            --accent: #cf6679;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --light: #333;
+            --dark: #f8f9fa;
+            --text: #f8f9fa;
+            --gray: #aaa;
+            --bg-body: #121212;
+            --bg-container: #1e1e1e;
+            --text-color: #f8f9fa;
+            --card-bg: #2d2d2d;
         }
 
         * {
@@ -39,8 +63,8 @@
         }
 
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--text);
+            background: var(--bg-body);
+            color: var(--text-color);
             min-height: 100vh;
             padding: 15px;
             display: flex;
@@ -48,18 +72,48 @@
             align-items: center;
             justify-content: center;
             line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
         }
 
         /* ===== CONTAINER PRINCIPAL ===== */
         .container {
             max-width: 100%;
             width: 100%;
-            background: white;
+            background: var(--bg-container);
             border-radius: 20px;
             box-shadow: var(--shadow-lg);
             overflow: hidden;
             margin: 10px 0;
             position: relative;
+            transition: background 0.3s;
+        }
+
+        /* ===== BOTÕES FLUTUANTES ===== */
+        .floating-buttons {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+        .floating-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        .floating-btn:hover {
+            transform: scale(1.1);
         }
 
         /* ===== ANIMAÇÃO INICIAL ===== */
@@ -163,7 +217,7 @@
         .logo-img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
             border-radius: 50%;
         }
 
@@ -242,7 +296,7 @@
         }
 
         .about-card, .details-card {
-            background: var(--light);
+            background: var(--card-bg);
             border-radius: 16px;
             padding: 25px 20px;
             box-shadow: var(--shadow);
@@ -323,6 +377,26 @@
             background: #ff2d95;
         }
 
+        /* ===== TELA DE INSTRUÇÕES ===== */
+        .instructions {
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            margin: 20px;
+        }
+        .instructions h3 {
+            margin-bottom: 15px;
+        }
+        .instructions ul {
+            list-style: none;
+        }
+        .instructions li {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         /* ===== SEÇÃO DO QUIZ ===== */
         .quiz-section {
             display: none;
@@ -393,22 +467,26 @@
             margin-bottom: 25px;
             padding: 20px;
             border-radius: 16px;
-            background: white;
+            background: var(--card-bg);
             box-shadow: var(--shadow);
             border-left: 5px solid var(--primary);
+            transition: transform 0.3s;
+        }
+        .question:hover {
+            transform: scale(1.01);
         }
 
         .question-header {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 20px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
         }
 
         .question-difficulty {
-            padding: 8px 15px;
+            padding: 5px 12px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: bold;
             color: white;
             align-self: flex-start;
@@ -418,11 +496,31 @@
         .difficulty-medium { background: var(--warning); }
         .difficulty-hard { background: var(--danger); }
 
+        .tip-icon {
+            cursor: pointer;
+            color: var(--warning);
+            font-size: 1.3rem;
+            transition: transform 0.2s;
+        }
+        .tip-icon:hover {
+            transform: scale(1.2);
+        }
+        .tip-text {
+            display: none;
+            background: var(--light);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-style: italic;
+            border-left: 3px solid var(--warning);
+        }
+
         .question-text {
             font-size: 1.2rem;
             font-weight: 600;
             color: var(--primary);
             line-height: 1.4;
+            margin-bottom: 15px;
         }
 
         .options {
@@ -441,6 +539,7 @@
             align-items: center;
             border: 2px solid transparent;
             position: relative;
+            gap: 12px;
         }
 
         .option:hover {
@@ -478,14 +577,13 @@
             height: 32px;
             background: rgba(255,255,255,0.3);
             border-radius: 50%;
-            margin-right: 12px;
             font-weight: bold;
             flex-shrink: 0;
         }
 
-        .option.selected .option-letter,
-        .option.correct-answer .option-letter {
-            background: rgba(255,255,255,0.2);
+        .option-text {
+            flex: 1;
+            word-break: break-word;
         }
 
         .feedback-icon {
@@ -505,14 +603,13 @@
             opacity: 1;
         }
 
-        .option.locked {
-            cursor: not-allowed;
-        }
-
-        .option.locked:hover {
-            transform: none;
-            box-shadow: none;
-            border-color: transparent;
+        .feedback-curiosity {
+            margin-top: 15px;
+            padding: 10px;
+            background: var(--light);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            border-left: 3px solid var(--primary);
         }
 
         /* ===== NAVEGAÇÃO ===== */
@@ -590,7 +687,7 @@
             text-align: center;
             padding: 20px;
             border-radius: 16px;
-            background: var(--light);
+            background: var(--card-bg);
             box-shadow: var(--shadow);
         }
 
@@ -609,9 +706,73 @@
             margin: 25px 0;
             padding: 20px;
             border-radius: 16px;
-            background: var(--light);
+            background: var(--card-bg);
             box-shadow: var(--shadow);
             line-height: 1.5;
+        }
+
+        /* ===== BOTÕES DE AÇÃO ===== */
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+        .action-btn {
+            background: var(--secondary);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            transition: transform 0.2s;
+        }
+        .action-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        /* ===== REVISÃO ===== */
+        #review-container {
+            text-align: left;
+            margin: 20px 0;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 15px;
+            background: var(--card-bg);
+            border-radius: 16px;
+        }
+        .review-item {
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border-left: 5px solid;
+        }
+        .review-item.correct { border-color: var(--success); }
+        .review-item.incorrect { border-color: var(--danger); }
+        .review-question { font-weight: 600; }
+        .review-answer { margin-top: 5px; font-size: 0.95rem; }
+        .review-explanation { margin-top: 5px; font-style: italic; color: var(--gray); }
+
+        /* ===== RANKING ===== */
+        .ranking {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
+            margin-top: 20px;
+        }
+        .ranking h3 { margin-bottom: 15px; }
+        .ranking-list { list-style: none; }
+        .ranking-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--gray);
         }
 
         /* ===== ANIMAÇÕES FINAIS ===== */
@@ -651,7 +812,7 @@
         .church-info {
             text-align: center;
             padding: 20px;
-            background: var(--light);
+            background: var(--card-bg);
             border-top: 1px solid #dee2e6;
         }
 
@@ -711,39 +872,36 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
+        @keyframes slideIn {
+            from { transform: translateX(20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
-
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
             40% { transform: translateY(-10px); }
             60% { transform: translateY(-5px); }
         }
-
         @keyframes slideInLeft {
             from { opacity: 0; transform: translateX(-50px); }
             to { opacity: 1; transform: translateX(0); }
         }
-
         @keyframes slideInRight {
             from { opacity: 0; transform: translateX(50px); }
             to { opacity: 1; transform: translateX(0); }
         }
-
         @keyframes confettiRain {
             0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
             100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
-
         @keyframes starPulse {
             0%, 100% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.2); opacity: 0.8; }
         }
-
         @keyframes trophyGlow {
             0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.7)); }
             50% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.9)); }
@@ -751,6 +909,9 @@
 
         .fade-in {
             animation: fadeIn 0.5s ease forwards;
+        }
+        .slide-in {
+            animation: slideIn 0.4s ease;
         }
 
         /* ===== RESPONSIVO ===== */
@@ -802,6 +963,12 @@
             
             .option {
                 padding: 14px 12px;
+                gap: 8px;
+            }
+            .option-letter {
+                width: 28px;
+                height: 28px;
+                font-size: 0.9rem;
             }
             
             .navigation {
@@ -830,6 +997,11 @@
             
             .countdown {
                 font-size: 2.5rem;
+            }
+
+            .floating-buttons {
+                top: 10px;
+                right: 10px;
             }
         }
 
@@ -879,6 +1051,12 @@
     </style>
 </head>
 <body>
+    <!-- BOTÕES FLUTUANTES -->
+    <div class="floating-buttons">
+        <button class="floating-btn" id="theme-toggle" title="Modo noturno/claro"><i class="fas fa-moon"></i></button>
+        <button class="floating-btn" id="sound-toggle" title="Ativar/desativar sons"><i class="fas fa-volume-up"></i></button>
+    </div>
+
     <!-- ANIMAÇÃO INICIAL -->
     <div class="quiz-start-animation" id="quiz-start-animation">
         <div class="animation-icon">
@@ -899,7 +1077,7 @@
             <div class="header-content">
                 <div class="logo-container">
                     <div class="logo">
-                        <img src="https://i.ibb.co/9mLXgx7k/logo.png" alt="Logo EBD Fiel" class="logo-img" id="logo-img">
+                        <img src="https://i.ibb.co/9mLXgx7k/logo.png" alt="Logo EBD Fiel" class="logo-img" id="logo-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%234361ee\'/><text x=\'50\' y=\'60\' text-anchor=\'middle\' fill=\'white\' font-size=\'40\' font-family=\'Arial\'>EBD</text></svg>'">
                     </div>
                     <div class="logo-text">
                         <h1>QUIZ DA EBD Fiel - Classe Adultos 👨‍👩</h1>
@@ -929,7 +1107,7 @@
             </div>
         </header>
 
-        <!-- CONTEÚDO -->
+        <!-- CONTEÚDO (LIÇÃO 9) -->
         <section class="content-section">
             <div class="about-card">
                 <h2 class="card-title"><i class="fas fa-info-circle"></i> Sobre Esta Lição</h2>
@@ -960,6 +1138,18 @@
                 </button>
             </div>
         </section>
+
+        <!-- TELA DE INSTRUÇÕES -->
+        <div class="instructions" id="instructions-screen" style="display: none;">
+            <h3><i class="fas fa-info-circle"></i> Como funciona</h3>
+            <ul>
+                <li><i class="fas fa-check-circle" style="color:var(--success);"></i> 15 perguntas sobre a lição</li>
+                <li><i class="fas fa-lightbulb" style="color:var(--warning);"></i> Perguntas difíceis têm dica (clique na lâmpada)</li>
+                <li><i class="fas fa-music"></i> Sons de acerto/erro (pode mutar)</li>
+                <li><i class="fas fa-chart-line"></i> Ao final, veja seu desempenho e compartilhe</li>
+                <li><i class="fas fa-trophy"></i> As 5 melhores pontuações ficam salvas</li>
+            </ul>
+        </div>
 
         <!-- QUIZ -->
         <div class="quiz-section" id="quiz-section">
@@ -1010,6 +1200,22 @@
 
             <div class="message" id="message"></div>
 
+            <!-- Botões de ação -->
+            <div class="action-buttons">
+                <button class="action-btn" id="share-whatsapp"><i class="fab fa-whatsapp"></i> Compartilhar</button>
+                <button class="action-btn" id="export-pdf"><i class="fas fa-file-pdf"></i> Exportar PDF</button>
+                <button class="action-btn" id="review-btn"><i class="fas fa-search"></i> Revisar respostas</button>
+            </div>
+
+            <!-- Revisão (inicialmente oculta) -->
+            <div id="review-container" style="display: none;"></div>
+
+            <!-- Ranking -->
+            <div class="ranking">
+                <h3><i class="fas fa-ranking-star"></i> Ranking Local (Top 5)</h3>
+                <ul class="ranking-list" id="ranking-list"></ul>
+            </div>
+
             <button id="restart-btn" style="background: var(--success);">
                 <i class="fas fa-redo"></i> Fazer Quiz Novamente
             </button>
@@ -1032,7 +1238,7 @@
 
     <script>
         // =============================================
-        // BANCO DE PERGUNTAS - LIÇÃO 9
+        // BANCO DE PERGUNTAS - LIÇÃO 9 (com dicas e curiosidades)
         // =============================================
         const allQuestions = [
             // PERGUNTAS FÁCEIS (1-5)
@@ -1046,7 +1252,9 @@
                 ],
                 correct: 0,
                 explanation: "O texto áureo é 1 Tessalonicenses 4.7: 'Porque não nos chamou Deus para a imundícia, mas para a santificação'.",
-                difficulty: "easy"
+                difficulty: "easy",
+                tip: "Está em 1 Tessalonicenses, capítulo 4.",
+                curiosity: "1 Tessalonicenses 4:7 - Deus nos chama para a santidade, não para a impureza."
             },
             {
                 question: "Qual é a verdade aplicada da lição sobre santificação?",
@@ -1058,7 +1266,9 @@
                 ],
                 correct: 2,
                 explanation: "A verdade aplicada é: 'No poder do Espírito Santo e pela ação da Palavra de Deus, o discípulo de Cristo busca um viver santo em todas as áreas da vida'.",
-                difficulty: "easy"
+                difficulty: "easy",
+                tip: "Envolve o Espírito Santo e a Palavra.",
+                curiosity: "A santificação é obra conjunta de Deus e do crente."
             },
             {
                 question: "Qual é um dos objetivos da lição sobre santificação?",
@@ -1070,7 +1280,9 @@
                 ],
                 correct: 1,
                 explanation: "Um dos objetivos da lição é: 'Compreender o conceito de santificação'.",
-                difficulty: "easy"
+                difficulty: "easy",
+                tip: "Conceito básico.",
+                curiosity: "Santificação significa separação para Deus."
             },
             {
                 question: "Segundo Hebreus 12:14, qual é a condição para ver a Deus?",
@@ -1082,7 +1294,9 @@
                 ],
                 correct: 2,
                 explanation: "Hebreus 12:14 diz: 'Segui a paz com todos e a santificação, sem a qual ninguém verá o Senhor'.",
-                difficulty: "easy"
+                difficulty: "easy",
+                tip: "É uma condição indispensável.",
+                curiosity: "A santificação é necessária para a comunhão com Deus agora e na eternidade."
             },
             {
                 question: "O que a santificação representa para o novo convertido, segundo a lição?",
@@ -1094,7 +1308,9 @@
                 ],
                 correct: 1,
                 explanation: "A santificação faz parte da nova maneira de viver daquele que nasceu de novo. Santificação não é sinônimo de perfeição, mas de purificação e separação para Deus.",
-                difficulty: "easy"
+                difficulty: "easy",
+                tip: "Nova vida em Cristo.",
+                curiosity: "2 Coríntios 5:17 - 'Se alguém está em Cristo, nova criatura é'."
             },
             
             // PERGUNTAS MÉDIAS (6-10)
@@ -1108,7 +1324,9 @@
                 ],
                 correct: 1,
                 explanation: "A santificação envolve separação para Deus, purificação e limpeza. A pessoa que nasceu de novo é purificada pelo Sangue de Jesus e passa a viver para Deus.",
-                difficulty: "medium"
+                difficulty: "medium",
+                tip: "Envolve três aspectos.",
+                curiosity: "1 João 1:7 - O sangue de Jesus nos purifica de todo pecado."
             },
             {
                 question: "Como a Palavra de Deus atua na santificação do crente?",
@@ -1120,7 +1338,9 @@
                 ],
                 correct: 1,
                 explanation: "A Palavra de Deus é um agente na santificação: 'Para a santificar, purificando-a com a lavagem da água, pela palavra' (Efésios 5:26).",
-                difficulty: "medium"
+                difficulty: "medium",
+                tip: "Efésios 5:26.",
+                curiosity: "A Palavra nos lava e renova a mente."
             },
             {
                 question: "Qual é o papel do Espírito Santo no processo de santificação?",
@@ -1132,7 +1352,9 @@
                 ],
                 correct: 2,
                 explanation: "O Espírito Santo reside em nós para produzir uma vida de santidade e sensibilidade à Sua voz. Ele nos ajuda contra o pecado e a fazer a vontade de Deus.",
-                difficulty: "medium"
+                difficulty: "medium",
+                tip: "O fruto do Espírito evidencia essa obra.",
+                curiosity: "Gálatas 5:22-23 - O fruto do Espírito é amor, alegria, paz..."
             },
             {
                 question: "O que o sangue de Jesus faz na santificação do crente?",
@@ -1144,7 +1366,9 @@
                 ],
                 correct: 1,
                 explanation: "O Sangue de Jesus nos purifica de todo o pecado (1 João 1:7), santificando-nos pelo Seu sacrifício vicário (Hebreus 10:10).",
-                difficulty: "medium"
+                difficulty: "medium",
+                tip: "Hebreus 10:10.",
+                curiosity: "Fomos santificados pela oferta do corpo de Jesus Cristo, uma vez por todas."
             },
             {
                 question: "O que a santificação NÃO é, segundo a lição?",
@@ -1156,7 +1380,9 @@
                 ],
                 correct: 0,
                 explanation: "A santificação não é sinônimo de perfeição. É um processo contínuo de crescimento em semelhança a Cristo, envolvendo separação do pecado e dedicação a Deus.",
-                difficulty: "medium"
+                difficulty: "medium",
+                tip: "É um processo, não um estado final.",
+                curiosity: "Filipenses 3:12 - 'Não que já a tenha alcançado ou que seja perfeito...'"
             },
             
             // PERGUNTAS DIFÍCEIS (11-15)
@@ -1170,7 +1396,9 @@
                 ],
                 correct: 2,
                 explanation: "A santificação é um processo contínuo e dinâmico, pelo qual o cristão, capacitado pelo Espírito Santo, cresce em semelhança a Cristo. É uma jornada diária de renovação espiritual.",
-                difficulty: "hard"
+                difficulty: "hard",
+                tip: "Envolve esforço diário e a graça de Deus.",
+                curiosity: "Romanos 12:2 - 'Transformai-vos pela renovação da vossa mente'."
             },
             {
                 question: "Como a Trindade está envolvida no processo de santificação?",
@@ -1182,7 +1410,9 @@
                 ],
                 correct: 2,
                 explanation: "A Trindade está envolvida na missão de santificar: o Pai (1 Tessalonicenses 5:23), o Filho (Hebreus 10:10; 13:12), e o Espírito Santo (1 Pedro 1:2).",
-                difficulty: "hard"
+                difficulty: "hard",
+                tip: "Cada Pessoa divina tem um papel.",
+                curiosity: "1 Tessalonicenses 5:23 - 'E o mesmo Deus de paz vos santifique...'"
             },
             {
                 question: "Qual a relação entre santificação e comunhão com Deus?",
@@ -1194,7 +1424,9 @@
                 ],
                 correct: 2,
                 explanation: "A santidade nos leva a ter mais intimidade com Deus. A comunhão com Deus é mantida pelo afastamento do pecado (2 Timóteo 2:22).",
-                difficulty: "hard"
+                difficulty: "hard",
+                tip: "Pecado afasta, santidade aproxima.",
+                curiosity: "2 Timóteo 2:22 - 'Foge também das paixões da mocidade; e segue a justiça, a fé, o amor, e a paz com os que, com um coração puro, invocam o Senhor.'"
             },
             {
                 question: "O que significa 'sem santificação ninguém verá a Deus' (Hb 12:14)?",
@@ -1206,7 +1438,9 @@
                 ],
                 correct: 2,
                 explanation: "'Sem santificação ninguém verá a Deus' significa que a santificação é condição essencial para ter comunhão com Deus nesta vida e vê-Lo face a face na eternidade.",
-                difficulty: "hard"
+                difficulty: "hard",
+                tip: "É uma declaração de absoluta necessidade.",
+                curiosity: "Apocalipse 21:27 - 'Não entrará nela coisa alguma que contamine...'"
             },
             {
                 question: "Como a santificação se relaciona com a identidade do crente em Cristo?",
@@ -1218,7 +1452,9 @@
                 ],
                 correct: 2,
                 explanation: "Em Cristo, nos tornamos 'nação santa', povo próprio de Deus (1 Pedro 2:9-10). Antes não fazíamos parte do povo de Deus, mas agora somos o Seu povo, chamados a viver em santidade.",
-                difficulty: "hard"
+                difficulty: "hard",
+                tip: "1 Pedro 2:9.",
+                curiosity: "1 Pedro 2:9 - 'Vós sois a geração eleita, o sacerdócio real, a nação santa, o povo adquirido...'"
             }
         ];
 
@@ -1226,11 +1462,36 @@
         // VARIÁVEIS GLOBAIS
         // =============================================
         let currentQuestionIndex = 0;
-        let userAnswers = [];               // Armazena o índice original da opção selecionada (relativo à pergunta original)
+        let userAnswers = [];
         let quizStarted = false;
-        let shuffledQuestions = [];           // Array com as perguntas em ordem aleatória para a sessão atual
-        // Estado para manter as opções embaralhadas por pergunta (indexado pela posição no array shuffledQuestions)
+        let shuffledQuestions = [];
         let shuffledOptionsState = [];
+        let soundEnabled = true;
+        let darkMode = false;
+
+        // Sons
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+        function playSound(type) {
+            if (!soundEnabled) return;
+            if (!audioCtx) audioCtx = new AudioContext();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.type = 'sine';
+            if (type === 'correct') {
+                osc.frequency.value = 800;
+                gain.gain.value = 0.1;
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.2);
+            } else {
+                osc.frequency.value = 400;
+                gain.gain.value = 0.1;
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.15);
+            }
+        }
 
         // =============================================
         // FUNÇÕES AUXILIARES
@@ -1243,13 +1504,10 @@
             return array;
         }
 
-        // Prepara as opções embaralhadas para uma pergunta, se ainda não existir
         function getShuffledOptionsForQuestion(questionIndex) {
             if (!shuffledOptionsState[questionIndex]) {
                 const question = shuffledQuestions[questionIndex];
-                // Cria array de objetos com texto e índice original
                 const optionsWithIndex = question.options.map((text, idx) => ({ text, originalIndex: idx }));
-                // Embaralha
                 shuffledOptionsState[questionIndex] = shuffleArray([...optionsWithIndex]);
             }
             return shuffledOptionsState[questionIndex];
@@ -1259,28 +1517,27 @@
         // INICIALIZAÇÃO
         // =============================================
         document.addEventListener('DOMContentLoaded', function() {
-            // Configurar eventos dos botões
             document.getElementById('start-btn').addEventListener('click', startQuizWithAnimation);
             document.getElementById('prev-btn').addEventListener('click', showPreviousQuestion);
             document.getElementById('next-btn').addEventListener('click', showNextQuestion);
             document.getElementById('restart-btn').addEventListener('click', restartQuiz);
+            document.getElementById('share-whatsapp').addEventListener('click', shareWhatsApp);
+            document.getElementById('export-pdf').addEventListener('click', exportPDF);
+            document.getElementById('review-btn').addEventListener('click', toggleReview);
+            document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+            document.getElementById('sound-toggle').addEventListener('click', toggleSound);
             
-            // Configurar imagem da logo
             const logoImg = document.getElementById('logo-img');
             logoImg.onerror = function() {
                 logoImg.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%234361ee"/><text x="50" y="60" text-anchor="middle" fill="white" font-size="40" font-family="Arial">EBD</text></svg>';
             };
+            updateRankingDisplay();
         });
 
-        // =============================================
-        // FUNÇÕES DO QUIZ
-        // =============================================
         function startQuizWithAnimation() {
-            // Mostrar animação inicial
             const startAnimation = document.getElementById('quiz-start-animation');
             startAnimation.classList.add('active');
             
-            // Contagem regressiva
             let count = 3;
             const countdownElement = document.getElementById('countdown');
             
@@ -1296,43 +1553,42 @@
         }
 
         function startQuiz() {
-            // Embaralhar a ordem das perguntas
             shuffledQuestions = shuffleArray([...allQuestions]);
-            
-            // Resetar estado de opções embaralhadas
             shuffledOptionsState = [];
-            
-            // Resetar respostas
             userAnswers = new Array(shuffledQuestions.length).fill(null);
             
-            // Esconder animação inicial
             document.getElementById('quiz-start-animation').classList.remove('active');
             
-            // Esconder elementos iniciais e mostrar quiz
             document.querySelector('.modern-header').style.display = 'none';
             document.querySelector('.content-section').style.display = 'none';
-            document.getElementById('quiz-section').style.display = 'block';
+            document.getElementById('instructions-screen').style.display = 'block';
+            document.getElementById('quiz-section').style.display = 'none';
             document.getElementById('results').style.display = 'none';
             
-            // Resetar índice
             currentQuestionIndex = 0;
             quizStarted = true;
             
-            // Mostrar primeira pergunta
-            showQuestion(currentQuestionIndex);
+            // Após instruções, iniciar o quiz de fato
+            const startQuizBtn = document.createElement('button');
+            startQuizBtn.className = 'start-btn';
+            startQuizBtn.innerHTML = '<i class="fas fa-play"></i> Começar Agora';
+            startQuizBtn.style.margin = '20px auto';
+            startQuizBtn.onclick = function() {
+                document.getElementById('instructions-screen').style.display = 'none';
+                document.getElementById('quiz-section').style.display = 'block';
+                showQuestion(currentQuestionIndex);
+            };
+            document.getElementById('instructions-screen').appendChild(startQuizBtn);
         }
 
         function showQuestion(index) {
             const question = shuffledQuestions[index];
             const quizContainer = document.getElementById('quiz-container');
             
-            // Atualizar barra de progresso
             updateProgressBar();
             
-            // Obter opções embaralhadas para esta pergunta
             const shuffledOptions = getShuffledOptionsForQuestion(index);
             
-            // Criar HTML da pergunta usando as opções embaralhadas
             let optionsHTML = '';
             const letters = ['A', 'B', 'C', 'D'];
             
@@ -1350,7 +1606,6 @@
                     }
                 }
                 
-                // Se o usuário já respondeu e esta é a opção correta (e ele errou), destacar como correta
                 if (userAnswers[index] !== null && originalIdx === question.correct && userAnswers[index] !== question.correct) {
                     optionClass += ' correct-answer';
                 }
@@ -1366,21 +1621,33 @@
                 `;
             });
             
+            let tipHtml = '';
+            if (question.difficulty === 'hard') {
+                tipHtml = `<span class="tip-icon" onclick="event.stopPropagation(); showTip(${index})"><i class="fas fa-lightbulb"></i></span>`;
+            }
+            
+            let curiosityHtml = '';
+            if (userAnswers[index] !== null) {
+                curiosityHtml = `<div class="feedback-curiosity"><i class="fas fa-book-open"></i> ${question.curiosity}</div>`;
+            }
+            
             quizContainer.innerHTML = `
-                <div class="question fade-in">
+                <div class="question slide-in">
                     <div class="question-header">
                         <span class="question-difficulty difficulty-${question.difficulty}">
                             ${question.difficulty === 'easy' ? 'Fácil' : question.difficulty === 'medium' ? 'Médio' : 'Difícil'}
                         </span>
-                        <div class="question-text">${question.question}</div>
+                        ${tipHtml}
                     </div>
+                    <div class="question-text">${question.question}</div>
+                    ${question.difficulty === 'hard' ? `<div class="tip-text" id="tip-${index}">💡 Dica: ${question.tip}</div>` : ''}
                     <div class="options">
                         ${optionsHTML}
                     </div>
+                    ${curiosityHtml}
                 </div>
             `;
             
-            // Adicionar eventos às opções
             document.querySelectorAll('.option').forEach(option => {
                 option.addEventListener('click', function() {
                     if (!quizStarted) return;
@@ -1390,38 +1657,26 @@
                 });
             });
             
-            // Atualizar botões de navegação
             updateNavigationButtons();
         }
 
-        function selectOption(originalIndex) {
+        window.selectOption = function(originalIndex) {
             userAnswers[currentQuestionIndex] = originalIndex;
             const question = shuffledQuestions[currentQuestionIndex];
             
-            // Atualizar visual das opções
-            const options = document.querySelectorAll('.option');
-            options.forEach(option => {
-                const optOriginalIndex = parseInt(option.getAttribute('data-original-index'));
-                option.classList.remove('selected', 'correct', 'incorrect', 'correct-answer');
-                
-                if (optOriginalIndex === originalIndex) {
-                    option.classList.add('selected');
-                    if (optOriginalIndex === question.correct) {
-                        option.classList.add('correct');
-                    } else {
-                        option.classList.add('incorrect');
-                    }
-                }
-                
-                // Mostrar resposta correta se o usuário errou
-                if (optOriginalIndex === question.correct && originalIndex !== question.correct) {
-                    option.classList.add('correct-answer');
-                }
-            });
+            if (originalIndex === question.correct) {
+                playSound('correct');
+            } else {
+                playSound('incorrect');
+            }
             
-            // Atualizar botões de navegação
-            updateNavigationButtons();
-        }
+            showQuestion(currentQuestionIndex);
+        };
+
+        window.showTip = function(qIndex) {
+            const tip = document.getElementById(`tip-${qIndex}`);
+            if (tip) tip.style.display = tip.style.display === 'block' ? 'none' : 'block';
+        };
 
         function showNextQuestion() {
             if (currentQuestionIndex < shuffledQuestions.length - 1) {
@@ -1455,12 +1710,11 @@
                 nextButton.innerHTML = 'Próxima <i class="fas fa-arrow-right"></i>';
             }
             
-            // Habilitar próximo apenas se uma opção foi selecionada
             nextButton.disabled = userAnswers[currentQuestionIndex] === null;
         }
 
         // =============================================
-        // ANIMAÇÕES FINAIS
+        // RESULTADOS
         // =============================================
         function createConfetti(scorePercentage) {
             const container = document.getElementById('confetti-container');
@@ -1474,7 +1728,6 @@
                 const confetti = document.createElement('div');
                 confetti.className = 'confetti';
                 
-                // Configurações aleatórias
                 const left = Math.random() * 100;
                 const size = Math.random() * 10 + 5;
                 const color = colors[Math.floor(Math.random() * colors.length)];
@@ -1492,7 +1745,6 @@
                 container.appendChild(confetti);
             }
             
-            // Remover confetes após 5 segundos
             setTimeout(() => {
                 container.classList.remove('active');
                 container.innerHTML = '';
@@ -1503,18 +1755,15 @@
             document.getElementById('quiz-section').style.display = 'none';
             document.getElementById('results').style.display = 'block';
             
-            // Calcular pontuação
             let score = 0;
             let correctEasy = 0, correctMedium = 0, correctHard = 0;
             let totalEasy = 0, totalMedium = 0, totalHard = 0;
             
             shuffledQuestions.forEach((question, index) => {
-                // Contar totais por dificuldade
                 if (question.difficulty === 'easy') totalEasy++;
                 if (question.difficulty === 'medium') totalMedium++;
                 if (question.difficulty === 'hard') totalHard++;
                 
-                // Verificar resposta correta
                 if (userAnswers[index] === question.correct) {
                     score++;
                     
@@ -1526,80 +1775,139 @@
             
             const scorePercentage = score / shuffledQuestions.length;
             
-            // Atualizar resultados na tela
             document.getElementById('score').textContent = `${score}/${shuffledQuestions.length}`;
             document.getElementById('correct-easy').textContent = `${correctEasy}/${totalEasy}`;
             document.getElementById('correct-medium').textContent = `${correctMedium}/${totalMedium}`;
             document.getElementById('correct-hard').textContent = `${correctHard}/${totalHard}`;
             
-            // Configurar mensagem e animações baseadas na pontuação
             const trophyIcon = document.getElementById('trophy-icon');
             const messageElement = document.getElementById('message');
             
             let message = '';
             
             if (score === shuffledQuestions.length) {
-                // PERFEITO
                 message = '<i class="fas fa-crown star-animation"></i> <strong>PERFEITO!</strong> Você acertou todas as questões! Sua compreensão sobre a santificação é excepcional. Continue crescendo na graça e no conhecimento!';
                 trophyIcon.className = 'fas fa-crown trophy-animation';
                 createConfetti(1);
             } else if (scorePercentage >= 0.8) {
-                // EXCELENTE
                 message = '<i class="fas fa-star star-animation"></i> <strong>EXCELENTE!</strong> Você demonstrou um conhecimento profundo sobre a santificação. Continue buscando viver santo em todas as áreas da vida!';
                 trophyIcon.className = 'fas fa-trophy trophy-animation';
                 createConfetti(scorePercentage);
             } else if (scorePercentage >= 0.6) {
-                // MUITO BOM
                 message = '<i class="fas fa-thumbs-up"></i> <strong>MUITO BOM!</strong> Você tem um bom entendimento da santificação. Continue se dedicando ao estudo da Palavra e à vida de santidade!';
                 trophyIcon.className = 'fas fa-award';
                 createConfetti(scorePercentage * 0.7);
             } else if (scorePercentage >= 0.5) {
-                // BOM
                 message = '<i class="fas fa-check-circle"></i> <strong>BOM TRABALHO!</strong> Você acertou a maioria das questões. Reveja os pontos em que teve dificuldade sobre a santificação.';
                 trophyIcon.className = 'fas fa-medal';
                 createConfetti(scorePercentage * 0.5);
             } else {
-                // CONTINUE ESTUDANDO
                 message = '<i class="fas fa-book"></i> <strong>CONTINUE ESTUDANDO!</strong> A santificação é essencial para ver a Deus. Reveja a lição e busque viver separado para o Senhor.';
                 trophyIcon.className = 'fas fa-book';
             }
             
             messageElement.innerHTML = message;
             
-            // Adicionar animação de entrada aos elementos
-            const resultElements = document.querySelectorAll('#results > *');
-            resultElements.forEach((element, index) => {
-                element.classList.add('fade-in');
-                element.style.animationDelay = `${index * 0.2}s`;
-            });
-            
-            // Rolagem suave para os resultados
-            setTimeout(() => {
-                document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
-            }, 500);
+            saveRanking(score);
+            updateRankingDisplay();
         }
 
+        // =============================================
+        // RANKING
+        // =============================================
+        function saveRanking(score) {
+            let ranking = JSON.parse(localStorage.getItem('quizRankingL9')) || [];
+            ranking.push({ score: score, date: new Date().toLocaleDateString() });
+            ranking.sort((a, b) => b.score - a.score);
+            ranking = ranking.slice(0, 5);
+            localStorage.setItem('quizRankingL9', JSON.stringify(ranking));
+        }
+
+        function updateRankingDisplay() {
+            let ranking = JSON.parse(localStorage.getItem('quizRankingL9')) || [];
+            let html = '';
+            ranking.forEach((item, i) => {
+                html += `<li class="ranking-item"><span>${i+1}. ${item.score} pontos</span> <span>${item.date}</span></li>`;
+            });
+            document.getElementById('ranking-list').innerHTML = html || '<li>Nenhuma pontuação ainda.</li>';
+        }
+
+        // =============================================
+        // COMPARTILHAMENTO
+        // =============================================
+        function shareWhatsApp() {
+            let score = document.getElementById('score').innerText;
+            let text = `Fiz ${score} no Quiz da EBD Fiel (Lição 9 - Santificação)! Será que você consegue mais? Acesse: ${window.location.href}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function exportPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text('Resultado do Quiz - Lição 9: Santificação', 10, 10);
+            doc.text(`Pontuação: ${document.getElementById('score').innerText}`, 10, 20);
+            doc.text(document.getElementById('message').innerText.replace(/<[^>]*>/g, ''), 10, 30);
+            doc.save('resultado_licao9.pdf');
+        }
+
+        // =============================================
+        // REVISÃO
+        // =============================================
+        function toggleReview() {
+            let container = document.getElementById('review-container');
+            if (container.style.display === 'none') {
+                let html = '<h3>Revisão das respostas</h3>';
+                shuffledQuestions.forEach((q, i) => {
+                    let userAns = userAnswers[i];
+                    let isCorrect = userAns === q.correct;
+                    html += `<div class="review-item ${isCorrect ? 'correct' : 'incorrect'}">`;
+                    html += `<div class="review-question"><strong>${i+1}. ${q.question}</strong></div>`;
+                    html += `<div class="review-answer">Sua resposta: ${q.options[userAns] || 'N/A'} - ${isCorrect ? '✅' : '❌'}</div>`;
+                    html += `<div class="review-explanation">${q.explanation}</div>`;
+                    html += `</div>`;
+                });
+                container.innerHTML = html;
+                container.style.display = 'block';
+            } else {
+                container.style.display = 'none';
+            }
+        }
+
+        // =============================================
+        // TEMA E SOM
+        // =============================================
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.querySelector('#theme-toggle i');
+            icon.className = document.body.classList.contains('dark-mode') ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = document.querySelector('#sound-toggle i');
+            icon.className = soundEnabled ? 'fas fa-volume-up' : 'fas fa-volume-mute';
+        }
+
+        // =============================================
+        // REINICIAR
+        // =============================================
         function restartQuiz() {
-            // Resetar variáveis
             currentQuestionIndex = 0;
             userAnswers = [];
             quizStarted = false;
             
-            // Resetar estado de opções embaralhadas e perguntas
             shuffledOptionsState = [];
             shuffledQuestions = shuffleArray([...allQuestions]);
             userAnswers = new Array(shuffledQuestions.length).fill(null);
             
-            // Esconder resultados e confetes
             document.getElementById('results').style.display = 'none';
             document.getElementById('confetti-container').classList.remove('active');
             document.getElementById('confetti-container').innerHTML = '';
             
-            // Mostrar página inicial
             document.querySelector('.modern-header').style.display = 'block';
             document.querySelector('.content-section').style.display = 'flex';
+            document.getElementById('instructions-screen').style.display = 'none';
             
-            // Rolagem para o topo
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
