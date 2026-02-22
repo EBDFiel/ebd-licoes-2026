@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QUIZ DA EBD Fiel - Classe Adultos 👨‍👩 | Os Discípulos de Cristo e o Bom Ânimo</title>
+    <title>QUIZ DA EBD Fiel - Completo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        /* ===== VARIÁVEIS E RESET ===== */
         :root {
             --primary: #4361ee;
             --primary-dark: #3a56d4;
@@ -25,6 +26,28 @@
             --gradient: linear-gradient(135deg, #4361ee 0%, #7209b7 100%);
             --gradient-light: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);
             --instagram: #E1306C;
+            --bg-body: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --bg-container: white;
+            --text-color: #343a40;
+            --card-bg: #f8f9fa;
+        }
+
+        body.dark-mode {
+            --primary: #bb86fc;
+            --primary-dark: #9b67f0;
+            --secondary: #03dac6;
+            --accent: #cf6679;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --light: #333;
+            --dark: #f8f9fa;
+            --text: #f8f9fa;
+            --gray: #aaa;
+            --bg-body: #121212;
+            --bg-container: #1e1e1e;
+            --text-color: #f8f9fa;
+            --card-bg: #2d2d2d;
         }
 
         * {
@@ -39,8 +62,8 @@
         }
 
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--text);
+            background: var(--bg-body);
+            color: var(--text-color);
             min-height: 100vh;
             padding: 15px;
             display: flex;
@@ -48,206 +71,135 @@
             align-items: center;
             justify-content: center;
             line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
         }
 
-        /* ===== CONTAINER PRINCIPAL ===== */
         .container {
             max-width: 100%;
             width: 100%;
-            background: white;
+            background: var(--bg-container);
             border-radius: 20px;
             box-shadow: var(--shadow-lg);
             overflow: hidden;
             margin: 10px 0;
             position: relative;
+            transition: background 0.3s;
         }
 
-        /* ===== ANIMAÇÃO INICIAL ===== */
-        .quiz-start-animation {
+        /* Botões flutuantes */
+        .floating-buttons {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--gradient);
-            display: none;
-            flex-direction: column;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+        .floating-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            font-size: 1.2rem;
+            display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 9999;
-            color: white;
-            text-align: center;
-            padding: 20px;
+            transition: transform 0.2s;
+        }
+        .floating-btn:hover {
+            transform: scale(1.1);
         }
 
-        .quiz-start-animation.active {
-            display: flex;
+        /* Animações */
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        .slide-in {
+            animation: slideIn 0.4s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideIn {
+            from { transform: translateX(20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
-        .animation-icon {
-            font-size: 5rem;
-            margin-bottom: 20px;
-            animation: bounce 1s infinite, starPulse 2s infinite;
-        }
-
-        .animation-text {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            animation: slideInLeft 1s ease forwards;
-        }
-
-        .animation-subtext {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            animation: slideInRight 1s ease forwards;
-            animation-delay: 0.3s;
-        }
-
-        .countdown {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-top: 30px;
-            animation: pulse 1s infinite;
-        }
-
-        /* ===== HEADER MODERNO ===== */
+        /* Header */
         .modern-header {
             background: var(--gradient);
             color: white;
             padding: 25px 20px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
         }
-
-        .header-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.1;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHBhdGggZD0iTTIxLDMwIENyMSwzMCA0MCwzMCA1MCw0MCBDNjAsMzAgNzksMzAgNzksMzAgQzc5LDMwIDg1LDM1IDg1LDQwIEM4NSw0NSA3OSw1MCA3OSw1MCBDNzksNTAgNjAsNTAgNTAsNjAgQzQwLDUwIDIxLDUwIDIxLDUwIEMyMSw1MCAxNSw0NSAxNSw0MCBDMTUsMzUgMjEsMzAgMjEsMzAgWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=');
-            background-size: 150px;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 2;
-            max-width: 100%;
-            margin: 0 auto;
-        }
-
         .logo-container {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
             gap: 15px;
-            margin-bottom: 20px;
+            flex-wrap: wrap;
         }
-
         .logo {
             width: 120px;
             height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            border-radius: 50%;
-            background: white;
-            padding: 10px;
+            flex-shrink: 0;
         }
-
         .logo-img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            border-radius: 50%;
+            object-fit: cover;
         }
-
-        .logo-text {
-            text-align: center;
-        }
-
         .logo-text h1 {
             font-size: 1.8rem;
-            font-weight: 700;
-            margin: 0;
             line-height: 1.2;
         }
-
-        .logo-text .subtitle {
-            font-size: 1rem;
-            opacity: 0.9;
-            font-weight: 400;
-            margin-top: 5px;
-        }
-
         .welcome-card {
             background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
             padding: 20px;
             border-radius: 16px;
             margin: 20px 0;
-            border: 1px solid rgba(255,255,255,0.2);
-            text-align: left;
         }
 
-        .welcome-card h2 {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
+        /* Instruções */
+        .instructions {
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            margin: 20px;
+        }
+        .instructions ul {
+            list-style: none;
+            margin-top: 15px;
+        }
+        .instructions li {
+            margin: 10px 0;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .welcome-card p {
-            font-size: 1rem;
-            opacity: 0.9;
-            line-height: 1.5;
-        }
-
-        .features {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 20px;
-            width: 100%;
-            max-width: 300px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .feature {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(255,255,255,0.1);
-            padding: 12px 15px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            backdrop-filter: blur(5px);
-            justify-content: center;
-        }
-
-        /* ===== SEÇÃO DE CONTEÚDO ===== */
+        /* Seções de conteúdo (mantido original) */
         .content-section {
             padding: 30px 20px;
             display: flex;
             flex-direction: column;
             gap: 25px;
         }
-
         .about-card, .details-card {
-            background: var(--light);
+            background: var(--card-bg);
             border-radius: 16px;
             padding: 25px 20px;
             box-shadow: var(--shadow);
         }
-
         .card-title {
             font-size: 1.3rem;
             color: var(--primary);
@@ -256,31 +208,18 @@
             align-items: center;
             gap: 10px;
         }
-
-        .card-content {
-            font-size: 0.95rem;
-            color: var(--text);
-            line-height: 1.6;
+        .card-content p {
+            margin-bottom: 10px;
         }
-
         .card-content ul {
             list-style: none;
-            margin-top: 15px;
         }
-
         .card-content li {
             margin-bottom: 12px;
             display: flex;
             align-items: flex-start;
             gap: 10px;
         }
-
-        .card-content li i {
-            color: var(--primary);
-            margin-top: 3px;
-            flex-shrink: 0;
-        }
-
         .highlight {
             background: var(--gradient-light);
             -webkit-background-clip: text;
@@ -289,15 +228,12 @@
             font-weight: 600;
         }
 
-        /* ===== BOTÃO INICIAR ===== */
+        /* Botão iniciar */
         .cta-section {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
+            justify-content: center;
             margin-top: 30px;
         }
-
         .start-btn {
             padding: 16px 35px;
             border: none;
@@ -306,170 +242,100 @@
             color: white;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: 0.3s;
             font-size: 1.1rem;
             display: flex;
             align-items: center;
             gap: 10px;
             box-shadow: 0 8px 20px rgba(248, 37, 133, 0.4);
-            width: 100%;
-            max-width: 280px;
-            justify-content: center;
         }
-
         .start-btn:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 12px 25px rgba(248, 37, 133, 0.5);
-            background: #ff2d95;
+            transform: translateY(-3px);
         }
 
-        /* ===== SEÇÃO DO QUIZ ===== */
+        /* Quiz */
         .quiz-section {
             display: none;
-            padding: 20px 15px;
+            padding: 20px;
         }
-
         .progress-container {
-            padding: 0 15px;
             margin-bottom: 20px;
         }
-
         .progress-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             margin-bottom: 10px;
         }
-
-        .progress-text {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--primary);
-        }
-
         .progress-bar {
             height: 8px;
             background: #e9ecef;
             border-radius: 10px;
             overflow: hidden;
-            position: relative;
         }
-
         .progress {
             height: 100%;
             background: var(--gradient);
-            border-radius: 10px;
-            transition: width 0.5s ease;
-            position: relative;
-        }
-
-        .progress::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background-image: linear-gradient(
-                -45deg,
-                rgba(255, 255, 255, 0.2) 25%,
-                transparent 25%,
-                transparent 50%,
-                rgba(255, 255, 255, 0.2) 50%,
-                rgba(255, 255, 255, 0.2) 75%,
-                transparent 75%,
-                transparent
-            );
-            background-size: 20px 20px;
-            animation: move 1s linear infinite;
-        }
-
-        @keyframes move {
-            0% { background-position: 0 0; }
-            100% { background-position: 20px 0; }
+            transition: width 0.5s;
         }
 
         .question {
-            margin-bottom: 25px;
-            padding: 20px;
+            background: var(--card-bg);
             border-radius: 16px;
-            background: white;
-            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 20px;
             border-left: 5px solid var(--primary);
         }
-
         .question-header {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 20px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
         }
-
-        .question-difficulty {
-            padding: 8px 15px;
+        .difficulty-badge {
+            padding: 5px 12px;
             border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: bold;
             color: white;
-            align-self: flex-start;
+            font-size: 0.8rem;
+            font-weight: 600;
         }
-
         .difficulty-easy { background: var(--success); }
         .difficulty-medium { background: var(--warning); }
         .difficulty-hard { background: var(--danger); }
 
-        .question-text {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--primary);
-            line-height: 1.4;
+        .tip-icon {
+            cursor: pointer;
+            color: var(--warning);
+            font-size: 1.3rem;
+        }
+        .tip-text {
+            display: none;
+            background: var(--light);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-style: italic;
+            border-left: 3px solid var(--warning);
         }
 
         .options {
             display: grid;
-            grid-template-columns: 1fr;
             gap: 12px;
         }
-
         .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             padding: 16px 15px;
             background: var(--light);
             border-radius: 12px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
+            transition: 0.3s;
             border: 2px solid transparent;
-            position: relative;
         }
-
         .option:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
             border-color: var(--primary);
         }
-
-        .option.selected.correct {
-            background: var(--success);
-            color: white;
-            border-color: var(--success);
-            transform: translateY(-2px);
-        }
-
-        .option.selected.incorrect {
-            background: var(--danger);
-            color: white;
-            border-color: var(--danger);
-            transform: translateY(-2px);
-        }
-
-        .option.correct-answer {
-            background: var(--success);
-            color: white;
-            border-color: var(--success);
-            animation: pulse 0.6s ease;
-        }
-
         .option-letter {
             display: inline-flex;
             align-items: center;
@@ -478,458 +344,224 @@
             height: 32px;
             background: rgba(255,255,255,0.3);
             border-radius: 50%;
-            margin-right: 12px;
             font-weight: bold;
             flex-shrink: 0;
         }
-
-        .option.selected .option-letter,
-        .option.correct-answer .option-letter {
-            background: rgba(255,255,255,0.2);
+        .option-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .option.selected.correct {
+            background: var(--success);
+            color: white;
+        }
+        .option.selected.incorrect {
+            background: var(--danger);
+            color: white;
+        }
+        .option.correct-answer {
+            background: var(--success);
+            color: white;
+        }
+        .feedback-curiosity {
+            margin-top: 15px;
+            padding: 10px;
+            background: var(--light);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            border-left: 3px solid var(--primary);
         }
 
-        .feedback-icon {
-            margin-left: auto;
-            font-size: 1.1rem;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            flex-shrink: 0;
-        }
-
-        .option.selected.correct .feedback-icon,
-        .option.correct-answer .feedback-icon {
-            opacity: 1;
-        }
-
-        .option.selected.incorrect .feedback-icon {
-            opacity: 1;
-        }
-
-        .option.locked {
-            cursor: not-allowed;
-        }
-
-        .option.locked:hover {
-            transform: none;
-            box-shadow: none;
-            border-color: transparent;
-        }
-
-        /* ===== NAVEGAÇÃO ===== */
+        /* Navegação */
         .navigation {
             display: flex;
-            justify-content: space-between;
-            margin-top: 25px;
             gap: 10px;
-            flex-direction: row-reverse;
+            margin-top: 20px;
         }
-
         button {
-            padding: 14px 20px;
+            padding: 12px 20px;
             border: none;
             border-radius: 50px;
             background: var(--primary);
             color: white;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: 0.3s;
+            flex: 1;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.95rem;
-            flex: 1;
             justify-content: center;
+            gap: 8px;
         }
-
         button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+            filter: brightness(1.1);
         }
-
         button:disabled {
-            background: #bdc3c7;
+            background: var(--gray);
             cursor: not-allowed;
             transform: none;
-            box-shadow: none;
         }
 
-        .btn-next {
-            background: var(--secondary);
-        }
-
-        /* ===== RESULTADOS ===== */
+        /* Resultados */
         .results {
-            text-align: center;
-            padding: 30px 20px;
             display: none;
+            padding: 30px 20px;
+            text-align: center;
         }
-
-        .results-header {
-            margin-bottom: 25px;
-        }
-
         .score {
-            font-size: 3.5rem;
+            font-size: 4rem;
             font-weight: 700;
             background: var(--gradient);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin: 15px 0;
+            margin: 20px 0;
         }
-
         .performance {
             display: flex;
-            flex-direction: column;
             justify-content: center;
             gap: 15px;
-            margin: 30px 0;
+            margin: 20px 0;
+            flex-wrap: wrap;
         }
-
         .performance-item {
-            text-align: center;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 16px;
+            min-width: 100px;
+        }
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .action-btn {
+            background: var(--secondary);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        #review-container {
+            text-align: left;
+            margin: 20px 0;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 15px;
+            background: var(--card-bg);
+            border-radius: 16px;
+        }
+        .review-item {
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border-left: 5px solid;
+        }
+        .review-item.correct { border-color: var(--success); }
+        .review-item.incorrect { border-color: var(--danger); }
+        .ranking {
+            background: var(--card-bg);
             padding: 20px;
             border-radius: 16px;
-            background: var(--light);
-            box-shadow: var(--shadow);
+            margin-top: 20px;
+        }
+        .ranking-list {
+            list-style: none;
+            margin-top: 10px;
+        }
+        .ranking-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--gray);
         }
 
-        .performance-value {
-            font-size: 2rem;
-            font-weight: 700;
-            margin: 10px 0;
-        }
-
-        .performance-easy { color: var(--success); }
-        .performance-medium { color: var(--warning); }
-        .performance-hard { color: var(--danger); }
-
-        .message {
-            font-size: 1.1rem;
-            margin: 25px 0;
-            padding: 20px;
-            border-radius: 16px;
-            background: var(--light);
-            box-shadow: var(--shadow);
-            line-height: 1.5;
-        }
-
-        /* ===== ANIMAÇÕES FINAIS ===== */
-        .confetti-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 999;
-            overflow: hidden;
-            display: none;
-        }
-
-        .confetti-container.active {
-            display: block;
-        }
-
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            opacity: 0;
-            animation: confettiRain 2s ease forwards;
-        }
-
-        .trophy-animation {
-            animation: trophyGlow 2s infinite;
-        }
-
-        .star-animation {
-            animation: starPulse 1.5s infinite;
-        }
-
-        /* ===== INFORMAÇÕES DA IGREJA E INSTAGRAM ===== */
+        /* Rodapé */
         .church-info {
             text-align: center;
             padding: 20px;
-            background: var(--light);
+            background: var(--card-bg);
             border-top: 1px solid #dee2e6;
         }
-
-        .church-name {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-
-        .church-location {
-            color: var(--text);
-            opacity: 0.8;
-            font-size: 0.95rem;
-            margin-bottom: 15px;
-        }
-
-        .instagram-section {
-            display: flex;
-            flex-direction: column;
+        .instagram-link {
+            display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            background: var(--instagram);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
             margin-top: 10px;
         }
 
-        .instagram-text {
-            font-size: 0.9rem;
-            color: var(--text);
-        }
-
-        .instagram-link {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: var(--instagram);
-            color: white;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(225, 48, 108, 0.3);
-        }
-
-        .instagram-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(225, 48, 108, 0.4);
-            background: #C13584;
-        }
-
-        .instagram-icon {
-            font-size: 1.2rem;
-        }
-
-        /* ===== ANIMAÇÕES ===== */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes confettiRain {
-            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-        }
-
-        @keyframes starPulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.2); opacity: 0.8; }
-        }
-
-        @keyframes trophyGlow {
-            0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.7)); }
-            50% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.9)); }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease forwards;
-        }
-
-        /* ===== RESPONSIVO ===== */
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-            
-            .container {
-                border-radius: 16px;
-            }
-            
-            .modern-header {
-                padding: 20px 15px;
-            }
-            
-            .logo-text h1 {
-                font-size: 1.6rem;
-            }
-            
-            .logo {
-                width: 100px;
-                height: 100px;
-            }
-            
-            .welcome-card {
-                padding: 15px;
-            }
-            
-            .content-section {
-                padding: 25px 15px;
-            }
-            
-            .about-card, .details-card {
-                padding: 20px 15px;
-            }
-            
-            .quiz-section {
-                padding: 15px 10px;
-            }
-            
-            .question {
-                padding: 15px;
-            }
-            
-            .question-text {
-                font-size: 1.1rem;
-            }
-            
-            .option {
-                padding: 14px 12px;
-            }
-            
-            .navigation {
-                flex-direction: column-reverse;
-            }
-            
-            button {
-                width: 100%;
-            }
-            
-            .results {
-                padding: 25px 15px;
-            }
-            
-            .score {
-                font-size: 3rem;
-            }
-            
-            .animation-text {
-                font-size: 1.5rem;
-            }
-            
-            .animation-icon {
-                font-size: 3.5rem;
-            }
-            
-            .countdown {
-                font-size: 2.5rem;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .container {
-                max-width: 700px;
-            }
-            
+        /* Responsivo */
+        @media (max-width: 600px) {
             .logo-container {
-                flex-direction: row;
-                text-align: left;
-            }
-            
-            .logo-text {
-                text-align: left;
-            }
-            
-            .features {
-                flex-direction: row;
-                max-width: 100%;
-            }
-            
-            .performance {
-                flex-direction: row;
-            }
-            
-            .navigation {
-                flex-direction: row-reverse;
-            }
-            
-            .instagram-section {
-                flex-direction: row;
                 justify-content: center;
+                text-align: center;
             }
-        }
-
-        @media (min-width: 992px) {
-            .container {
-                max-width: 900px;
+            .logo-text h1 {
+                font-size: 1.4rem;
             }
-            
-            .content-section {
-                grid-template-columns: 1fr 1fr;
-                display: grid;
+            .option {
+                padding: 12px 10px;
+                gap: 8px;
+            }
+            .option-letter {
+                width: 28px;
+                height: 28px;
+                font-size: 0.9rem;
+            }
+            .performance {
+                flex-direction: column;
+            }
+            .floating-buttons {
+                top: 10px;
+                right: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- ANIMAÇÃO INICIAL -->
-    <div class="quiz-start-animation" id="quiz-start-animation">
-        <div class="animation-icon">
-            <i class="fas fa-heart"></i>
-        </div>
+    <div class="floating-buttons">
+        <button class="floating-btn" id="theme-toggle" title="Modo noturno/claro"><i class="fas fa-moon"></i></button>
+        <button class="floating-btn" id="sound-toggle" title="Ativar/desativar sons"><i class="fas fa-volume-up"></i></button>
+    </div>
+
+    <!-- ANIMAÇÃO INICIAL (opcional, pode ser removida se preferir) -->
+    <div class="quiz-start-animation" id="quiz-start-animation" style="display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:var(--gradient); z-index:9999; flex-direction:column; align-items:center; justify-content:center; color:white;">
+        <div class="animation-icon"><i class="fas fa-heart"></i></div>
         <div class="animation-text">Quiz da EBD Fiel</div>
-        <div class="animation-subtext">Lição 08: Os Discípulos de Cristo e o Bom Ânimo</div>
         <div class="countdown" id="countdown">3</div>
     </div>
 
-    <!-- CONFETES -->
-    <div class="confetti-container" id="confetti-container"></div>
-
-    <div class="container fade-in">
+    <div class="container">
         <!-- HEADER -->
         <header class="modern-header">
-            <div class="header-bg"></div>
-            <div class="header-content">
-                <div class="logo-container">
-                    <div class="logo">
-                        <img src="https://i.ibb.co/9mLXgx7k/logo.png" alt="Logo EBD Fiel" class="logo-img" id="logo-img">
-                    </div>
-                    <div class="logo-text">
-                        <h1>QUIZ DA EBD Fiel</h1>
-                        <div class="subtitle">Lição 08: Os Discípulos de Cristo e o Bom Ânimo</div>
-                    </div>
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="https://i.ibb.co/9mLXgx7k/logo.png" alt="Logo EBD Fiel" class="logo-img" id="logo-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%234361ee\'/><text x=\'50\' y=\'60\' text-anchor=\'middle\' fill=\'white\' font-size=\'40\' font-family=\'Arial\'>EBD</text></svg>'">
                 </div>
-
-                <div class="welcome-card">
-                    <h2><i class="fas fa-hands"></i> Bem-vindo ao Quiz da EBD Fiel!</h2>
-                    <p>Explore o ensino bíblico sobre como manter o bom ânimo em meio às adversidades. Descubra o que significa confiar em Deus mesmo quando as circunstâncias são difíceis.</p>
+                <div class="logo-text">
+                    <h1>QUIZ DA EBD Fiel</h1>
+                    <p>Lção 08: Os Discípulos de Cristo e o Bom Ânimo</p>
                 </div>
-
-                <div class="features">
-                    <div class="feature">
-                        <i class="fas fa-star" style="color: #4cc9f0;"></i>
-                        <span>15 Perguntas</span>
-                    </div>
-                    <div class="feature">
-                        <i class="fas fa-check-circle" style="color: #f8961e;"></i>
-                        <span>Feedback Imediato</span>
-                    </div>
-                    <div class="feature">
-                        <i class="fas fa-graduation-cap" style="color: #f94144;"></i>
-                        <span>Aprenda com a Bíblia</span>
-                    </div>
-                </div>
+            </div>
+            <div class="welcome-card">
+                <h2><i class="fas fa-hands"></i> Bem-vindo!</h2>
+                <p>Teste seus conhecimentos sobre a lição.</p>
             </div>
         </header>
 
-        <!-- CONTEÚDO -->
+        <!-- CONTEÚDO ORIGINAL (exatamente como solicitado) -->
         <section class="content-section">
             <div class="about-card">
                 <h2 class="card-title"><i class="fas fa-info-circle"></i> Sobre Esta Lição</h2>
@@ -952,460 +584,237 @@
                     </ul>
                 </div>
             </div>
-            
-            <!-- BOTÃO INICIAR NO FINAL -->
-            <div class="cta-section">
-                <button class="start-btn" id="start-btn">
-                    <i class="fas fa-play"></i> Iniciar Quiz
-                </button>
-            </div>
         </section>
+
+        <!-- TELA DE INSTRUÇÕES -->
+        <div class="instructions" id="instructions-screen">
+            <h3><i class="fas fa-info-circle"></i> Como funciona</h3>
+            <ul>
+                <li><i class="fas fa-check-circle" style="color:var(--success);"></i> 15 perguntas sobre a lição</li>
+                <li><i class="fas fa-lightbulb" style="color:var(--warning);"></i> Perguntas difíceis têm dica (clique na lâmpada)</li>
+                <li><i class="fas fa-music"></i> Sons de acerto/erro (pode mutar)</li>
+                <li><i class="fas fa-chart-line"></i> Ao final, veja seu desempenho e compartilhe</li>
+                <li><i class="fas fa-trophy"></i> As 5 melhores pontuações ficam salvas</li>
+            </ul>
+            <div class="cta-section">
+                <button class="start-btn" id="start-btn"><i class="fas fa-play"></i> Iniciar Quiz</button>
+            </div>
+        </div>
 
         <!-- QUIZ -->
         <div class="quiz-section" id="quiz-section">
             <div class="progress-container">
                 <div class="progress-header">
-                    <div class="progress-text" id="progress-text">Pergunta 1 de 15</div>
+                    <span id="progress-text">Pergunta 1 de 15</span>
                 </div>
-                <div class="progress-bar">
-                    <div class="progress" id="quiz-progress"></div>
-                </div>
+                <div class="progress-bar"><div class="progress" id="quiz-progress"></div></div>
             </div>
-
-            <div class="quiz-container" id="quiz-container">
-                <!-- Perguntas serão inseridas aqui -->
-            </div>
-
+            <div id="quiz-container"></div>
             <div class="navigation">
-                <button id="prev-btn" disabled>
-                    <i class="fas fa-arrow-left"></i> Anterior
-                </button>
-                <button id="next-btn" class="btn-next">
-                    Próxima <i class="fas fa-arrow-right"></i>
-                </button>
+                <button id="prev-btn" disabled><i class="fas fa-arrow-left"></i> Anterior</button>
+                <button id="next-btn" class="btn-next">Próxima <i class="fas fa-arrow-right"></i></button>
             </div>
         </div>
 
         <!-- RESULTADOS -->
         <div class="results" id="results">
-            <div class="results-header">
-                <h2><i class="fas fa-trophy" id="trophy-icon"></i> Resultado Final</h2>
-            </div>
+            <h2><i class="fas fa-trophy" id="trophy-icon"></i> Resultado Final</h2>
             <div class="score" id="score">0/0</div>
-
-            <div class="performance" id="performance">
-                <div class="performance-item">
-                    <div class="performance-value performance-easy" id="correct-easy">0</div>
-                    <div>Fáceis</div>
-                </div>
-                <div class="performance-item">
-                    <div class="performance-value performance-medium" id="correct-medium">0</div>
-                    <div>Médias</div>
-                </div>
-                <div class="performance-item">
-                    <div class="performance-value performance-hard" id="correct-hard">0</div>
-                    <div>Difíceis</div>
-                </div>
-            </div>
-
+            <div class="performance" id="performance"></div>
             <div class="message" id="message"></div>
 
-            <button id="restart-btn" style="background: var(--success);">
-                <i class="fas fa-redo"></i> Fazer Quiz Novamente
-            </button>
+            <div class="action-buttons">
+                <button class="action-btn" id="share-whatsapp"><i class="fab fa-whatsapp"></i> Compartilhar</button>
+                <button class="action-btn" id="export-pdf"><i class="fas fa-file-pdf"></i> Exportar PDF</button>
+                <button class="action-btn" id="review-btn"><i class="fas fa-search"></i> Revisar respostas</button>
+            </div>
+
+            <div id="review-container" style="display: none;"></div>
+
+            <div class="ranking">
+                <h3><i class="fas fa-ranking-star"></i> Ranking Local (Top 5)</h3>
+                <ul class="ranking-list" id="ranking-list"></ul>
+            </div>
+
+            <button id="restart-btn" style="background:var(--success); margin-top:20px;"><i class="fas fa-redo"></i> Fazer novamente</button>
         </div>
 
-        <!-- INFORMAÇÕES DA IGREJA -->
+        <!-- RODAPÉ -->
         <div class="church-info">
             <div class="church-name">EBD FIEL</div>
             <div class="church-location">FIEL A PALAVRA</div>
-
-            <div class="instagram-section">
-                <div class="instagram-text">Curta nossa página no Instagram:</div>
-                <a href="https://www.instagram.com/ebdfiel" target="_blank" class="instagram-link">
-                    <i class="fab fa-instagram instagram-icon"></i>
-                    @ebdfiel
-                </a>
-            </div>
+            <a href="https://www.instagram.com/ebdfiel" target="_blank" class="instagram-link">
+                <i class="fab fa-instagram"></i> @ebdfiel
+            </a>
         </div>
     </div>
 
     <script>
-        // =============================================
-        // BANCO DE PERGUNTAS - LIÇÃO 8
-        // =============================================
+        // ---------- BANCO DE PERGUNTAS ----------
         const allQuestions = [
-            // PERGUNTAS FÁCEIS
-            {
-                question: "Qual é o versículo do Texto Áureo desta lição?",
-                options: ["João 14:6", "João 16:33", "2 Coríntios 4:7", "Filipenses 4:13"],
-                correct: 1,
-                explanation: "O Texto Áureo é João 16:33: 'Tenho-vos dito isto, para que em mim tenhais paz; no mundo tereis aflições, mas tende bom ânimo; eu venci o mundo.'",
-                difficulty: "easy"
-            },
-            {
-                question: "O que significa ter 'bom ânimo' segundo a lição?",
-                options: [
-                    "Estar sempre alegre e sorridente",
-                    "Não esmorecer e não perder a fé mesmo nas adversidades", 
-                    "Ignorar os problemas da vida",
-                    "Esperar que tudo dê certo sem esforço"
-                ],
-                correct: 1,
-                explanation: "Ter bom ânimo significa não esmorecer, não perder a fé, mesmo diante das dificuldades e adversidades da vida.",
-                difficulty: "easy"
-            },
-            {
-                question: "Quem é o exemplo bíblico que manteve o bom ânimo mesmo sendo vendido como escravo?",
-                options: [
-                    "Moisés",
-                    "José", 
-                    "Davi",
-                    "Paulo"
-                ],
-                correct: 1,
-                explanation: "José manteve o bom ânimo e a confiança em Deus mesmo sendo vendido como escravo por seus irmãos.",
-                difficulty: "easy"
-            },
-            {
-                question: "O que não paralisa o autêntico discípulo de Cristo, segundo a lição?",
-                options: ["O desânimo", "A alegria", "A paz", "A fé"],
-                correct: 0,
-                explanation: "A Verdade Aplicada ensina que 'O desânimo não paralisa o autêntico discípulo de Cristo, pois seu fundamento é a fé e a certeza de que os propósitos de Deus se cumprirão.'",
-                difficulty: "easy"
-            },
-            {
-                question: "Qual destes versículos mostra Jesus incentivando alguém a ter bom ânimo?",
-                options: ["Mateus 9:2", "João 3:16", "Romanos 8:1", "Efésios 2:8"],
-                correct: 0,
-                explanation: "Em Mateus 9:2, Jesus diz ao paralítico: 'Filho, tem bom ânimo; perdoados são os teus pecados.'",
-                difficulty: "easy"
-            },
-            
-            // PERGUNTAS MÉDIAS
-            {
-                question: "Como Paulo reagia às perseguições e sofrimentos que enfrentava?",
-                options: [
-                    "Desistia temporariamente de pregar",
-                    "Mantinha o bom ânimo por se fortalecer em Cristo", 
-                    "Pedia aos outros apóstolos que pregassem em seu lugar",
-                    "Escrevia cartas de queixa às igrejas"
-                ],
-                correct: 1,
-                explanation: "A lição mostra que Paulo manteve o bom ânimo por se fortalecer em Cristo (Filipenses 4:13), apesar de açoites, apedrejamentos e naufrágios.",
-                difficulty: "medium"
-            },
-            {
-                question: "O que José entendeu sobre as adversidades que enfrentou no Egito?",
-                options: [
-                    "Eram um castigo por seus pecados",
-                    "Tudo fazia parte do plano de Deus para preservação da vida", 
-                    "Eram resultado do azar e do destino",
-                    "Mostravam que Deus o abandonara"
-                ],
-                correct: 1,
-                explanation: "José disse a seus irmãos: 'Vós, na verdade, intentastes o mal contra mim; porém Deus o tornou em bem' (Gênesis 45:5).",
-                difficulty: "medium"
-            },
-            {
-                question: "Segundo a lição, o que o perdão representa para o cristão?",
-                options: [
-                    "Uma obrigação difícil que deve ser evitada",
-                    "Uma graça que Deus nos dá para prosseguir após um ferimento", 
-                    "Um sinal de fraqueza e submissão",
-                    "Algo que só devemos fazer se a pessoa pedir desculpas"
-                ],
-                correct: 1,
-                explanation: "O Bispo Abner Ferreira afirma que 'o perdão é uma Graça que Deus nos dá para prosseguirmos no caminho após um ferimento profundo.'",
-                difficulty: "medium"
-            },
-            {
-                question: "O que as adversidades produzem no cristão, segundo a lição?",
-                options: [
-                    "Apenas sofrimento e dor",
-                    "Crescimento e amadurecimento em Cristo", 
-                    "Dúvidas e questionamentos",
-                    "Isolamento e solidão"
-                ],
-                correct: 1,
-                explanation: "A conclusão da lição afirma que as adversidades 'contribuem para o nosso crescimento e amadurecimento em Cristo.'",
-                difficulty: "medium"
-            },
-            {
-                question: "Onde encontramos ânimo para superar as adversidades?",
-                options: [
-                    "Em nossas próprias forças",
-                    "Em Jesus Cristo", 
-                    "Nos amigos e familiares",
-                    "No sucesso profissional"
-                ],
-                correct: 1,
-                explanation: "A lição afirma: 'Em Jesus, encontramos o ânimo de que precisamos para superar as barreiras que surgem ao longo da vida.'",
-                difficulty: "medium"
-            },
-            
-            // PERGUNTAS DIFÍCEIS
-            {
-                question: "Segundo 2 Coríntios 4, por que Paulo não desanimava em meio às aflições?",
-                options: [
-                    "Porque as aflições são leves comparadas à glória eterna",
-                    "Porque ele era naturalmente uma pessoa otimista", 
-                    "Porque ele tinha riquezas que o confortavam",
-                    "Porque evitava situações difíceis sempre que possível"
-                ],
-                correct: 0,
-                explanation: "Colin Kruse comenta que Paulo não desanima porque as aflições são leves e momentâneas comparadas com o peso eterno da glória.",
-                difficulty: "hard"
-            },
-            {
-                question: "Qual o papel da Palavra de Deus para o cristão que enfrenta adversidades?",
-                options: [
-                    "É a espada do Espírito que nos ajuda a vencer as batalhas",
-                    "É apenas um livro de histórias inspiradoras", 
-                    "Serve apenas para estudos acadêmicos",
-                    "É útil apenas para líderes religiosos"
-                ],
-                correct: 0,
-                explanation: "A lição cita Efésios 6:17: 'a espada do Espírito, que é a palavra de Deus' como arma poderosa para vencer as adversidades.",
-                difficulty: "hard"
-            },
-            {
-                question: "Qual foi a atitude de José em relação a seus irmãos que o venderam?",
-                options: [
-                    "Ele os perdoou e reconheceu que Deus usou aquilo para o bem",
-                    "Ele os denunciou às autoridades egípcias", 
-                    "Ele os evitou pelo resto da vida",
-                    "Ele exigiu compensação financeira pelo mal sofrido"
-                ],
-                correct: 0,
-                explanation: "José perdoou seus irmãos e disse: 'Vós, na verdade, intentastes o mal contra mim; porém Deus o tornou em bem' (Gênesis 50:20).",
-                difficulty: "hard"
-            },
-            {
-                question: "Como a lição explica a relação entre fé e bom ânimo nas tribulações?",
-                options: [
-                    "A fé em Cristo nos enche de força e esperança para enfrentar desafios",
-                    "Fé e bom ânimo são conceitos separados", 
-                    "Primeiro vem o bom ânimo, depois a fé",
-                    "A fé substitui a necessidade de bom ânimo"
-                ],
-                correct: 0,
-                explanation: "A lição afirma: 'A fé em Jesus Cristo e Suas promessas nos enchem de força e esperança para enfrentar os desafios com bom ânimo.'",
-                difficulty: "hard"
-            },
-            {
-                question: "O que o Senhor representa para os que passam por provações, segundo a lição?",
-                options: [
-                    "Uma torre segura e refúgio",
-                    "Um juiz severo que observa nossos erros", 
-                    "Um observador distante",
-                    "Um mestre exigente que testa nossos limites"
-                ],
-                correct: 0,
-                explanation: "A lição menciona Provérbios 18:10: 'Torre forte é o nome do Senhor; para ela corre o justo, e está seguro.'",
-                difficulty: "hard"
-            }
+            // FÁCEIS
+            { question: "Qual é o versículo do Texto Áureo desta lição?", options: ["João 14:6", "João 16:33", "2 Coríntios 4:7", "Filipenses 4:13"], correct: 1, explanation: "O Texto Áureo é João 16:33.", difficulty: "easy", tip: "Jesus falou sobre ter paz em mim.", curiosity: "João 16:33 - 'Tenho-vos dito isto, para que em mim tenhais paz...'" },
+            { question: "O que significa ter 'bom ânimo' segundo a lição?", options: ["Estar sempre alegre e sorridente", "Não esmorecer e não perder a fé mesmo nas adversidades", "Ignorar os problemas da vida", "Esperar que tudo dê certo sem esforço"], correct: 1, explanation: "Bom ânimo é não esmorecer.", difficulty: "easy", tip: "Relacionado com fé.", curiosity: "Provérbios 18:10 - Torre forte é o nome do Senhor." },
+            { question: "Quem é o exemplo bíblico que manteve o bom ânimo mesmo sendo vendido como escravo?", options: ["Moisés", "José", "Davi", "Paulo"], correct: 1, explanation: "José confiou em Deus.", difficulty: "easy", tip: "Filho de Jacó.", curiosity: "Gênesis 45:5 - Deus me enviou adiante de vós." },
+            { question: "O que não paralisa o autêntico discípulo de Cristo, segundo a lição?", options: ["O desânimo", "A alegria", "A paz", "A fé"], correct: 0, explanation: "O desânimo não paralisa o autêntico discípulo.", difficulty: "easy", tip: "É o oposto de ânimo.", curiosity: "Filipenses 4:13 - Tudo posso naquele que me fortalece." },
+            { question: "Qual destes versículos mostra Jesus incentivando alguém a ter bom ânimo?", options: ["Mateus 9:2", "João 3:16", "Romanos 8:1", "Efésios 2:8"], correct: 0, explanation: "Ao paralítico.", difficulty: "easy", tip: "Ele disse: 'Filho, tem bom ânimo; perdoados são os teus pecados.'", curiosity: "Mateus 9:2 - A fé do paralítico." },
+            // MÉDIAS
+            { question: "Como Paulo reagia às perseguições e sofrimentos que enfrentava?", options: ["Desistia temporariamente de pregar", "Mantinha o bom ânimo por se fortalecer em Cristo", "Pedia aos outros apóstolos que pregassem em seu lugar", "Escrevia cartas de queixa às igrejas"], correct: 1, explanation: "Paulo se fortalecia em Cristo.", difficulty: "medium", tip: "Filipenses 4:13", curiosity: "2 Coríntios 11:24-27 - Lista de sofrimentos de Paulo." },
+            { question: "O que José entendeu sobre as adversidades que enfrentou no Egito?", options: ["Eram um castigo por seus pecados", "Tudo fazia parte do plano de Deus para preservação da vida", "Eram resultado do azar e do destino", "Mostravam que Deus o abandonara"], correct: 1, explanation: "Deus transformou o mal em bem.", difficulty: "medium", tip: "Gênesis 50:20", curiosity: "José disse: 'Vós intentastes o mal, mas Deus o tornou em bem.'" },
+            { question: "Segundo a lição, o que o perdão representa para o cristão?", options: ["Uma obrigação difícil que deve ser evitada", "Uma graça que Deus nos dá para prosseguir após um ferimento", "Um sinal de fraqueza e submissão", "Algo que só devemos fazer se a pessoa pedir desculpas"], correct: 1, explanation: "Graça para prosseguir.", difficulty: "medium", tip: "Dom divino", curiosity: "Efésios 4:32 - Perdoai-vos uns aos outros." },
+            { question: "O que as adversidades produzem no cristão, segundo a lição?", options: ["Apenas sofrimento e dor", "Crescimento e amadurecimento em Cristo", "Dúvidas e questionamentos", "Isolamento e solidão"], correct: 1, explanation: "Crescimento e amadurecimento.", difficulty: "medium", tip: "Romanos 5:3-5", curiosity: "A tribulação produz paciência." },
+            { question: "Onde encontramos ânimo para superar as adversidades?", options: ["Em nossas próprias forças", "Em Jesus Cristo", "Nos amigos e familiares", "No sucesso profissional"], correct: 1, explanation: "Em Jesus.", difficulty: "medium", tip: "João 16:33", curiosity: "Jesus venceu o mundo." },
+            // DIFÍCEIS
+            { question: "Segundo 2 Coríntios 4, por que Paulo não desanimava em meio às aflições?", options: ["Porque as aflições são leves comparadas à glória eterna", "Porque ele era naturalmente uma pessoa otimista", "Porque ele tinha riquezas que o confortavam", "Porque evitava situações difíceis sempre que possível"], correct: 0, explanation: "As aflições são leves e momentâneas.", difficulty: "hard", tip: "Peso eterno de glória", curiosity: "2 Coríntios 4:17 - 'Porque a nossa leve e momentânea tribulação...'" },
+            { question: "Qual o papel da Palavra de Deus para o cristão que enfrenta adversidades?", options: ["É a espada do Espírito que nos ajuda a vencer as batalhas", "É apenas um livro de histórias inspiradoras", "Serve apenas para estudos acadêmicos", "É útil apenas para líderes religiosos"], correct: 0, explanation: "É a espada do Espírito.", difficulty: "hard", tip: "Efésios 6:17", curiosity: "A palavra é viva e eficaz." },
+            { question: "Qual foi a atitude de José em relação a seus irmãos que o venderam?", options: ["Ele os perdoou e reconheceu que Deus usou aquilo para o bem", "Ele os denunciou às autoridades egípcias", "Ele os evitou pelo resto da vida", "Ele exigiu compensação financeira pelo mal sofrido"], correct: 0, explanation: "Perdoou e reconheceu o plano de Deus.", difficulty: "hard", tip: "Gênesis 50:20", curiosity: "Ele os confortou." },
+            { question: "Como a lição explica a relação entre fé e bom ânimo nas tribulações?", options: ["A fé em Cristo nos enche de força e esperança para enfrentar desafios", "Fé e bom ânimo são conceitos separados", "Primeiro vem o bom ânimo, depois a fé", "A fé substitui a necessidade de bom ânimo"], correct: 0, explanation: "A fé enche de força e esperança.", difficulty: "hard", tip: "Hebreus 11", curiosity: "Sem fé é impossível agradar a Deus." },
+            { question: "O que o Senhor representa para os que passam por provações, segundo a lição?", options: ["Uma torre segura e refúgio", "Um juiz severo que observa nossos erros", "Um observador distante", "Um mestre exigente que testa nossos limites"], correct: 0, explanation: "Torre forte e refúgio.", difficulty: "hard", tip: "Provérbios 18:10", curiosity: "O justo corre para ela e está seguro." }
         ];
 
-        // =============================================
-        // VARIÁVEIS GLOBAIS
-        // =============================================
-        let currentQuestionIndex = 0;
-        let userAnswers = [];               // Armazena o índice original da opção selecionada (relativo à pergunta original)
-        let quizStarted = false;
-        let shuffledQuestions = [];           // Array com as perguntas em ordem aleatória para a sessão atual
-        // Estado para manter as opções embaralhadas por pergunta (indexado pela posição no array shuffledQuestions)
+        // ---------- VARIÁVEIS GLOBAIS ----------
+        let shuffledQuestions = [];
         let shuffledOptionsState = [];
+        let userAnswers = [];
+        let currentQuestionIndex = 0;
+        let quizStarted = false;
+        let soundEnabled = true;
+        let darkMode = false;
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
 
-        // =============================================
-        // FUNÇÕES AUXILIARES
-        // =============================================
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
+        function playSound(type) {
+            if (!soundEnabled) return;
+            if (!audioCtx) audioCtx = new AudioContext();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.type = 'sine';
+            if (type === 'correct') {
+                osc.frequency.value = 800;
+                gain.gain.value = 0.1;
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.2);
+            } else {
+                osc.frequency.value = 400;
+                gain.gain.value = 0.1;
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.15);
             }
-            return array;
         }
 
-        // Prepara as opções embaralhadas para uma pergunta, se ainda não existir
-        function getShuffledOptionsForQuestion(questionIndex) {
-            if (!shuffledOptionsState[questionIndex]) {
-                const question = shuffledQuestions[questionIndex];
-                // Cria array de objetos com texto e índice original
-                const optionsWithIndex = question.options.map((text, idx) => ({ text, originalIndex: idx }));
-                // Embaralha
-                shuffledOptionsState[questionIndex] = shuffleArray([...optionsWithIndex]);
-            }
-            return shuffledOptionsState[questionIndex];
-        }
-
-        // =============================================
-        // INICIALIZAÇÃO
-        // =============================================
+        // ---------- INICIALIZAÇÃO ----------
         document.addEventListener('DOMContentLoaded', function() {
-            // Configurar eventos dos botões
-            document.getElementById('start-btn').addEventListener('click', startQuizWithAnimation);
+            document.getElementById('start-btn').addEventListener('click', startQuiz);
             document.getElementById('prev-btn').addEventListener('click', showPreviousQuestion);
             document.getElementById('next-btn').addEventListener('click', showNextQuestion);
             document.getElementById('restart-btn').addEventListener('click', restartQuiz);
-            
-            // Configurar imagem da logo
-            const logoImg = document.getElementById('logo-img');
-            logoImg.onerror = function() {
-                logoImg.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%234361ee"/><text x="50" y="60" text-anchor="middle" fill="white" font-size="40" font-family="Arial">EBD</text></svg>';
-            };
+            document.getElementById('share-whatsapp').addEventListener('click', shareWhatsApp);
+            document.getElementById('export-pdf').addEventListener('click', exportPDF);
+            document.getElementById('review-btn').addEventListener('click', toggleReview);
+            document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+            document.getElementById('sound-toggle').addEventListener('click', toggleSound);
+            updateRankingDisplay();
         });
 
-        // =============================================
-        // FUNÇÕES DO QUIZ
-        // =============================================
-        function startQuizWithAnimation() {
-            // Mostrar animação inicial
-            const startAnimation = document.getElementById('quiz-start-animation');
-            startAnimation.classList.add('active');
-            
-            // Contagem regressiva
-            let count = 3;
-            const countdownElement = document.getElementById('countdown');
-            
-            const countdownInterval = setInterval(() => {
-                countdownElement.textContent = count;
-                count--;
-                
-                if (count < 0) {
-                    clearInterval(countdownInterval);
-                    startQuiz();
-                }
-            }, 1000);
-        }
-
         function startQuiz() {
-            // Embaralhar a ordem das perguntas
             shuffledQuestions = shuffleArray([...allQuestions]);
-            
-            // Resetar estado de opções embaralhadas
             shuffledOptionsState = [];
-            
-            // Resetar respostas
             userAnswers = new Array(shuffledQuestions.length).fill(null);
-            
-            // Esconder animação inicial
-            document.getElementById('quiz-start-animation').classList.remove('active');
-            
-            // Esconder elementos iniciais e mostrar quiz
+            currentQuestionIndex = 0;
+            quizStarted = true;
             document.querySelector('.modern-header').style.display = 'none';
+            document.getElementById('instructions-screen').style.display = 'none';
             document.querySelector('.content-section').style.display = 'none';
             document.getElementById('quiz-section').style.display = 'block';
             document.getElementById('results').style.display = 'none';
-            
-            // Resetar índice
-            currentQuestionIndex = 0;
-            quizStarted = true;
-            
-            // Mostrar primeira pergunta
             showQuestion(currentQuestionIndex);
         }
 
-        function showQuestion(index) {
-            const question = shuffledQuestions[index];
-            const quizContainer = document.getElementById('quiz-container');
-            
-            // Atualizar barra de progresso
-            updateProgressBar();
-            
-            // Obter opções embaralhadas para esta pergunta
-            const shuffledOptions = getShuffledOptionsForQuestion(index);
-            
-            // Criar HTML da pergunta usando as opções embaralhadas
-            let optionsHTML = '';
-            const letters = ['A', 'B', 'C', 'D'];
-            
-            shuffledOptions.forEach((opt, i) => {
-                const originalIdx = opt.originalIndex;
-                const isSelected = userAnswers[index] === originalIdx;
-                let optionClass = 'option';
-                
-                if (isSelected) {
-                    optionClass += ' selected';
-                    if (originalIdx === question.correct) {
-                        optionClass += ' correct';
-                    } else {
-                        optionClass += ' incorrect';
-                    }
-                }
-                
-                // Se o usuário já respondeu e esta é a opção correta (e ele errou), destacar como correta
-                if (userAnswers[index] !== null && originalIdx === question.correct && userAnswers[index] !== question.correct) {
-                    optionClass += ' correct-answer';
-                }
-                
-                optionsHTML += `
-                    <div class="${optionClass}" data-original-index="${originalIdx}">
-                        <span class="option-letter">${letters[i]}</span>
-                        <span class="option-text">${opt.text}</span>
-                        <span class="feedback-icon">
-                            ${isSelected ? (originalIdx === question.correct ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>') : ''}
-                        </span>
-                    </div>
-                `;
-            });
-            
-            quizContainer.innerHTML = `
-                <div class="question fade-in">
-                    <div class="question-header">
-                        <span class="question-difficulty difficulty-${question.difficulty}">
-                            ${question.difficulty === 'easy' ? 'Fácil' : question.difficulty === 'medium' ? 'Médio' : 'Difícil'}
-                        </span>
-                        <div class="question-text">${question.question}</div>
-                    </div>
-                    <div class="options">
-                        ${optionsHTML}
-                    </div>
-                </div>
-            `;
-            
-            // Adicionar eventos às opções
-            document.querySelectorAll('.option').forEach(option => {
-                option.addEventListener('click', function() {
-                    if (!quizStarted) return;
-                    
-                    const originalIndex = parseInt(this.getAttribute('data-original-index'));
-                    selectOption(originalIndex);
-                });
-            });
-            
-            // Atualizar botões de navegação
-            updateNavigationButtons();
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
         }
 
-        function selectOption(originalIndex) {
-            userAnswers[currentQuestionIndex] = originalIndex;
-            const question = shuffledQuestions[currentQuestionIndex];
-            
-            // Atualizar visual das opções
-            const options = document.querySelectorAll('.option');
-            options.forEach(option => {
-                const optOriginalIndex = parseInt(option.getAttribute('data-original-index'));
-                option.classList.remove('selected', 'correct', 'incorrect', 'correct-answer');
-                
-                if (optOriginalIndex === originalIndex) {
-                    option.classList.add('selected');
-                    if (optOriginalIndex === question.correct) {
-                        option.classList.add('correct');
-                    } else {
-                        option.classList.add('incorrect');
-                    }
-                }
-                
-                // Mostrar resposta correta se o usuário errou
-                if (optOriginalIndex === question.correct && originalIndex !== question.correct) {
-                    option.classList.add('correct-answer');
-                }
+        function getShuffledOptions(qIndex) {
+            if (!shuffledOptionsState[qIndex]) {
+                const q = shuffledQuestions[qIndex];
+                const opts = q.options.map((text, idx) => ({ text, originalIndex: idx }));
+                shuffledOptionsState[qIndex] = shuffleArray([...opts]);
+            }
+            return shuffledOptionsState[qIndex];
+        }
+
+        function showQuestion(index) {
+            const q = shuffledQuestions[index];
+            const shuffledOpts = getShuffledOptions(index);
+            const letters = ['A', 'B', 'C', 'D'];
+            let html = `<div class="question slide-in">`;
+            html += `<div class="question-header">`;
+            html += `<span class="difficulty-badge difficulty-${q.difficulty}">${q.difficulty === 'easy' ? 'Fácil' : q.difficulty === 'medium' ? 'Médio' : 'Difícil'}</span>`;
+            if (q.difficulty === 'hard') {
+                html += `<span class="tip-icon" onclick="event.stopPropagation(); showTip(${index})"><i class="fas fa-lightbulb"></i></span>`;
+            }
+            html += `</div>`;
+            html += `<div class="question-text">${q.question}</div>`;
+            if (q.difficulty === 'hard') {
+                html += `<div class="tip-text" id="tip-${index}">💡 Dica: ${q.tip}</div>`;
+            }
+            html += `<div class="options">`;
+            shuffledOpts.forEach((opt, i) => {
+                const selected = userAnswers[index] === opt.originalIndex;
+                let cls = 'option';
+                if (selected) cls += ' selected' + (opt.originalIndex === q.correct ? ' correct' : ' incorrect');
+                if (userAnswers[index] !== null && opt.originalIndex === q.correct && userAnswers[index] !== q.correct) cls += ' correct-answer';
+                html += `<div class="${cls}" data-original-index="${opt.originalIndex}" onclick="selectOption(${index}, ${opt.originalIndex})">`;
+                html += `<span class="option-letter">${letters[i]}</span>`;
+                html += `<span class="option-text">${opt.text}</span>`;
+                html += `<span class="feedback-icon">${selected ? (opt.originalIndex === q.correct ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>') : ''}</span>`;
+                html += `</div>`;
             });
-            
-            // Atualizar botões de navegação
-            updateNavigationButtons();
+            html += `</div>`;
+            if (userAnswers[index] !== null) {
+                html += `<div class="feedback-curiosity"><i class="fas fa-book-open"></i> ${q.curiosity}</div>`;
+            }
+            html += `</div>`;
+            document.getElementById('quiz-container').innerHTML = html;
+            updateProgressBar(index);
+            updateNavButtons();
+        }
+
+        window.selectOption = function(qIndex, optIndex) {
+            if (!quizStarted) return;
+            userAnswers[qIndex] = optIndex;
+            const q = shuffledQuestions[qIndex];
+            if (optIndex === q.correct) playSound('correct');
+            else playSound('incorrect');
+            showQuestion(qIndex);
+        };
+
+        window.showTip = function(qIndex) {
+            const tip = document.getElementById(`tip-${qIndex}`);
+            if (tip) tip.style.display = tip.style.display === 'block' ? 'none' : 'block';
+        };
+
+        function updateProgressBar(index) {
+            const pct = ((index + 1) / shuffledQuestions.length) * 100;
+            document.getElementById('quiz-progress').style.width = pct + '%';
+            document.getElementById('progress-text').innerText = `Pergunta ${index+1} de ${shuffledQuestions.length}`;
+        }
+
+        function updateNavButtons() {
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            const nextBtn = document.getElementById('next-btn');
+            if (currentQuestionIndex === shuffledQuestions.length - 1) {
+                nextBtn.innerHTML = 'Ver Resultados <i class="fas fa-chart-bar"></i>';
+            } else {
+                nextBtn.innerHTML = 'Próxima <i class="fas fa-arrow-right"></i>';
+            }
+            nextBtn.disabled = userAnswers[currentQuestionIndex] === null;
         }
 
         function showNextQuestion() {
@@ -1424,167 +833,111 @@
             }
         }
 
-        function updateProgressBar() {
-            const progress = ((currentQuestionIndex + 1) / shuffledQuestions.length) * 100;
-            document.getElementById('quiz-progress').style.width = `${progress}%`;
-            document.getElementById('progress-text').textContent = `Pergunta ${currentQuestionIndex + 1} de ${shuffledQuestions.length}`;
-        }
-
-        function updateNavigationButtons() {
-            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
-            
-            const nextButton = document.getElementById('next-btn');
-            if (currentQuestionIndex === shuffledQuestions.length - 1) {
-                nextButton.innerHTML = 'Ver Resultados <i class="fas fa-chart-bar"></i>';
-            } else {
-                nextButton.innerHTML = 'Próxima <i class="fas fa-arrow-right"></i>';
-            }
-            
-            // Habilitar próximo apenas se uma opção foi selecionada
-            nextButton.disabled = userAnswers[currentQuestionIndex] === null;
-        }
-
-        // =============================================
-        // ANIMAÇÕES FINAIS
-        // =============================================
-        function createConfetti(scorePercentage) {
-            const container = document.getElementById('confetti-container');
-            container.classList.add('active');
-            container.innerHTML = '';
-            
-            const colors = ['#4361ee', '#7209b7', '#f72585', '#4cc9f0', '#f8961e', '#f94144'];
-            const confettiCount = Math.min(100, Math.floor(scorePercentage * 100));
-            
-            for (let i = 0; i < confettiCount; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                
-                // Configurações aleatórias
-                const left = Math.random() * 100;
-                const size = Math.random() * 10 + 5;
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                const delay = Math.random() * 2;
-                const duration = Math.random() * 2 + 2;
-                
-                confetti.style.left = `${left}%`;
-                confetti.style.width = `${size}px`;
-                confetti.style.height = `${size}px`;
-                confetti.style.backgroundColor = color;
-                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-                confetti.style.animationDelay = `${delay}s`;
-                confetti.style.animationDuration = `${duration}s`;
-                
-                container.appendChild(confetti);
-            }
-            
-            // Remover confetes após 5 segundos
-            setTimeout(() => {
-                container.classList.remove('active');
-                container.innerHTML = '';
-            }, 5000);
-        }
-
+        // ---------- RESULTADOS ----------
         function showResults() {
             document.getElementById('quiz-section').style.display = 'none';
             document.getElementById('results').style.display = 'block';
-            
-            // Calcular pontuação
-            let score = 0;
-            let correctEasy = 0, correctMedium = 0, correctHard = 0;
-            let totalEasy = 0, totalMedium = 0, totalHard = 0;
-            
-            shuffledQuestions.forEach((question, index) => {
-                // Contar totais por dificuldade
-                if (question.difficulty === 'easy') totalEasy++;
-                if (question.difficulty === 'medium') totalMedium++;
-                if (question.difficulty === 'hard') totalHard++;
-                
-                // Verificar resposta correta
-                if (userAnswers[index] === question.correct) {
+            let score = 0, easy=0, med=0, hard=0, totEasy=0, totMed=0, totHard=0;
+            shuffledQuestions.forEach((q, i) => {
+                if (q.difficulty === 'easy') totEasy++;
+                if (q.difficulty === 'medium') totMed++;
+                if (q.difficulty === 'hard') totHard++;
+                if (userAnswers[i] === q.correct) {
                     score++;
-                    
-                    if (question.difficulty === 'easy') correctEasy++;
-                    if (question.difficulty === 'medium') correctMedium++;
-                    if (question.difficulty === 'hard') correctHard++;
+                    if (q.difficulty === 'easy') easy++;
+                    if (q.difficulty === 'medium') med++;
+                    if (q.difficulty === 'hard') hard++;
                 }
             });
-            
-            const scorePercentage = score / shuffledQuestions.length;
-            
-            // Atualizar resultados na tela
-            document.getElementById('score').textContent = `${score}/${shuffledQuestions.length}`;
-            document.getElementById('correct-easy').textContent = `${correctEasy}/${totalEasy}`;
-            document.getElementById('correct-medium').textContent = `${correctMedium}/${totalMedium}`;
-            document.getElementById('correct-hard').textContent = `${correctHard}/${totalHard}`;
-            
-            // Configurar mensagem e animações baseadas na pontuação
-            const trophyIcon = document.getElementById('trophy-icon');
-            const messageElement = document.getElementById('message');
-            
-            let message = '';
-            
-            if (score === shuffledQuestions.length) {
-                // PERFEITO
-                message = '<i class="fas fa-crown star-animation"></i> <strong>PERFEITO!</strong> Você acertou todas as questões! Sua compreensão sobre manter o bom ânimo em Cristo é excepcional.';
-                trophyIcon.className = 'fas fa-crown trophy-animation';
-                createConfetti(1);
-            } else if (scorePercentage >= 0.8) {
-                // EXCELENTE
-                message = '<i class="fas fa-star star-animation"></i> <strong>EXCELENTE!</strong> Você demonstrou um conhecimento excepcional sobre como manter o bom ânimo nas adversidades.';
-                trophyIcon.className = 'fas fa-trophy trophy-animation';
-                createConfetti(scorePercentage);
-            } else if (scorePercentage >= 0.6) {
-                // MUITO BOM
-                message = '<i class="fas fa-thumbs-up"></i> <strong>MUITO BOM!</strong> Você tem um bom entendimento da lição sobre o bom ânimo. Continue estudando!';
-                trophyIcon.className = 'fas fa-award';
-                createConfetti(scorePercentage * 0.7);
-            } else if (scorePercentage >= 0.5) {
-                // BOM
-                message = '<i class="fas fa-check-circle"></i> <strong>BOM TRABALHO!</strong> Você acertou a maioria das questões. Revise os pontos em que teve dificuldade.';
-                trophyIcon.className = 'fas fa-medal';
-                createConfetti(scorePercentage * 0.5);
-            } else {
-                // CONTINUE ESTUDANDO
-                message = '<i class="fas fa-book"></i> <strong>CONTINUE ESTUDANDO!</strong> Manter o bom ânimo em Cristo é fundamental. Reveja a lição e tente novamente.';
-                trophyIcon.className = 'fas fa-book';
-            }
-            
-            messageElement.innerHTML = message;
-            
-            // Adicionar animação de entrada aos elementos
-            const resultElements = document.querySelectorAll('#results > *');
-            resultElements.forEach((element, index) => {
-                element.classList.add('fade-in');
-                element.style.animationDelay = `${index * 0.2}s`;
+            document.getElementById('score').innerText = `${score}/${shuffledQuestions.length}`;
+            document.getElementById('performance').innerHTML = `
+                <div class="performance-item"><strong>Fáceis</strong><br>${easy}/${totEasy}</div>
+                <div class="performance-item"><strong>Médias</strong><br>${med}/${totMed}</div>
+                <div class="performance-item"><strong>Difíceis</strong><br>${hard}/${totHard}</div>
+            `;
+            let msg = '';
+            if (score === shuffledQuestions.length) msg = 'Perfeito! Você acertou todas!';
+            else if (score >= shuffledQuestions.length*0.8) msg = 'Excelente!';
+            else if (score >= shuffledQuestions.length*0.6) msg = 'Muito bom!';
+            else if (score >= shuffledQuestions.length*0.5) msg = 'Bom trabalho!';
+            else msg = 'Continue estudando!';
+            document.getElementById('message').innerHTML = `<i class="fas fa-smile"></i> ${msg}`;
+
+            saveRanking(score);
+            updateRankingDisplay();
+        }
+
+        function saveRanking(score) {
+            let ranking = JSON.parse(localStorage.getItem('quizRanking')) || [];
+            ranking.push({ score: score, date: new Date().toLocaleDateString() });
+            ranking.sort((a, b) => b.score - a.score);
+            ranking = ranking.slice(0, 5);
+            localStorage.setItem('quizRanking', JSON.stringify(ranking));
+        }
+
+        function updateRankingDisplay() {
+            let ranking = JSON.parse(localStorage.getItem('quizRanking')) || [];
+            let html = '';
+            ranking.forEach((item, i) => {
+                html += `<li class="ranking-item"><span>${i+1}. ${item.score} pontos</span> <span>${item.date}</span></li>`;
             });
-            
-            // Rolagem suave para os resultados
-            setTimeout(() => {
-                document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
-            }, 500);
+            document.getElementById('ranking-list').innerHTML = html || '<li>Nenhuma pontuação ainda.</li>';
+        }
+
+        function shareWhatsApp() {
+            let score = document.getElementById('score').innerText;
+            let text = `Fiz ${score} no Quiz da EBD Fiel! Vem fazer também! Acesse: ${window.location.href}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function exportPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text('Resultado do Quiz EBD Fiel', 10, 10);
+            doc.text(`Pontuação: ${document.getElementById('score').innerText}`, 10, 20);
+            doc.text(document.getElementById('message').innerText.replace(/<[^>]*>/g, ''), 10, 30);
+            doc.save('resultado_quiz.pdf');
+        }
+
+        function toggleReview() {
+            let container = document.getElementById('review-container');
+            if (container.style.display === 'none') {
+                let html = '<h3>Revisão das respostas</h3>';
+                shuffledQuestions.forEach((q, i) => {
+                    let userAns = userAnswers[i];
+                    let isCorrect = userAns === q.correct;
+                    html += `<div class="review-item ${isCorrect ? 'correct' : 'incorrect'}">`;
+                    html += `<div class="review-question"><strong>${i+1}. ${q.question}</strong></div>`;
+                    html += `<div class="review-answer">Sua resposta: ${q.options[userAns] || 'N/A'} - ${isCorrect ? '✅' : '❌'}</div>`;
+                    html += `<div class="review-explanation">${q.explanation}</div>`;
+                    html += `</div>`;
+                });
+                container.innerHTML = html;
+                container.style.display = 'block';
+            } else {
+                container.style.display = 'none';
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.querySelector('#theme-toggle i');
+            icon.className = document.body.classList.contains('dark-mode') ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = document.querySelector('#sound-toggle i');
+            icon.className = soundEnabled ? 'fas fa-volume-up' : 'fas fa-volume-mute';
         }
 
         function restartQuiz() {
-            // Resetar variáveis
-            currentQuestionIndex = 0;
-            userAnswers = [];
             quizStarted = false;
-            
-            // Resetar estado de opções embaralhadas e perguntas
-            shuffledOptionsState = [];
-            shuffledQuestions = shuffleArray([...allQuestions]);
-            userAnswers = new Array(shuffledQuestions.length).fill(null);
-            
-            // Esconder resultados e confetes
-            document.getElementById('results').style.display = 'none';
-            document.getElementById('confetti-container').classList.remove('active');
-            document.getElementById('confetti-container').innerHTML = '';
-            
-            // Mostrar página inicial
             document.querySelector('.modern-header').style.display = 'block';
+            document.getElementById('instructions-screen').style.display = 'block';
             document.querySelector('.content-section').style.display = 'flex';
-            
-            // Rolagem para o topo
+            document.getElementById('quiz-section').style.display = 'none';
+            document.getElementById('results').style.display = 'none';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
