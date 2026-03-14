@@ -3,226 +3,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EBD 2026 - Quizzes das Lições</title>
+    <title>Quizzes da EBD Fiel - Classe Adultos</title>
+    <!-- Fonte Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(145deg, #e6edf5 0%, #d0ddeb 100%);
             min-height: 100vh;
             padding: 20px;
-            color: #333;
+            color: #1e2f4a;
         }
-        
+
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
         }
-        
+
         header {
             text-align: center;
-            padding: 40px 20px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 3rem 2rem;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 20px 40px -12px rgba(0, 20, 40, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
-        
-        /* LOGO SEM MOLDA - CANTO RETO E SEM SOMBRA */
+
         .logo-img {
-            max-width: 150px;
+            max-width: 140px;
             height: auto;
             display: block;
             margin: 0 auto 20px auto;
-            border-radius: 0;
-            box-shadow: none;
         }
-        
+
         h1 {
-            color: #2c3e50;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            color: #1e3a5f;
+            font-size: 2.6rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
         }
-        
+
         .subtitle {
-            color: #7f8c8d;
-            font-size: 1.2rem;
-            margin-bottom: 20px;
+            color: #3e5e7e;
+            font-size: 1.25rem;
+            margin-bottom: 24px;
         }
-        
-        /* REDES SOCIAIS */
+
+        .subtitle strong {
+            color: #d96c2b;
+            font-weight: 600;
+            background: rgba(217, 108, 43, 0.12);
+            padding: 6px 16px;
+            border-radius: 40px;
+            display: inline-block;
+            margin-left: 8px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(217, 108, 43, 0.2);
+        }
+
         .redes-sociais {
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(0,0,0,0.1);
         }
-        
+
         .redes-sociais h3 {
-            color: #3498db;
-            margin-bottom: 15px;
+            color: #2c6e9c;
+            margin-bottom: 16px;
             font-size: 1.1rem;
+            font-weight: 500;
         }
-        
+
         .social-icons {
             display: flex;
             justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
         }
-        
+
         .social-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 45px;
-            height: 45px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            background: #f8f9fa;
-            color: #333;
+            background: white;
+            color: #1e3a5f;
             font-size: 1.4rem;
             text-decoration: none;
             transition: all 0.3s ease;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 16px -6px rgba(0, 20, 40, 0.15);
+            border: 1px solid rgba(255,255,255,0.8);
         }
-        
+
         .social-icon:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .social-icon.instagram {
-            background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+            transform: translateY(-4px);
+            background: #2c6e9c;
             color: white;
+            box-shadow: 0 16px 24px -8px #2c6e9c80;
         }
-        
-        .social-icon.facebook {
-            background: #1877F2;
-            color: white;
-        }
-        
-        .social-icon.youtube {
-            background: #FF0000;
-            color: white;
-        }
-        
-        .social-icon.tiktok {
-            background: #000000;
-            color: white;
-        }
-        
-        /* MENSAGEM DE SAUDAÇÃO */
+
         .saudacao {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 25px 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 30px 35px;
+            margin-bottom: 32px;
+            box-shadow: 0 20px 40px -16px rgba(0, 20, 40, 0.1);
+            border: 1px solid rgba(255,255,255,0.6);
         }
-        
+
         .saudacao h2 {
-            color: #3498db;
+            color: #2c6e9c;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-weight: 600;
+            font-size: 1.8rem;
         }
-        
+
         .saudacao p {
-            margin-bottom: 12px;
-            font-size: 1.05rem;
-            color: #444;
+            margin-bottom: 14px;
+            color: #2e405b;
         }
-        
+
         .saudacao ul {
             margin-left: 20px;
             margin-bottom: 20px;
+            color: #3e5e7e;
         }
-        
-        .saudacao li {
-            margin-bottom: 8px;
-            color: #555;
-        }
-        
+
         .saudacao .destaque {
-            background: rgba(52, 152, 219, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 4px solid #3498db;
-            margin-top: 15px;
+            background: rgba(44, 110, 156, 0.06);
+            padding: 20px;
+            border-radius: 20px;
+            border-left: 6px solid #2c6e9c;
+            margin-top: 20px;
         }
-        
+
+        /* Accordion */
         .trimestre {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            margin-bottom: 20px;
+            box-shadow: 0 20px 40px -16px rgba(0, 20, 40, 0.15);
+            border: 1px solid rgba(255,255,255,0.6);
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
         }
-        
-        .trimestre h2 {
-            color: #2c3e50;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-            border-bottom: 3px solid #3498db;
+
+        .trimestre:hover {
+            box-shadow: 0 25px 50px -16px #2c6e9c80;
+        }
+
+        .trimestre-header {
+            background: white;
+            padding: 22px 30px;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            transition: background 0.2s ease;
+        }
+
+        .trimestre-header:hover {
+            background: #f0f5fa;
+        }
+
+        .trimestre-header h2 {
+            color: #1e3a5f;
+            font-size: 1.6rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 16px;
             flex-wrap: wrap;
+            margin: 0;
         }
-        
-        .trimestre h2 .badge {
-            background: #3498db;
+
+        .trimestre-header .badge {
+            background: linear-gradient(145deg, #2c6e9c, #1e4f73);
             color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
+            padding: 6px 18px;
+            border-radius: 40px;
             font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: 0 6px 12px -6px #2c6e9c;
         }
-        
-        /* SEÇÃO DO VÍDEO DO TRIMESTRE - CORRIGIDA PARA MOBILE */
-        .video-trimestre {
-            background: rgba(52, 152, 219, 0.08);
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 30px;
-            border-left: 5px solid #3498db;
-            text-align: center;
-        }
-        
-        .video-trimestre h3 {
-            color: #2c3e50;
-            font-size: 1.3rem;
-            margin-bottom: 20px;
+
+        .toggle-icon {
+            font-size: 1.6rem;
+            color: #2c6e9c;
+            transition: transform 0.4s ease;
+            background: rgba(44, 110, 156, 0.1);
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            border-radius: 50%;
         }
-        
-        /* SOLUÇÃO UNIVERSAL PARA O VÍDEO */
+
+        .trimestre-header.open .toggle-icon {
+            transform: rotate(180deg);
+            background: #2c6e9c;
+            color: white;
+        }
+
+        .trimestre-conteudo {
+            padding: 0 30px 30px 30px;
+            background: rgba(255,255,255,0.5);
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .tema-trimestre {
+            color: #2e405b;
+            font-size: 1.1rem;
+            margin: 24px 0 20px;
+            padding: 14px 20px;
+            background: rgba(44, 110, 156, 0.04);
+            border-radius: 40px;
+            border-left: 6px solid #2c6e9c;
+            font-weight: 500;
+        }
+
+        /* Estilo para a imagem da capa */
+        .capa-revista {
+            text-align: center;
+            margin: 20px 0 30px;
+        }
+        .capa-revista img {
+            width: 100%;
+            max-width: 1200px;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 18px 30px -12px rgba(0, 30, 60, 0.4);
+            border: 3px solid rgba(255,255,255,0.8);
+            transition: transform 0.3s ease;
+            image-rendering: auto;
+            image-orientation: from-image;
+            transform: rotate(0deg);
+        }
+        .capa-revista img:hover {
+            transform: scale(1.02);
+        }
+
+        .descricao-detalhada {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(4px);
+            border-radius: 24px;
+            padding: 28px;
+            margin: 20px 0 30px;
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 12px 24px -16px #2c6e9c40;
+            color: #1e2f4a;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .video-trimestre {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(4px);
+            border-radius: 28px;
+            padding: 28px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 12px 28px -16px #2c6e9c30;
+            text-align: center;
+        }
+
+        .video-trimestre h3 {
+            color: #1e3a5f;
+            font-size: 1.3rem;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+
         .video-universal-container {
             width: 100%;
-            max-width: 315px;
+            max-width: 300px;
             margin: 0 auto;
-            border-radius: 10px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 16px 32px -12px rgba(0,0,0,0.2);
             background: #000;
+            border: 1px solid rgba(44, 110, 156, 0.3);
         }
-        
-        /* Container responsivo para vídeo */
+
         .video-responsive-wrapper {
             position: relative;
-            padding-bottom: 177.78%; /* Proporção 9:16 para Shorts vertical */
+            padding-bottom: 177.78%;
             height: 0;
             overflow: hidden;
         }
-        
+
         .video-responsive-wrapper iframe {
             position: absolute;
             top: 0;
@@ -231,33 +326,26 @@
             height: 100%;
             border: none;
         }
-        
-        /* Thumbnail com link para mobile */
+
         .video-mobile-fallback {
             display: none;
             width: 100%;
-            max-width: 315px;
+            max-width: 300px;
             margin: 0 auto;
-            border-radius: 10px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
             cursor: pointer;
             position: relative;
         }
-        
-        .video-mobile-fallback img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        
+
         .video-mobile-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -266,126 +354,113 @@
             padding: 20px;
             text-align: center;
         }
-        
+
         .play-icon-large {
             width: 70px;
             height: 70px;
-            background: rgba(255, 0, 0, 0.9);
+            background: #d96c2b;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 15px;
-            font-size: 1.8rem;
+            margin-bottom: 16px;
+            font-size: 2rem;
+            box-shadow: 0 12px 24px -8px #d96c2b;
         }
-        
-        .mobile-video-text {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-        }
-        
-        .mobile-video-subtext {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-        
+
         .video-info {
             text-align: center;
-            color: #555;
+            color: #3e5e7e;
             font-size: 1rem;
-            line-height: 1.5;
-            max-width: 800px;
             margin: 20px auto 0;
         }
-        
-        .video-info p {
-            margin-bottom: 10px;
-        }
-        
+
         .video-direct-link {
             display: inline-block;
-            background: #FF0000;
+            background: #d96c2b;
             color: white;
-            padding: 12px 25px;
-            border-radius: 8px;
+            padding: 12px 28px;
+            border-radius: 40px;
             text-decoration: none;
-            font-weight: bold;
-            margin-top: 15px;
+            font-weight: 600;
+            margin-top: 16px;
             transition: all 0.3s ease;
+            box-shadow: 0 8px 18px -6px #d96c2b;
         }
-        
+
         .video-direct-link:hover {
-            background: #cc0000;
+            background: #c25c22;
             transform: translateY(-2px);
+            box-shadow: 0 16px 24px -8px #d96c2b;
         }
-        
+
         .licoes-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            gap: 24px;
         }
-        
+
         .licao-card {
             background: white;
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            border: 2px solid transparent;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 12px 28px -16px #1e3a5f40;
+            border: 1px solid rgba(255,255,255,0.8);
             transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
-            height: 100%;
             display: flex;
             flex-direction: column;
         }
-        
+
         .licao-card:hover {
-            transform: translateY(-5px);
-            border-color: #3498db;
-            box-shadow: 0 15px 30px rgba(52, 152, 219, 0.2);
+            transform: translateY(-6px);
+            border-color: #2c6e9c;
+            box-shadow: 0 24px 40px -20px #2c6e9c;
         }
-        
+
         .licao-card .numero {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #f1f8ff;
-            color: #3498db;
-            width: 40px;
-            height: 40px;
+            top: 16px;
+            right: 16px;
+            background: rgba(44, 110, 156, 0.12);
+            color: #2c6e9c;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
+            font-weight: 700;
             font-size: 1.2rem;
         }
-        
+
         .licao-card h3 {
-            color: #2c3e50;
-            margin-bottom: 10px;
+            color: #1e3a5f;
+            margin-bottom: 12px;
             font-size: 1.1rem;
+            font-weight: 600;
             padding-right: 50px;
             flex-grow: 1;
         }
-        
+
         .licao-card .data {
-            color: #7f8c8d;
+            color: #5f7d9c;
             font-size: 0.9rem;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             display: flex;
             align-items: center;
             gap: 8px;
+            font-weight: 500;
         }
-        
+
         .btn-quiz {
             display: inline-block;
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            background: linear-gradient(145deg, #2c6e9c, #1e4f73);
             color: white;
             text-decoration: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-weight: bold;
+            padding: 14px 24px;
+            border-radius: 40px;
+            font-weight: 600;
             text-align: center;
             transition: all 0.3s ease;
             border: none;
@@ -393,186 +468,103 @@
             width: 100%;
             font-size: 1rem;
             margin-top: auto;
+            box-shadow: 0 8px 18px -8px #2c6e9c;
         }
-        
+
         .btn-quiz:hover {
-            background: linear-gradient(135deg, #27ae60, #219653);
+            background: linear-gradient(145deg, #1e4f73, #153b56);
             transform: translateY(-2px);
-            box-shadow: 0 7px 15px rgba(39, 174, 96, 0.3);
+            box-shadow: 0 16px 24px -10px #2c6e9c;
         }
-        
+
         .btn-quiz.disabled {
-            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-        
-        .btn-quiz.disabled:hover {
-            transform: none;
+            background: #b0c4de;
+            color: #2e405b;
             box-shadow: none;
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
         }
-        
+
         .status {
             display: inline-block;
-            padding: 4px 12px;
-            border-radius: 15px;
+            padding: 5px 14px;
+            border-radius: 30px;
             font-size: 0.8rem;
-            font-weight: bold;
+            font-weight: 600;
             margin-left: 10px;
+            background: rgba(0,0,0,0.04);
+            color: #2e405b;
         }
-        
+
         .status.ativa {
-            background: #d4edda;
-            color: #155724;
+            background: #2c6e9c20;
+            color: #1e4f73;
         }
-        
+
         .status.breve {
-            background: #fff3cd;
-            color: #856404;
+            background: #d96c2b20;
+            color: #b35e24;
         }
-        
+
+        .placeholder-message {
+            text-align: center;
+            padding: 48px 24px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(4px);
+            border-radius: 32px;
+            border: 2px dashed #2c6e9c60;
+            color: #2e405b;
+        }
+
+        .placeholder-message i {
+            font-size: 3.2rem;
+            color: #2c6e9c;
+            margin-bottom: 16px;
+            opacity: 0.7;
+        }
+
         footer {
             text-align: center;
             padding: 30px;
-            color: white;
+            color: #3e5e7e;
             margin-top: 40px;
+            font-weight: 500;
         }
-        
+
         @media (max-width: 768px) {
-            .licoes-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .logo-img {
-                max-width: 120px;
-            }
-            
-            .trimestre h2 {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            
-            .licao-card h3 {
-                padding-right: 0;
-                font-size: 1rem;
-            }
-            
-            .saudacao {
-                padding: 20px;
-            }
-            
-            .video-trimestre {
-                padding: 20px;
-            }
-            
-            .video-universal-container, .video-mobile-fallback {
-                max-width: 280px;
-            }
-            
-            .social-icons {
-                gap: 15px;
-            }
-            
-            .social-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-            
-            header {
-                padding: 20px 15px;
-            }
-            
-            .trimestre {
-                padding: 20px 15px;
-            }
-            
-            .licao-card {
-                padding: 20px;
-            }
-            
-            .saudacao, .video-trimestre {
-                padding: 15px;
-            }
-            
-            .video-universal-container, .video-mobile-fallback {
-                max-width: 250px;
-            }
-            
-            .social-icons {
-                gap: 10px;
-            }
-            
-            .social-icon {
-                width: 35px;
-                height: 35px;
-                font-size: 1.1rem;
-            }
-            
-            .video-trimestre h3 {
-                font-size: 1.1rem;
-            }
-        }
-        
-        /* Estilos específicos para mobile */
-        @media (max-width: 768px) and (orientation: portrait) {
-            .video-responsive-wrapper {
-                padding-bottom: 177.78%; /* Mantém proporção vertical */
-            }
+            h1 { font-size: 2rem; }
+            .logo-img { max-width: 110px; }
+            .trimestre-header { padding: 18px 22px; }
+            .trimestre-header h2 { font-size: 1.4rem; gap: 10px; }
+            .trimestre-conteudo { padding: 0 22px 22px; }
+            .descricao-detalhada { padding: 22px; }
+            .capa-revista img { max-width: 100%; }
         }
     </style>
-    <!-- Adicionando Font Awesome para ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <!-- LOGO DA EBD - SEM MOLDA -->
             <img src="https://i.imgur.com/vsNu5IC.png" alt="Logo EBD" class="logo-img">
+            <h1>Quizzes da EBD Fiel</h1>
+            <p class="subtitle">Quizzes Interativos <strong>Classe Adultos</strong></p>
+            <p style="color: #4a6b8a; margin-top: 16px;">Teste seu conhecimento com os quizzes das lições da EBD</p>
             
-            <h1>Escola Bíblica Dominical</h1>
-            <p class="subtitle">Quizzes Interativos</p>
-            <p style="color: #666; margin-top: 20px;">
-                Teste seu conhecimento com os quizzes das lições da EBD
-            </p>
-            
-            <!-- REDES SOCIAIS -->
             <div class="redes-sociais">
                 <h3>Siga a EBD Fiel nas redes sociais:</h3>
                 <div class="social-icons">
-                    <a href="https://www.instagram.com/ebdfiel/" class="social-icon instagram" target="_blank" title="Instagram">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="https://www.facebook.com/EBDFiel/" class="social-icon facebook" target="_blank" title="Facebook">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="https://www.youtube.com/@EBDFiel" class="social-icon youtube" target="_blank" title="YouTube">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                    <a href="https://www.tiktok.com/@ebdfiel" class="social-icon tiktok" target="_blank" title="TikTok">
-                        <i class="fab fa-tiktok"></i>
-                    </a>
+                    <a href="https://www.instagram.com/ebdfiel/" class="social-icon" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/EBDFiel/" class="social-icon" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com/@EBDFiel" class="social-icon" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.tiktok.com/@ebdfiel" class="social-icon" target="_blank"><i class="fab fa-tiktok"></i></a>
                 </div>
             </div>
         </header>
         
-        <!-- MENSAGEM DE SAUDAÇÃO E EXPLICAÇÃO -->
         <div class="saudacao">
-            <h2>📚 Bem-vindo à Página de Quizzes da EBD Fiel</h2>
-            
+            <h2>📚 Bem-vindo à Página de Quizzes</h2>
             <p>Esta página foi criada para ajudar no estudo e fixação das lições da EBD Betel, com foco especial na classe de Adultos.</p>
-            
             <p><strong>Objetivo dos Quizzes:</strong></p>
             <ul>
                 <li><strong>Reforçar o aprendizado:</strong> Testar o conhecimento adquirido em cada lição</li>
@@ -581,243 +573,153 @@
                 <li><strong>Tornar o estudo interativo:</strong> Transformar o estudo bíblico em uma experiência dinâmica</li>
                 <li><strong>Facilitar o ensino:</strong> Professores podem usar os quizzes para preparar suas aulas</li>
             </ul>
-            
             <div class="destaque">
                 <p><strong>📝 Como usar esta plataforma:</strong></p>
-                <p>1. Encontre a lição da semana correspondente abaixo</p>
-                <p>2. Clique em "Iniciar Quiz" para testar seu conhecimento</p>
-                <p>3. Responda as questões com atenção</p>
-                <p>4. Revise as respostas e estude os pontos que você errou</p>
+                <p>1. Clique no trimestre desejado para expandir as lições.</p>
+                <p>2. Escolha a lição e clique em "Iniciar Quiz".</p>
+                <p>3. Responda as questões e revise seus erros.</p>
             </div>
-            
-            <p>Os quizzes serão disponibilizados semanalmente, seguindo o calendário das lições. As lições futuras serão marcadas como "Em preparação" até estarem prontas para uso.</p>
-            
-            <p>Que Deus abençoe seu estudo da Palavra e que estes recursos contribuam para seu crescimento espiritual!</p>
+            <p>Que Deus abençoe seu estudo!</p>
         </div>
         
         <main>
+            <!-- 1º TRIMESTRE 2026 (Discípulos) -->
             <div class="trimestre">
-                <h2>
-                    <span>1º Trimestre 2026</span>
-                    <span class="badge">Jan-Mar</span>
-                </h2>
-                <p style="margin-bottom: 25px; color: #555; font-size: 1.1rem;">
-                    <strong>Tema:</strong> Os Discípulos de Jesus Cristo
-                </p>
-                
-                <!-- SEÇÃO DO VÍDEO DA LIÇÃO 2 -->
-                <div class="video-trimestre">
-                    <h3><i class="fas fa-video"></i> Vídeo da Lição 2 - Princípios bíblicos para a vida dos discípulos de Cristo</h3>
+                <div class="trimestre-header">
+                    <h2>
+                        <span>1º Trimestre 2026</span>
+                        <span class="badge">Jan-Mar</span>
+                    </h2>
+                    <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="trimestre-conteudo" style="display: none;">
+                    <div class="tema-trimestre"><strong>Tema:</strong> Os Discípulos de Jesus Cristo</div>
                     
-                    <!-- SOLUÇÃO PARA PC - IFRAME -->
-                    <div class="video-universal-container" id="pcVideoContainer">
-                        <div class="video-responsive-wrapper">
-                            <iframe 
-                                id="youtubeIframe"
-                                src="https://www.youtube.com/embed/j6NSJQ42ch8?rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=https://yourdomain.com" 
-                                title="Vídeo da Lição 2: Princípios bíblicos para a vida dos discípulos de Cristo" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                allowfullscreen
-                                referrerpolicy="strict-origin-when-cross-origin">
-                            </iframe>
-                        </div>
+                    <!-- Capa correta do 1º trimestre -->
+                    <div class="capa-revista">
+                        <img src="https://i.imgur.com/9LhB3an.jpeg" alt="Capa da Revista - 1º Trimestre 2026">
                     </div>
                     
-                    <!-- SOLUÇÃO PARA MOBILE - THUMBNAIL COM LINK -->
-                    <div class="video-mobile-fallback" id="mobileVideoFallback">
-                        <div class="video-mobile-overlay">
-                            <div class="play-icon-large">
-                                <i class="fas fa-play"></i>
+                    <div class="descricao-detalhada">
+                        <p>Neste primeiro trimestre do ano 2026, nossa temática é: <strong>O Discípulo de Cristo</strong>, uma abordagem desde o novo nascimento até a volta de Jesus Cristo. Ser discípulo exige um estilo de vida de comprometimento, transformação e entrega total ao Mestre. Nosso objetivo é refletir sobre o que significa seguir a Cristo em um mundo que adota um sistema de crenças e valores tão opostos aos princípios bíblicos.</p>
+                        <p>A vida de um discípulo de Cristo inicia com a experiência do novo nascimento. A partir daí, vamos estudar sobre a relevância da ação do Espírito Santo e da Palavra de Deus, a oração e o jejum, o enfrentamento das tentações, o cumprimento da missão de fazer discípulos, o amadurecimento espiritual, o processo da santificação, entre outros aspectos, até chegarmos na bem-aventurada esperança: a vinda de Nosso Senhor Jesus Cristo.</p>
+                        <p>Que seja um trimestre propício a sermos despertados e motivados a crescer na Graça e no conhecimento de Jesus Cristo. Que o Espírito Santo guie você em mais esta jornada de aprendizado e crescimento espiritual!</p>
+                    </div>
+                    
+                    <!-- Vídeo da Lição 2 -->
+                    <div class="video-trimestre">
+                        <h3><i class="fas fa-video"></i> Vídeo da Lição 2 - Princípios bíblicos para a vida dos discípulos de Cristo</h3>
+                        <div class="video-universal-container" id="pcVideoContainer1">
+                            <div class="video-responsive-wrapper">
+                                <iframe src="https://www.youtube.com/embed/j6NSJQ42ch8?rel=0&modestbranding=1&playsinline=1" allowfullscreen></iframe>
                             </div>
-                            <div class="mobile-video-text">Clique para assistir no YouTube</div>
-                            <div class="mobile-video-subtext">Vídeo da Lição 2</div>
+                        </div>
+                        <div class="video-mobile-fallback" id="mobileVideoFallback1">
+                            <div class="video-mobile-overlay">
+                                <div class="play-icon-large"><i class="fas fa-play"></i></div>
+                                <div class="mobile-video-text">Clique para assistir no YouTube</div>
+                                <div class="mobile-video-subtext">Vídeo da Lição 2</div>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <p><strong>Assista ao vídeo complementar.</strong></p>
+                            <a href="https://www.youtube.com/watch?v=j6NSJQ42ch8" target="_blank" class="video-direct-link"><i class="fab fa-youtube"></i> Assistir no YouTube</a>
                         </div>
                     </div>
                     
-                    <!-- LINK DIRETO COMO FALLBACK -->
-                    <div class="video-info">
-                        <p><strong>Assista a este vídeo complementar da Lição 2:</strong> "Princípios bíblicos para a vida dos discípulos de Cristo".</p>
-                        <p>Este conteúdo ajudará você a compreender melhor os conceitos abordados na segunda lição deste trimestre e a se preparar para o quiz.</p>
-                        
-                        <a href="https://www.youtube.com/watch?v=j6NSJQ42ch8" target="_blank" rel="noopener" class="video-direct-link" id="directVideoLink">
-                            <i class="fab fa-youtube"></i> Assistir Vídeo no YouTube
-                        </a>
-                        
-                        <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
-                            <i class="fas fa-lightbulb"></i> Dica: Assista o vídeo antes de fazer o quiz da Lição 2 para reforçar seu aprendizado.
-                        </p>
+                    <!-- Grade de lições do 1º trimestre com links originais -->
+                    <div class="licoes-grid">
+                        <div class="licao-card"><div class="numero">01</div><h3>Os discípulos de Cristo são novas criaturas</h3><div class="data"><span>📅</span> 04/01/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-01/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">02</div><h3>Princípios bíblicos para a vida dos discípulos de Cristo</h3><div class="data"><span>📅</span> 11/01/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-02/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">03</div><h3>Os compromissos dos discípulos de Cristo</h3><div class="data"><span>📅</span> 18/01/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-03/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">04</div><h3>Os discípulos de Cristo e a tentação</h3><div class="data"><span>📅</span> 25/01/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-04/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">05</div><h3>A importância do jejum na vida dos discípulos de Cristo</h3><div class="data"><span>📅</span> 01/02/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-05/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">06</div><h3>Oração: uma disciplina indispensável aos discípulos de Cristo</h3><div class="data"><span>📅</span> 08/02/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-06/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">07</div><h3>Vencendo as estratégias e propostas do inimigo</h3><div class="data"><span>📅</span> 15/02/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-07/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">08</div><h3>Os discípulos de Cristo e o bom ânimo</h3><div class="data"><span>📅</span> 22/02/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-08/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">09</div><h3>Os discípulos de Cristo e o processo da santificação</h3><div class="data"><span>📅</span> 01/03/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-09/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">10</div><h3>A missão dos discípulos de Cristo</h3><div class="data"><span>📅</span> 08/03/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-10/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">11</div><h3>O caráter dos discípulos de Cristo</h3><div class="data"><span>📅</span> 15/03/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-11/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">12</div><h3>Os discípulos de Cristo e o Espírito Santo</h3><div class="data"><span>📅</span> 22/03/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-12/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">13</div><h3>Os discípulos de Cristo e a bem-aventurada esperança</h3><div class="data"><span>📅</span> 29/03/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-13/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
                     </div>
                 </div>
-                
-                <div class="licoes-grid">
-                    <!-- Lição 01 -->
-                    <div class="licao-card">
-                        <div class="numero">01</div>
-                        <h3>Os discípulos de Cristo são novas criaturas</h3>
-                        <div class="data">
-                            <span>📅</span> 04/01/2026
-                            <span class="status ativa">Disponível</span>
-                        </div>
-                        <a href="trimestre-01/licao-01/" class="btn-quiz">
-                            ▶️ Iniciar Quiz
-                        </a>
+            </div>
+
+            <!-- 2º TRIMESTRE 2026 (Neemias) -->
+            <div class="trimestre">
+                <div class="trimestre-header">
+                    <h2>
+                        <span>2º Trimestre 2026</span>
+                        <span class="badge">Abr-Jun</span>
+                    </h2>
+                    <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="trimestre-conteudo" style="display: none;">
+                    <div class="tema-trimestre"><strong>Tema:</strong> Neemias: Restaurando Muros, Reconstruindo Vidas e Renovando Propósitos</div>
+                    
+                    <!-- Capa correta do 2º trimestre -->
+                    <div class="capa-revista">
+                        <img src="https://i.imgur.com/JZBDtpW.jpeg" alt="Capa da Revista - 2º Trimestre 2026">
                     </div>
                     
-                    <!-- Lição 02 -->
-                    <div class="licao-card">
-                        <div class="numero">02</div>
-                        <h3>Princípios bíblicos para a vida dos discípulos de Cristo</h3>
-                        <div class="data">
-                            <span>📅</span> 11/01/2026
-                            <span class="status ativa">Disponível</span>
-                        </div>
-                        <a href="trimestre-01/licao-02/" class="btn-quiz">
-                            ▶️ Iniciar Quiz
-                        </a>
+                    <div class="licoes-grid">
+                        <!-- Lições 1 a 13 do 2º trimestre (em preparação) -->
+                        <div class="licao-card"><div class="numero">01</div><h3>O chamado que transforma a dor em propósito</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">02</div><h3>Preparando-se para o agir de Deus</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">03</div><h3>Lidando com vozes contrárias</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">04</div><h3>O poder das palavras: pedras que edificam e não ferem</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">05</div><h3>Fortalecido pela fé para combater o medo com coragem</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">06</div><h3>Discernimento espiritual: a sabedoria divina em tempos de engano</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">07</div><h3>Unidade: a receita que nos faz vencer as adversidades da vida</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">08</div><h3>A fidelidade e o temor: características que geram confiança</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">09</div><h3>Alegria e gratidão ao Senhor resultam da Palavra de Deus</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">10</div><h3>O arrependimento: aspecto indispensável para uma nova vida</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">11</div><h3>O culto: a importância para uma vida cristã edificada</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">12</div><h3>Vigilância e oração: o perigo das alianças erradas</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">13</div><h3>Os elementos fundamentais da vitória de Neemias</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
                     </div>
-                    
-                    <!-- Lição 03 -->
-                    <div class="licao-card">
-                        <div class="numero">03</div>
-                        <h3>Os compromissos dos discípulos de Cristo</h3>
-                        <div class="data">
-                            <span>📅</span> 18/01/2026
-                            <span class="status ativa">Disponível</span>
-                        </div>
-                        <a href="trimestre-01/licao-03/" class="btn-quiz">
-                            ▶️ Iniciar Quiz
-                        </a>
+                </div>
+            </div>
+
+            <!-- 3º TRIMESTRE 2026 (placeholder) -->
+            <div class="trimestre">
+                <div class="trimestre-header">
+                    <h2>
+                        <span>3º Trimestre 2026</span>
+                        <span class="badge">Jul-Set</span>
+                    </h2>
+                    <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="trimestre-conteudo" style="display: none;">
+                    <div class="capa-revista">
+                        <img src="https://via.placeholder.com/1200x400?text=Capa+3%C2%BA+Trimestre" alt="Capa 3º Trimestre (em breve)">
                     </div>
-                    
-                    <!-- Lição 04 -->
-                    <div class="licao-card">
-                        <div class="numero">04</div>
-                        <h3>Os discípulos de Cristo e a tentação</h3>
-                        <div class="data">
-                            <span>📅</span> 25/01/2026
-                            <span class="status ativa">Disponível</span>
-                        </div>
-                        <a href="trimestre-01/licao-04/" class="btn-quiz">
-                            ▶️ Iniciar Quiz
-                        </a>
+                    <div class="placeholder-message">
+                        <i class="fas fa-clock"></i>
+                        <p>Quizzes do 3º trimestre de 2026 estão sendo preparados.</p>
+                        <p><small>Em breve, novas lições estarão disponíveis aqui.</small></p>
                     </div>
-                    
-                    <!-- Lição 05 -->
-                    <div class="licao-card">
-                        <div class="numero">05</div>
-                        <h3>A importância do jejum na vida dos discípulos de Cristo</h3>
-                        <div class="data">
-                            <span>📅</span> 01/02/2026
-                            <span class="status ativa">Disponível</span>
-                        </div>
-                        <a href="trimestre-01/licao-05/" class="btn-quiz">
-                            ▶️ Iniciar Quiz
-                        </a>
+                </div>
+            </div>
+
+            <!-- 4º TRIMESTRE 2026 (placeholder) -->
+            <div class="trimestre">
+                <div class="trimestre-header">
+                    <h2>
+                        <span>4º Trimestre 2026</span>
+                        <span class="badge">Out-Dez</span>
+                    </h2>
+                    <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="trimestre-conteudo" style="display: none;">
+                    <div class="capa-revista">
+                        <img src="https://via.placeholder.com/1200x400?text=Capa+4%C2%BA+Trimestre" alt="Capa 4º Trimestre (em breve)">
                     </div>
-                    
-                    <!-- Lição 06 -->
-                    <div class="licao-card">
-                        <div class="numero">06</div>
-                        <h3>Oração: uma disciplina indispensável aos discípulos de Cristo</h3>
-                        <div class="data">
-                            <span>📅</span> 08/02/2026
-                            <span class="status ativa">Disponível</span>
-                        </div>
-                        <a href="trimestre-01/licao-06/" class="btn-quiz">
-                            ▶️ Iniciar Quiz
-                        </a>
-                    </div>
-                    
-                    <!-- Lição 07 -->
-                    <div class="licao-card">
-                        <div class="numero">07</div>
-                        <h3>Vencendo as estratégias e propostas do inimigo</h3>
-                        <div class="data">
-                            <span>📅</span> 15/02/2026
-                            <span class="status ativa">Disponível</span>
-                        </div>
-                        <a href="trimestre-01/licao-07/" class="btn-quiz">
-                            ▶️ Iniciar Quiz
-                        </a>
-                    </div>
-                    
-                    <!-- Lição 08 -->
-                    <div class="licao-card">
-                        <div class="numero">08</div>
-                        <h3>Os discípulos de Cristo e o bom ânimo</h3>
-                        <div class="data">
-                            <span>📅</span> 22/02/2026
-                            <span class="status ativa">Disponível</span>
-                        </div>
-                        <a href="trimestre-01/licao-08/" class="btn-quiz">
-                            ▶️ Iniciar Quiz
-                        </a>
-                    </div>
-                   
-                    <!-- Lição 09 -->
-                    <div class="licao-card">
-                        <div class="numero">09</div>
-                        <h3>Os discípulos de Cristo e o processo da santificação</h3>
-                        <div class="data">
-                            <span>📅</span> 01/03/2026
-                            <span class="status ativa">Disponível</span>
-                        </div>
-                        <a href="trimestre-01/licao-09/" class="btn-quiz">
-                            ▶️ Iniciar Quiz
-                        </a>
-                    </div>
-                
-                    <!-- Lição 10 -->
-                    <div class="licao-card">
-                        <div class="numero">10</div>
-                        <h3>A missão dos discípulos de Cristo</h3>
-                        <div class="data">
-                            <span>📅</span> 08/03/2026
-                            <span class="status ativa">Disponível</span>
-                        </div>
-                        <a href="trimestre-01/licao-10/" class="btn-quiz">
-                            ▶️ Iniciar Quiz
-                        </a>
-                    </div>
-                    
-                    <!-- Lição 11 -->
-                    <div class="licao-card">
-                        <div class="numero">11</div>
-                        <h3>O caráter dos discípulos de Cristo</h3>
-                        <div class="data">
-                            <span>📅</span> 15/03/2026
-                            <span class="status ativa">Disponível</span>
-                        </div>
-                        <a href="trimestre-01/licao-11/" class="btn-quiz">
-                            ▶️ Iniciar Quiz
-                        </a>
-                    </div>
-                    
-                    <!-- Lição 12 -->
-                    <div class="licao-card">
-                        <div class="numero">12</div>
-                        <h3>Os discípulos de Cristo e o Espírito Santo</h3>
-                        <div class="data">
-                            <span>📅</span> 22/03/2026
-                            <span class="status ativa">Disponível</span>
-                        </div>
-                        <a href="trimestre-01/licao-12/" class="btn-quiz">
-                            ▶️ Iniciar Quiz
-                        </a>
-                    </div>
-                    
-                    <!-- Lição 13 -->
-                    <div class="licao-card">
-                        <div class="numero">13</div>
-                        <h3>Os discípulos de Cristo e a bem-aventurada esperança</h3>
-                        <div class="data">
-                            <span>📅</span> 29/03/2026
-                            <span class="status ativa">Disponível</span>
-                        </div>
-                        <a href="trimestre-01/licao-13/" class="btn-quiz">
-                            ▶️ Iniciar Quiz
-                        </a>
+                    <div class="placeholder-message">
+                        <i class="fas fa-clock"></i>
+                        <p>Quizzes do 4º trimestre de 2026 estão sendo preparados.</p>
+                        <p><small>Em breve, novas lições estarão disponíveis aqui.</small></p>
                     </div>
                 </div>
             </div>
@@ -825,145 +727,29 @@
         
         <footer>
             <p>© 2026 - EBD Fiel</p>
-            <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">
-                Fiel à Palavra
-            </p>
+            <p style="font-size: 0.9rem; opacity: 0.6;">Fiel à Palavra</p>
         </footer>
     </div>
-    
+
     <script>
-        // Adiciona fallback para a logo caso não carregue
-        document.addEventListener('DOMContentLoaded', function() {
-            const logo = document.querySelector('.logo-img');
-            
-            if (logo) {
-                logo.onerror = function() {
-                    this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%233498db"/><text x="50" y="60" font-family="Arial" font-size="24" fill="white" text-anchor="middle">EBD</text><text x="50" y="80" font-family="Arial" font-size="12" fill="white" text-anchor="middle">2026</text></svg>';
-                };
-            }
-            
-            // SOLUÇÃO PARA O VÍDEO DO YOUTUBE SHORTS
-            const videoId = 'j6NSJQ42ch8';
-            const youtubeWatchUrl = `https://www.youtube.com/watch?v=${videoId}`;
-            const youtubeEmbedUrl = `https://www.youtube.com/embed/${videoId}`;
-            
-            // Elementos do DOM
-            const pcVideoContainer = document.getElementById('pcVideoContainer');
-            const mobileVideoFallback = document.getElementById('mobileVideoFallback');
-            const youtubeIframe = document.getElementById('youtubeIframe');
-            const directVideoLink = document.getElementById('directVideoLink');
-            
-            // Detectar se é dispositivo móvel
-            function isMobileDevice() {
-                return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            }
-            
-            // Detectar se é iOS
-            function isIOS() {
-                return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-            }
-            
-            // Detectar se é um navegador específico
-            function isInAppBrowser() {
-                const userAgent = navigator.userAgent.toLowerCase();
-                return userAgent.includes('fbios') || 
-                       userAgent.includes('fban') || 
-                       userAgent.includes('fbbv') ||
-                       userAgent.includes('twitter') ||
-                       userAgent.includes('instagram') ||
-                       userAgent.includes('line') ||
-                       userAgent.includes('whatsapp');
-            }
-            
-            // Função para abrir o vídeo no YouTube
-            function openYouTubeVideo() {
-                // Tentar abrir no aplicativo do YouTube se estiver disponível
-                const youtubeAppUrl = `vnd.youtube://watch?v=${videoId}`;
-                const youtubeWebUrl = youtubeWatchUrl;
-                
-                // Primeiro tenta abrir no app, depois no navegador
-                window.location.href = youtubeAppUrl;
-                
-                // Fallback após um tempo se o app não abrir
-                setTimeout(function() {
-                    if (document.hasFocus()) {
-                        // O app não abriu, então abrir no navegador
-                        window.open(youtubeWebUrl, '_blank', 'noopener,noreferrer');
-                    }
-                }, 500);
-            }
-            
-            // Estratégia inteligente para carregar o vídeo
-            function initVideoPlayer() {
-                const isMobile = isMobileDevice();
-                const isIOSDevice = isIOS();
-                const isInApp = isInAppBrowser();
-                
-                console.log('Dispositivo móvel:', isMobile);
-                console.log('iOS:', isIOSDevice);
-                console.log('Navegador in-app:', isInApp);
-                
-                // URL do vídeo para diferentes cenários
-                let finalVideoUrl = youtubeEmbedUrl;
-                
-                // Adicionar parâmetros específicos para iOS
-                if (isIOSDevice) {
-                    finalVideoUrl += '?playsinline=1&rel=0&modestbranding=1&autoplay=0';
-                } else {
-                    finalVideoUrl += '?rel=0&modestbranding=1&playsinline=1&enablejsapi=1';
-                }
-                
-                // Atualizar o iframe com a URL correta
-                youtubeIframe.src = finalVideoUrl;
-                
-                // Estratégia para dispositivos móveis
-                if (isMobile) {
-                    console.log('Dispositivo móvel detectado - usando estratégia especial');
-                    
-                    // Para navegadores in-app (Facebook, Instagram, etc.), usar thumbnail
-                    if (isInApp) {
-                        console.log('Navegador in-app detectado - usando thumbnail com link');
-                        pcVideoContainer.style.display = 'none';
-                        mobileVideoFallback.style.display = 'block';
-                    }
-                    // Para iOS, tentar iframe com parâmetros especiais
-                    else if (isIOSDevice) {
-                        console.log('iOS detectado - tentando iframe otimizado');
-                        // Manter iframe visível
-                        pcVideoContainer.style.display = 'block';
-                        mobileVideoFallback.style.display = 'none';
-                    }
-                    // Para outros dispositivos móveis
-                    else {
-                        console.log('Outro dispositivo móvel - tentando iframe normal');
-                        // Manter iframe visível
-                        pcVideoContainer.style.display = 'block';
-                        mobileVideoFallback.style.display = 'none';
-                    }
-                } else {
-                    console.log('Dispositivo desktop - usando iframe normal');
-                    pcVideoContainer.style.display = 'block';
-                    mobileVideoFallback.style.display = 'none';
-                }
-                
-                // Configurar o link direto
-                directVideoLink.href = youtubeWatchUrl;
-                
-                // Configurar clique na thumbnail (para fallback mobile)
-                mobileVideoFallback.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    openYouTubeVideo();
-                });
-            }
-            
-            // Inicializar o player de vídeo
-            initVideoPlayer();
-            
-            // Log para debug
-            console.log('YouTube Video ID:', videoId);
-            console.log('YouTube Watch URL:', youtubeWatchUrl);
-            console.log('YouTube Embed URL:', youtubeEmbedUrl);
+        // Accordion
+        document.querySelectorAll('.trimestre-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const conteudo = this.nextElementSibling;
+                const isOpen = conteudo.style.display === 'block';
+                conteudo.style.display = isOpen ? 'none' : 'block';
+                this.classList.toggle('open', !isOpen);
+            });
         });
+
+        // Vídeo mobile fallback
+        if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            document.querySelectorAll('.video-universal-container').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.video-mobile-fallback').forEach(el => {
+                el.style.display = 'block';
+                el.addEventListener('click', () => window.open('https://www.youtube.com/watch?v=j6NSJQ42ch8', '_blank'));
+            });
+        }
     </script>
 </body>
 </html>
