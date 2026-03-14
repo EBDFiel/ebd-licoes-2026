@@ -1,45 +1,61 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quizzes da EBD Fiel - Classe Adultos</title>
-    <!-- Fonte Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            background: #e0e7ef;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
             min-height: 100vh;
             padding: 20px;
-            color: #1e2f4a;
+            color: #eaf6ff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
         }
 
         .container {
             max-width: 1100px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
+        /* ===== HEADER ===== */
         header {
             text-align: center;
             padding: 3rem 2rem;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(8px);
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 32px;
             margin-bottom: 24px;
-            box-shadow: 0 20px 40px -12px rgba(0, 20, 40, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.15);
+            animation: fadeSlideDown 1s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeSlideDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
         .logo-img {
@@ -47,44 +63,51 @@
             height: auto;
             display: block;
             margin: 0 auto 20px auto;
+            filter: drop-shadow(0 8px 24px rgba(0,180,255,0.3));
+            animation: logoPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { filter: drop-shadow(0 8px 24px rgba(0,180,255,0.3)); }
+            50%       { filter: drop-shadow(0 8px 32px rgba(0,180,255,0.6)); }
         }
 
         h1 {
-            color: #1e3a5f;
+            color: #ffffff;
             font-size: 2.6rem;
             font-weight: 700;
             letter-spacing: -0.02em;
             margin-bottom: 8px;
+            text-shadow: 0 2px 20px rgba(0,180,255,0.4);
         }
 
         .subtitle {
-            color: #3e5e7e;
+            color: rgba(255,255,255,0.75);
             font-size: 1.25rem;
             margin-bottom: 24px;
         }
 
         .subtitle strong {
-            color: #d96c2b;
+            color: #ffb347;
             font-weight: 600;
-            background: rgba(217, 108, 43, 0.12);
+            background: rgba(255,179,71,0.15);
             padding: 6px 16px;
             border-radius: 40px;
             display: inline-block;
             margin-left: 8px;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(217, 108, 43, 0.2);
+            border: 1px solid rgba(255,179,71,0.3);
         }
 
         .redes-sociais {
             margin-top: 32px;
             padding-top: 24px;
-            border-top: 1px solid rgba(0,0,0,0.1);
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
 
         .redes-sociais h3 {
-            color: #2c6e9c;
+            color: rgba(255,255,255,0.7);
             margin-bottom: 16px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 500;
         }
 
@@ -99,37 +122,45 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 48px;
-            height: 48px;
+            width: 48px; height: 48px;
             border-radius: 50%;
-            background: white;
-            color: #1e3a5f;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
             font-size: 1.4rem;
             text-decoration: none;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 16px -6px rgba(0, 20, 40, 0.15);
-            border: 1px solid rgba(255,255,255,0.8);
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(8px);
         }
 
         .social-icon:hover {
-            transform: translateY(-4px);
-            background: #2c6e9c;
-            color: white;
-            box-shadow: 0 16px 24px -8px #2c6e9c80;
+            transform: translateY(-6px) scale(1.1);
+            background: linear-gradient(145deg, #00b4d8, #0077b6);
+            box-shadow: 0 16px 30px rgba(0,180,216,0.5);
+            border-color: transparent;
         }
 
+        /* ===== SAUDAÇÃO ===== */
         .saudacao {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(8px);
+            background: rgba(255,255,255,0.07);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 28px;
             padding: 30px 35px;
             margin-bottom: 32px;
-            box-shadow: 0 20px 40px -16px rgba(0, 20, 40, 0.1);
-            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.12);
+            animation: fadeSlideUp 1s ease 0.3s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
         .saudacao h2 {
-            color: #2c6e9c;
+            color: #7dd3fc;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
@@ -138,57 +169,56 @@
             font-size: 1.8rem;
         }
 
-        .saudacao p {
-            margin-bottom: 14px;
-            color: #2e405b;
-        }
+        .saudacao p { margin-bottom: 14px; color: rgba(255,255,255,0.8); }
 
         .saudacao ul {
             margin-left: 20px;
             margin-bottom: 20px;
-            color: #3e5e7e;
+            color: rgba(255,255,255,0.7);
         }
 
+        .saudacao ul li { margin-bottom: 6px; }
+
         .saudacao .destaque {
-            background: rgba(44, 110, 156, 0.06);
+            background: rgba(125,211,252,0.08);
             padding: 20px;
             border-radius: 20px;
-            border-left: 6px solid #2c6e9c;
+            border-left: 6px solid #7dd3fc;
             margin-top: 20px;
         }
 
-        /* Accordion */
+        /* ===== ACCORDION ===== */
         .trimestre {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(8px);
+            background: rgba(255,255,255,0.07);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 28px;
             margin-bottom: 20px;
-            box-shadow: 0 20px 40px -16px rgba(0, 20, 40, 0.15);
-            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.12);
             overflow: hidden;
-            transition: box-shadow 0.3s ease;
+            transition: box-shadow 0.4s ease, transform 0.3s ease;
         }
 
         .trimestre:hover {
-            box-shadow: 0 25px 50px -16px #2c6e9c80;
+            box-shadow: 0 30px 60px rgba(0,180,216,0.2), inset 0 1px 0 rgba(255,255,255,0.15);
+            transform: translateY(-2px);
         }
 
         .trimestre-header {
-            background: white;
+            background: rgba(255,255,255,0.05);
             padding: 22px 30px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: background 0.2s ease;
+            transition: background 0.3s ease;
         }
 
-        .trimestre-header:hover {
-            background: #f0f5fa;
-        }
+        .trimestre-header:hover { background: rgba(255,255,255,0.1); }
 
         .trimestre-header h2 {
-            color: #1e3a5f;
+            color: #fff;
             font-size: 1.6rem;
             font-weight: 600;
             display: flex;
@@ -199,98 +229,103 @@
         }
 
         .trimestre-header .badge {
-            background: linear-gradient(145deg, #2c6e9c, #1e4f73);
+            background: linear-gradient(145deg, #00b4d8, #0077b6);
             color: white;
             padding: 6px 18px;
             border-radius: 40px;
             font-size: 0.9rem;
             font-weight: 500;
-            box-shadow: 0 6px 12px -6px #2c6e9c;
+            box-shadow: 0 6px 16px rgba(0,180,216,0.4);
         }
 
         .toggle-icon {
-            font-size: 1.6rem;
-            color: #2c6e9c;
-            transition: transform 0.4s ease;
-            background: rgba(44, 110, 156, 0.1);
-            width: 44px;
-            height: 44px;
+            font-size: 1.2rem;
+            color: #7dd3fc;
+            transition: transform 0.4s ease, background 0.3s ease;
+            background: rgba(125,211,252,0.1);
+            width: 44px; height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
+            border: 1px solid rgba(125,211,252,0.2);
+            flex-shrink: 0;
         }
 
         .trimestre-header.open .toggle-icon {
             transform: rotate(180deg);
-            background: #2c6e9c;
+            background: linear-gradient(145deg, #00b4d8, #0077b6);
             color: white;
+            box-shadow: 0 8px 20px rgba(0,180,216,0.4);
         }
 
+        /* Accordion animado com max-height */
         .trimestre-conteudo {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease;
+            padding: 0 30px;
+            background: rgba(0,0,0,0.1);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .trimestre-conteudo.open {
             padding: 0 30px 30px 30px;
-            background: rgba(255,255,255,0.5);
-            border-top: 1px solid rgba(0,0,0,0.05);
         }
 
         .tema-trimestre {
-            color: #2e405b;
-            font-size: 1.1rem;
+            color: rgba(255,255,255,0.85);
+            font-size: 1.05rem;
             margin: 24px 0 20px;
             padding: 14px 20px;
-            background: rgba(44, 110, 156, 0.04);
+            background: rgba(125,211,252,0.08);
             border-radius: 40px;
-            border-left: 6px solid #2c6e9c;
+            border-left: 6px solid #7dd3fc;
             font-weight: 500;
         }
 
-        /* Estilo para a imagem da capa */
-        .capa-revista {
-            text-align: center;
-            margin: 20px 0 30px;
-        }
+        /* ===== CAPA ===== */
+        .capa-revista { text-align: center; margin: 20px 0 30px; }
         .capa-revista img {
             width: 100%;
             max-width: 1200px;
             height: auto;
             border-radius: 20px;
-            box-shadow: 0 18px 30px -12px rgba(0, 30, 60, 0.4);
-            border: 3px solid rgba(255,255,255,0.8);
-            transition: transform 0.3s ease;
-            image-rendering: auto;
-            image-orientation: from-image;
-            transform: rotate(0deg);
+            box-shadow: 0 24px 50px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,255,255,0.15);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
         .capa-revista img:hover {
             transform: scale(1.02);
+            box-shadow: 0 32px 60px rgba(0,180,216,0.3);
         }
 
+        /* ===== DESCRIÇÃO ===== */
         .descricao-detalhada {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(4px);
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(10px);
             border-radius: 24px;
             padding: 28px;
             margin: 20px 0 30px;
-            border: 1px solid rgba(255,255,255,0.8);
-            box-shadow: 0 12px 24px -16px #2c6e9c40;
-            color: #1e2f4a;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.85);
             font-size: 1.05rem;
-            line-height: 1.7;
+            line-height: 1.8;
         }
 
+        /* ===== VÍDEO ===== */
         .video-trimestre {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(4px);
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(10px);
             border-radius: 28px;
             padding: 28px;
             margin-bottom: 30px;
-            border: 1px solid rgba(255,255,255,0.8);
-            box-shadow: 0 12px 28px -16px #2c6e9c30;
+            border: 1px solid rgba(255,255,255,0.1);
             text-align: center;
         }
 
         .video-trimestre h3 {
-            color: #1e3a5f;
+            color: #7dd3fc;
             font-size: 1.3rem;
             margin-bottom: 24px;
             display: flex;
@@ -306,9 +341,9 @@
             margin: 0 auto;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 16px 32px -12px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             background: #000;
-            border: 1px solid rgba(44, 110, 156, 0.3);
+            border: 1px solid rgba(0,180,216,0.3);
         }
 
         .video-responsive-wrapper {
@@ -320,23 +355,59 @@
 
         .video-responsive-wrapper iframe {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             border: none;
+        }
+
+        .video-mobile-fallback {
+            display: none;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .video-mobile-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .play-icon-large {
+            width: 70px; height: 70px;
+            background: linear-gradient(145deg, #ff9a3c, #d96c2b);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 16px;
+            font-size: 2rem;
+            box-shadow: 0 12px 30px rgba(217,108,43,0.5);
         }
 
         .video-info {
             text-align: center;
-            color: #3e5e7e;
+            color: rgba(255,255,255,0.6);
             font-size: 1rem;
             margin: 20px auto 0;
         }
 
         .video-direct-link {
             display: inline-block;
-            background: #d96c2b;
+            background: linear-gradient(145deg, #ff9a3c, #d96c2b);
             color: white;
             padding: 12px 28px;
             border-radius: 40px;
@@ -344,15 +415,15 @@
             font-weight: 600;
             margin-top: 16px;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 18px -6px #d96c2b;
+            box-shadow: 0 8px 20px rgba(217,108,43,0.4);
         }
 
         .video-direct-link:hover {
-            background: #c25c22;
-            transform: translateY(-2px);
-            box-shadow: 0 16px 24px -8px #d96c2b;
+            transform: translateY(-3px);
+            box-shadow: 0 16px 30px rgba(217,108,43,0.6);
         }
 
+        /* ===== CARDS DAS LIÇÕES ===== */
         .licoes-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -360,64 +431,102 @@
         }
 
         .licao-card {
-            background: white;
+            background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.04));
             border-radius: 24px;
             padding: 24px;
-            box-shadow: 0 12px 28px -16px #1e3a5f40;
-            border: 1px solid rgba(255,255,255,0.8);
-            transition: all 0.3s ease;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.12);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
+        }
+
+        .licao-card::before {
+            content: "";
+            position: absolute;
+            width: 180%;
+            height: 180%;
+            background: radial-gradient(circle, rgba(0,180,216,0.12) 0%, transparent 65%);
+            top: -40%;
+            left: -40%;
+            transition: 0.6s ease;
+            pointer-events: none;
         }
 
         .licao-card:hover {
-            transform: translateY(-6px);
-            border-color: #2c6e9c;
-            box-shadow: 0 24px 40px -20px #2c6e9c;
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 24px 50px rgba(0,180,216,0.35);
+            border-color: rgba(0,180,216,0.4);
+        }
+
+        .licao-card:hover::before {
+            top: -20%;
+            left: -20%;
         }
 
         .licao-card .numero {
             position: absolute;
-            top: 16px;
-            right: 16px;
-            background: rgba(44, 110, 156, 0.12);
-            color: #2c6e9c;
-            width: 44px;
-            height: 44px;
+            top: 16px; right: 16px;
+            background: linear-gradient(145deg, rgba(0,180,216,0.25), rgba(0,119,182,0.2));
+            color: #7dd3fc;
+            width: 44px; height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+            border: 1px solid rgba(125,211,252,0.3);
         }
 
         .licao-card h3 {
-            color: #1e3a5f;
+            color: #fff;
             margin-bottom: 12px;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 600;
             padding-right: 50px;
             flex-grow: 1;
+            line-height: 1.5;
         }
 
         .licao-card .data {
-            color: #5f7d9c;
-            font-size: 0.9rem;
-            margin-bottom: 18px;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.88rem;
+            margin-bottom: 14px;
             display: flex;
             align-items: center;
             gap: 8px;
             font-weight: 500;
         }
 
+        /* Progress bar */
+        .progress-bar {
+            height: 5px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
+            border-radius: 10px;
+            transition: width 0.8s ease;
+        }
+
         .btn-quiz {
-            display: inline-block;
-            background: linear-gradient(145deg, #2c6e9c, #1e4f73);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(145deg, #00b4d8, #0077b6);
             color: white;
             text-decoration: none;
-            padding: 14px 24px;
+            padding: 13px 24px;
             border-radius: 40px;
             font-weight: 600;
             text-align: center;
@@ -425,68 +534,69 @@
             border: none;
             cursor: pointer;
             width: 100%;
-            font-size: 1rem;
+            font-size: 0.95rem;
             margin-top: auto;
-            box-shadow: 0 8px 18px -8px #2c6e9c;
+            box-shadow: 0 8px 20px rgba(0,180,216,0.35);
+            position: relative;
+            z-index: 1;
         }
 
         .btn-quiz:hover {
-            background: linear-gradient(145deg, #1e4f73, #153b56);
+            background: linear-gradient(145deg, #0096c7, #005f8e);
             transform: translateY(-2px);
-            box-shadow: 0 16px 24px -10px #2c6e9c;
+            box-shadow: 0 16px 30px rgba(0,180,216,0.5);
         }
 
         .btn-quiz.disabled {
-            background: #b0c4de;
-            color: #2e405b;
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.35);
             box-shadow: none;
-            opacity: 0.5;
             cursor: not-allowed;
             pointer-events: none;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .status {
             display: inline-block;
-            padding: 5px 14px;
+            padding: 4px 12px;
             border-radius: 30px;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 600;
-            margin-left: 10px;
-            background: rgba(0,0,0,0.04);
-            color: #2e405b;
         }
 
         .status.ativa {
-            background: #2c6e9c20;
-            color: #1e4f73;
+            background: rgba(0,255,150,0.15);
+            color: #4ade80;
+            border: 1px solid rgba(74,222,128,0.3);
         }
 
         .status.breve {
-            background: #d96c2b20;
-            color: #b35e24;
+            background: rgba(255,179,71,0.15);
+            color: #ffb347;
+            border: 1px solid rgba(255,179,71,0.3);
         }
 
         .placeholder-message {
             text-align: center;
             padding: 48px 24px;
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(4px);
+            background: rgba(255,255,255,0.04);
             border-radius: 32px;
-            border: 2px dashed #2c6e9c60;
-            color: #2e405b;
+            border: 2px dashed rgba(125,211,252,0.3);
+            color: rgba(255,255,255,0.6);
         }
 
         .placeholder-message i {
             font-size: 3.2rem;
-            color: #2c6e9c;
+            color: #7dd3fc;
             margin-bottom: 16px;
-            opacity: 0.7;
+            opacity: 0.6;
+            display: block;
         }
 
         footer {
             text-align: center;
             padding: 30px;
-            color: #3e5e7e;
+            color: rgba(255,255,255,0.4);
             margin-top: 40px;
             font-weight: 500;
         }
@@ -495,21 +605,24 @@
             h1 { font-size: 2rem; }
             .logo-img { max-width: 110px; }
             .trimestre-header { padding: 18px 22px; }
-            .trimestre-header h2 { font-size: 1.4rem; gap: 10px; }
-            .trimestre-conteudo { padding: 0 22px 22px; }
-            .descricao-detalhada { padding: 22px; }
+            .trimestre-header h2 { font-size: 1.3rem; gap: 10px; }
+            .trimestre-conteudo.open { padding: 0 18px 22px; }
+            .descricao-detalhada { padding: 20px; }
             .capa-revista img { max-width: 100%; }
+            .licoes-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
+    <canvas id="particles"></canvas>
+
     <div class="container">
         <header>
             <img src="https://i.imgur.com/vsNu5IC.png" alt="Logo EBD" class="logo-img">
             <h1>Quizzes da EBD Fiel</h1>
             <p class="subtitle">Quizzes Interativos <strong>Classe Adultos</strong></p>
-            <p style="color: #4a6b8a; margin-top: 16px;">Teste seu conhecimento com os quizzes das lições da EBD</p>
-            
+            <p style="color: rgba(255,255,255,0.55); margin-top: 16px;">Teste seu conhecimento com os quizzes das lições da EBD</p>
+
             <div class="redes-sociais">
                 <h3>Siga a EBD Fiel nas redes sociais:</h3>
                 <div class="social-icons">
@@ -520,7 +633,7 @@
                 </div>
             </div>
         </header>
-        
+
         <div class="saudacao">
             <h2>📚 Bem-vindo à Página de Quizzes</h2>
             <p>Esta página foi criada para ajudar no estudo e fixação das lições da EBD Betel, com foco especial na classe de Adultos.</p>
@@ -538,11 +651,11 @@
                 <p>2. Escolha a lição e clique em "Iniciar Quiz".</p>
                 <p>3. Responda as questões e revise seus erros.</p>
             </div>
-            <p>Que Deus abençoe seu estudo!</p>
+            <p style="margin-top:14px;">Que Deus abençoe seu estudo!</p>
         </div>
-        
+
         <main>
-            <!-- 1º TRIMESTRE 2026 (Discípulos) -->
+            <!-- 1º TRIMESTRE 2026 -->
             <div class="trimestre">
                 <div class="trimestre-header">
                     <h2>
@@ -551,26 +664,28 @@
                     </h2>
                     <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
                 </div>
-                <div class="trimestre-conteudo" style="display: none;">
+                <div class="trimestre-conteudo">
                     <div class="tema-trimestre"><strong>Tema:</strong> Os Discípulos de Jesus Cristo</div>
-                    
-                    <!-- Capa do 1º trimestre -->
                     <div class="capa-revista">
                         <img src="https://i.imgur.com/k4G2Qdr.jpeg" alt="Capa da Revista - 1º Trimestre 2026">
                     </div>
-                    
                     <div class="descricao-detalhada">
                         <p>Neste primeiro trimestre do ano 2026, nossa temática é: <strong>O Discípulo de Cristo</strong>, uma abordagem desde o novo nascimento até a volta de Jesus Cristo. Ser discípulo exige um estilo de vida de comprometimento, transformação e entrega total ao Mestre. Nosso objetivo é refletir sobre o que significa seguir a Cristo em um mundo que adota um sistema de crenças e valores tão opostos aos princípios bíblicos.</p>
-                        <p>A vida de um discípulo de Cristo inicia com a experiência do novo nascimento. A partir daí, vamos estudar sobre a relevância da ação do Espírito Santo e da Palavra de Deus, a oração e o jejum, o enfrentamento das tentações, o cumprimento da missão de fazer discípulos, o amadurecimento espiritual, o processo da santificação, entre outros aspectos, até chegarmos na bem-aventurada esperança: a vinda de Nosso Senhor Jesus Cristo.</p>
-                        <p>Que seja um trimestre propício a sermos despertados e motivados a crescer na Graça e no conhecimento de Jesus Cristo. Que o Espírito Santo guie você em mais esta jornada de aprendizado e crescimento espiritual!</p>
+                        <p style="margin-top:12px;">A vida de um discípulo de Cristo inicia com a experiência do novo nascimento. A partir daí, vamos estudar sobre a relevância da ação do Espírito Santo e da Palavra de Deus, a oração e o jejum, o enfrentamento das tentações, o cumprimento da missão de fazer discípulos, o amadurecimento espiritual, o processo da santificação, entre outros aspectos, até chegarmos na bem-aventurada esperança: a vinda de Nosso Senhor Jesus Cristo.</p>
+                        <p style="margin-top:12px;">Que seja um trimestre propício a sermos despertados e motivados a crescer na Graça e no conhecimento de Jesus Cristo. Que o Espírito Santo guie você em mais esta jornada de aprendizado e crescimento espiritual!</p>
                     </div>
-                    
-                    <!-- Vídeo da Lição 11 (atualizado) -->
+
                     <div class="video-trimestre">
                         <h3><i class="fas fa-video"></i> Vídeo da Lição 11 - O caráter dos discípulos de Cristo</h3>
-                        <div class="video-universal-container">
+                        <div class="video-universal-container" id="pcVideoContainer1">
                             <div class="video-responsive-wrapper">
                                 <iframe src="https://www.youtube.com/embed/bFRykKpUv2c?rel=0&modestbranding=1&playsinline=1" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div class="video-mobile-fallback" id="mobileVideoFallback1">
+                            <div class="video-mobile-overlay">
+                                <div class="play-icon-large"><i class="fas fa-play"></i></div>
+                                <div>Clique para assistir no YouTube</div>
                             </div>
                         </div>
                         <div class="video-info">
@@ -578,27 +693,26 @@
                             <a href="https://www.youtube.com/watch?v=bFRykKpUv2c" target="_blank" class="video-direct-link"><i class="fab fa-youtube"></i> Assistir no YouTube</a>
                         </div>
                     </div>
-                    
-                    <!-- Grade de lições do 1º trimestre -->
+
                     <div class="licoes-grid">
-                        <div class="licao-card"><div class="numero">01</div><h3>Os discípulos de Cristo são novas criaturas</h3><div class="data"><span>📅</span> 04/01/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-01/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
-                        <div class="licao-card"><div class="numero">02</div><h3>Princípios bíblicos para a vida dos discípulos de Cristo</h3><div class="data"><span>📅</span> 11/01/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-02/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
-                        <div class="licao-card"><div class="numero">03</div><h3>Os compromissos dos discípulos de Cristo</h3><div class="data"><span>📅</span> 18/01/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-03/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
-                        <div class="licao-card"><div class="numero">04</div><h3>Os discípulos de Cristo e a tentação</h3><div class="data"><span>📅</span> 25/01/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-04/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
-                        <div class="licao-card"><div class="numero">05</div><h3>A importância do jejum na vida dos discípulos de Cristo</h3><div class="data"><span>📅</span> 01/02/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-05/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
-                        <div class="licao-card"><div class="numero">06</div><h3>Oração: uma disciplina indispensável aos discípulos de Cristo</h3><div class="data"><span>📅</span> 08/02/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-06/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
-                        <div class="licao-card"><div class="numero">07</div><h3>Vencendo as estratégias e propostas do inimigo</h3><div class="data"><span>📅</span> 15/02/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-07/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
-                        <div class="licao-card"><div class="numero">08</div><h3>Os discípulos de Cristo e o bom ânimo</h3><div class="data"><span>📅</span> 22/02/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-08/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
-                        <div class="licao-card"><div class="numero">09</div><h3>Os discípulos de Cristo e o processo da santificação</h3><div class="data"><span>📅</span> 01/03/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-09/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
-                        <div class="licao-card"><div class="numero">10</div><h3>A missão dos discípulos de Cristo</h3><div class="data"><span>📅</span> 08/03/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-10/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
-                        <div class="licao-card"><div class="numero">11</div><h3>O caráter dos discípulos de Cristo</h3><div class="data"><span>📅</span> 15/03/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-11/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
-                        <div class="licao-card"><div class="numero">12</div><h3>Os discípulos de Cristo e o Espírito Santo</h3><div class="data"><span>📅</span> 22/03/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-12/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
-                        <div class="licao-card"><div class="numero">13</div><h3>Os discípulos de Cristo e a bem-aventurada esperança</h3><div class="data"><span>📅</span> 29/03/2026 <span class="status ativa">Disponível</span></div><a href="trimestre-01/licao-13/" class="btn-quiz">▶️ Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">01</div><h3>Os discípulos de Cristo são novas criaturas</h3><div class="data"><span>📅</span> 04/01/2026 <span class="status ativa">Disponível</span></div><div class="progress-bar"><div class="progress" style="width:100%"></div></div><a href="trimestre-01/licao-01/" class="btn-quiz"><i class="fas fa-play-circle"></i> Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">02</div><h3>Princípios bíblicos para a vida dos discípulos de Cristo</h3><div class="data"><span>📅</span> 11/01/2026 <span class="status ativa">Disponível</span></div><div class="progress-bar"><div class="progress" style="width:100%"></div></div><a href="trimestre-01/licao-02/" class="btn-quiz"><i class="fas fa-play-circle"></i> Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">03</div><h3>Os compromissos dos discípulos de Cristo</h3><div class="data"><span>📅</span> 18/01/2026 <span class="status ativa">Disponível</span></div><div class="progress-bar"><div class="progress" style="width:100%"></div></div><a href="trimestre-01/licao-03/" class="btn-quiz"><i class="fas fa-play-circle"></i> Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">04</div><h3>Os discípulos de Cristo e a tentação</h3><div class="data"><span>📅</span> 25/01/2026 <span class="status ativa">Disponível</span></div><div class="progress-bar"><div class="progress" style="width:100%"></div></div><a href="trimestre-01/licao-04/" class="btn-quiz"><i class="fas fa-play-circle"></i> Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">05</div><h3>A importância do jejum na vida dos discípulos de Cristo</h3><div class="data"><span>📅</span> 01/02/2026 <span class="status ativa">Disponível</span></div><div class="progress-bar"><div class="progress" style="width:100%"></div></div><a href="trimestre-01/licao-05/" class="btn-quiz"><i class="fas fa-play-circle"></i> Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">06</div><h3>Oração: uma disciplina indispensável aos discípulos de Cristo</h3><div class="data"><span>📅</span> 08/02/2026 <span class="status ativa">Disponível</span></div><div class="progress-bar"><div class="progress" style="width:100%"></div></div><a href="trimestre-01/licao-06/" class="btn-quiz"><i class="fas fa-play-circle"></i> Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">07</div><h3>Vencendo as estratégias e propostas do inimigo</h3><div class="data"><span>📅</span> 15/02/2026 <span class="status ativa">Disponível</span></div><div class="progress-bar"><div class="progress" style="width:100%"></div></div><a href="trimestre-01/licao-07/" class="btn-quiz"><i class="fas fa-play-circle"></i> Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">08</div><h3>Os discípulos de Cristo e o bom ânimo</h3><div class="data"><span>📅</span> 22/02/2026 <span class="status ativa">Disponível</span></div><div class="progress-bar"><div class="progress" style="width:100%"></div></div><a href="trimestre-01/licao-08/" class="btn-quiz"><i class="fas fa-play-circle"></i> Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">09</div><h3>Os discípulos de Cristo e o processo da santificação</h3><div class="data"><span>📅</span> 01/03/2026 <span class="status ativa">Disponível</span></div><div class="progress-bar"><div class="progress" style="width:100%"></div></div><a href="trimestre-01/licao-09/" class="btn-quiz"><i class="fas fa-play-circle"></i> Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">10</div><h3>A missão dos discípulos de Cristo</h3><div class="data"><span>📅</span> 08/03/2026 <span class="status ativa">Disponível</span></div><div class="progress-bar"><div class="progress" style="width:100%"></div></div><a href="trimestre-01/licao-10/" class="btn-quiz"><i class="fas fa-play-circle"></i> Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">11</div><h3>O caráter dos discípulos de Cristo</h3><div class="data"><span>📅</span> 15/03/2026 <span class="status ativa">Disponível</span></div><div class="progress-bar"><div class="progress" style="width:100%"></div></div><a href="trimestre-01/licao-11/" class="btn-quiz"><i class="fas fa-play-circle"></i> Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">12</div><h3>Os discípulos de Cristo e o Espírito Santo</h3><div class="data"><span>📅</span> 22/03/2026 <span class="status ativa">Disponível</span></div><div class="progress-bar"><div class="progress" style="width:100%"></div></div><a href="trimestre-01/licao-12/" class="btn-quiz"><i class="fas fa-play-circle"></i> Iniciar Quiz</a></div>
+                        <div class="licao-card"><div class="numero">13</div><h3>Os discípulos de Cristo e a bem-aventurada esperança</h3><div class="data"><span>📅</span> 29/03/2026 <span class="status ativa">Disponível</span></div><div class="progress-bar"><div class="progress" style="width:100%"></div></div><a href="trimestre-01/licao-13/" class="btn-quiz"><i class="fas fa-play-circle"></i> Iniciar Quiz</a></div>
                     </div>
                 </div>
             </div>
 
-            <!-- 2º TRIMESTRE 2026 (Neemias) -->
+            <!-- 2º TRIMESTRE 2026 -->
             <div class="trimestre">
                 <div class="trimestre-header">
                     <h2>
@@ -607,34 +721,30 @@
                     </h2>
                     <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
                 </div>
-                <div class="trimestre-conteudo" style="display: none;">
+                <div class="trimestre-conteudo">
                     <div class="tema-trimestre"><strong>Tema:</strong> Neemias: Restaurando Muros, Reconstruindo Vidas e Renovando Propósitos</div>
-                    
-                    <!-- Capa do 2º trimestre -->
                     <div class="capa-revista">
                         <img src="https://i.imgur.com/hGrQk9q.jpeg" alt="Capa da Revista - 2º Trimestre 2026">
                     </div>
-                    
                     <div class="licoes-grid">
-                        <!-- Lições 1 a 13 do 2º trimestre (em preparação) -->
-                        <div class="licao-card"><div class="numero">01</div><h3>O chamado que transforma a dor em propósito</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
-                        <div class="licao-card"><div class="numero">02</div><h3>Preparando-se para o agir de Deus</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
-                        <div class="licao-card"><div class="numero">03</div><h3>Lidando com vozes contrárias</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
-                        <div class="licao-card"><div class="numero">04</div><h3>O poder das palavras: pedras que edificam e não ferem</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
-                        <div class="licao-card"><div class="numero">05</div><h3>Fortalecido pela fé para combater o medo com coragem</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
-                        <div class="licao-card"><div class="numero">06</div><h3>Discernimento espiritual: a sabedoria divina em tempos de engano</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
-                        <div class="licao-card"><div class="numero">07</div><h3>Unidade: a receita que nos faz vencer as adversidades da vida</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
-                        <div class="licao-card"><div class="numero">08</div><h3>A fidelidade e o temor: características que geram confiança</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
-                        <div class="licao-card"><div class="numero">09</div><h3>Alegria e gratidão ao Senhor resultam da Palavra de Deus</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
-                        <div class="licao-card"><div class="numero">10</div><h3>O arrependimento: aspecto indispensável para uma nova vida</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
-                        <div class="licao-card"><div class="numero">11</div><h3>O culto: a importância para uma vida cristã edificada</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
-                        <div class="licao-card"><div class="numero">12</div><h3>Vigilância e oração: o perigo das alianças erradas</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
-                        <div class="licao-card"><div class="numero">13</div><h3>Os elementos fundamentais da vitória de Neemias</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><a href="#" class="btn-quiz disabled">⏳ Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">01</div><h3>O chamado que transforma a dor em propósito</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><div class="progress-bar"><div class="progress" style="width:0%"></div></div><a href="#" class="btn-quiz disabled"><i class="fas fa-clock"></i> Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">02</div><h3>Preparando-se para o agir de Deus</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><div class="progress-bar"><div class="progress" style="width:0%"></div></div><a href="#" class="btn-quiz disabled"><i class="fas fa-clock"></i> Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">03</div><h3>Lidando com vozes contrárias</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><div class="progress-bar"><div class="progress" style="width:0%"></div></div><a href="#" class="btn-quiz disabled"><i class="fas fa-clock"></i> Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">04</div><h3>O poder das palavras: pedras que edificam e não ferem</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><div class="progress-bar"><div class="progress" style="width:0%"></div></div><a href="#" class="btn-quiz disabled"><i class="fas fa-clock"></i> Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">05</div><h3>Fortalecido pela fé para combater o medo com coragem</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><div class="progress-bar"><div class="progress" style="width:0%"></div></div><a href="#" class="btn-quiz disabled"><i class="fas fa-clock"></i> Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">06</div><h3>Discernimento espiritual: a sabedoria divina em tempos de engano</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><div class="progress-bar"><div class="progress" style="width:0%"></div></div><a href="#" class="btn-quiz disabled"><i class="fas fa-clock"></i> Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">07</div><h3>Unidade: a receita que nos faz vencer as adversidades da vida</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><div class="progress-bar"><div class="progress" style="width:0%"></div></div><a href="#" class="btn-quiz disabled"><i class="fas fa-clock"></i> Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">08</div><h3>A fidelidade e o temor: características que geram confiança</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><div class="progress-bar"><div class="progress" style="width:0%"></div></div><a href="#" class="btn-quiz disabled"><i class="fas fa-clock"></i> Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">09</div><h3>Alegria e gratidão ao Senhor resultam da Palavra de Deus</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><div class="progress-bar"><div class="progress" style="width:0%"></div></div><a href="#" class="btn-quiz disabled"><i class="fas fa-clock"></i> Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">10</div><h3>O arrependimento: aspecto indispensável para uma nova vida</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><div class="progress-bar"><div class="progress" style="width:0%"></div></div><a href="#" class="btn-quiz disabled"><i class="fas fa-clock"></i> Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">11</div><h3>O culto: a importância para uma vida cristã edificada</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><div class="progress-bar"><div class="progress" style="width:0%"></div></div><a href="#" class="btn-quiz disabled"><i class="fas fa-clock"></i> Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">12</div><h3>Vigilância e oração: o perigo das alianças erradas</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><div class="progress-bar"><div class="progress" style="width:0%"></div></div><a href="#" class="btn-quiz disabled"><i class="fas fa-clock"></i> Em preparação</a></div>
+                        <div class="licao-card"><div class="numero">13</div><h3>Os elementos fundamentais da vitória de Neemias</h3><div class="data"><span>📅</span> 2º Trim. 2026 <span class="status breve">Em preparação</span></div><div class="progress-bar"><div class="progress" style="width:0%"></div></div><a href="#" class="btn-quiz disabled"><i class="fas fa-clock"></i> Em preparação</a></div>
                     </div>
                 </div>
             </div>
 
-            <!-- 3º TRIMESTRE 2026 (placeholder) -->
+            <!-- 3º TRIMESTRE 2026 -->
             <div class="trimestre">
                 <div class="trimestre-header">
                     <h2>
@@ -643,10 +753,7 @@
                     </h2>
                     <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
                 </div>
-                <div class="trimestre-conteudo" style="display: none;">
-                    <div class="capa-revista">
-                        <img src="https://via.placeholder.com/1200x400?text=Capa+3%C2%BA+Trimestre" alt="Capa 3º Trimestre (em breve)">
-                    </div>
+                <div class="trimestre-conteudo">
                     <div class="placeholder-message">
                         <i class="fas fa-clock"></i>
                         <p>Quizzes do 3º trimestre de 2026 estão sendo preparados.</p>
@@ -655,7 +762,7 @@
                 </div>
             </div>
 
-            <!-- 4º TRIMESTRE 2026 (placeholder) -->
+            <!-- 4º TRIMESTRE 2026 -->
             <div class="trimestre">
                 <div class="trimestre-header">
                     <h2>
@@ -664,10 +771,7 @@
                     </h2>
                     <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
                 </div>
-                <div class="trimestre-conteudo" style="display: none;">
-                    <div class="capa-revista">
-                        <img src="https://via.placeholder.com/1200x400?text=Capa+4%C2%BA+Trimestre" alt="Capa 4º Trimestre (em breve)">
-                    </div>
+                <div class="trimestre-conteudo">
                     <div class="placeholder-message">
                         <i class="fas fa-clock"></i>
                         <p>Quizzes do 4º trimestre de 2026 estão sendo preparados.</p>
@@ -676,25 +780,80 @@
                 </div>
             </div>
         </main>
-        
+
         <footer>
             <p>© 2026 - EBD Fiel</p>
-            <p style="font-size: 0.9rem; opacity: 0.6;">Fiel à Palavra</p>
+            <p style="font-size: 0.9rem; opacity: 0.5; margin-top: 4px;">Fiel à Palavra</p>
         </footer>
     </div>
 
     <script>
-        // Accordion
+        // ===== PARTÍCULAS =====
+        const canvas = document.getElementById("particles");
+        const ctx = canvas.getContext("2d");
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const particles = Array.from({ length: 90 }, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 1.8 + 0.3,
+            d: Math.random() * 0.6 + 0.2,
+            o: Math.random() * 0.4 + 0.1
+        }));
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(125, 211, 252, ${p.o})`;
+                ctx.fill();
+                p.y += p.d;
+                if (p.y > canvas.height) {
+                    p.y = 0;
+                    p.x = Math.random() * canvas.width;
+                }
+            });
+            requestAnimationFrame(drawParticles);
+        }
+        drawParticles();
+
+        // ===== ACCORDION ANIMADO =====
         document.querySelectorAll('.trimestre-header').forEach(header => {
-            header.addEventListener('click', function() {
+            header.addEventListener('click', function () {
                 const conteudo = this.nextElementSibling;
-                const isOpen = conteudo.style.display === 'block';
-                conteudo.style.display = isOpen ? 'none' : 'block';
-                this.classList.toggle('open', !isOpen);
+                const isOpen = conteudo.classList.contains('open');
+
+                // Fecha todos
+                document.querySelectorAll('.trimestre-conteudo').forEach(c => {
+                    c.style.maxHeight = null;
+                    c.classList.remove('open');
+                });
+                document.querySelectorAll('.trimestre-header').forEach(h => h.classList.remove('open'));
+
+                // Abre o clicado (se estava fechado)
+                if (!isOpen) {
+                    conteudo.classList.add('open');
+                    conteudo.style.maxHeight = conteudo.scrollHeight + "px";
+                    this.classList.add('open');
+                }
             });
         });
 
-        // Não há mais fallback para mobile, o iframe será exibido em todos os dispositivos.
+        // ===== VÍDEO MOBILE =====
+        if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            document.querySelectorAll('.video-universal-container').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.video-mobile-fallback').forEach(el => {
+                el.style.display = 'block';
+                el.addEventListener('click', () => window.open('https://www.youtube.com/watch?v=bFRykKpUv2c', '_blank'));
+            });
+        }
     </script>
 </body>
 </html>
